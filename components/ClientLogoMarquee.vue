@@ -6,25 +6,10 @@
     <div class="absolute right-0 top-0 bottom-0 w-24 sm:w-40 z-10 bg-gradient-to-l from-brand-dark to-transparent pointer-events-none"></div>
 
     <!-- Marquee track wrapper — pause on hover -->
-    <div 
-      class="marquee-track-wrapper"
-      @mouseenter="pauseScroll"
-      @mouseleave="resumeScroll"
-    >
-      <div 
-        ref="marqueeEl"
-        class="marquee-track flex items-center gap-16 sm:gap-24 whitespace-nowrap"
-      >
-        <!-- Set 1 -->
-        <div v-for="logo in logos" :key="`a-${logo.name}`" class="logo-item flex items-center justify-center shrink-0">
-          <div class="flex items-center gap-2 opacity-40 hover:opacity-100 transition-opacity duration-300 cursor-pointer group">
-            <!-- SVG logo as inline text/icon combos matching screenshot 3 -->
-            <component :is="logo.component" class="text-white" />
-          </div>
-        </div>
-
-        <!-- Set 2 (duplicate for seamless loop) -->
-        <div v-for="logo in logos" :key="`b-${logo.name}`" class="logo-item flex items-center justify-center shrink-0">
+    <div class="marquee-track-wrapper">
+      <div class="marquee-track animate-marquee flex items-center gap-16 sm:gap-24 whitespace-nowrap">
+        <!-- 4 sets of logos for 100% seamless loop on all screen widths with zero gap -->
+        <div v-for="(logo, idx) in quadLogos" :key="idx" class="logo-item flex items-center justify-center shrink-0">
           <div class="flex items-center gap-2 opacity-40 hover:opacity-100 transition-opacity duration-300 cursor-pointer group">
             <component :is="logo.component" class="text-white" />
           </div>
@@ -35,7 +20,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, h, defineComponent } from 'vue'
+import { computed, h, defineComponent } from 'vue'
 
 /* ─── Inline SVG Logo Components ────────────────────────── */
 // Exact logos matching the screenshot: Taman, Crescent, Aurore, PRIMAL, icon, Slaaay, brunbae
@@ -105,32 +90,8 @@ const logos = [
   { name: 'brunbae',  component: LogoBrunbae  },
 ]
 
-/* ─── Vanilla JS Marquee (no lib needed) ───────────────── */
-const marqueeEl = ref<HTMLElement | null>(null)
-let animId: number | null = null
-let pos = 0
-let isPaused = false
-
-function tick() {
-  if (!isPaused && marqueeEl.value) {
-    // Scroll left at 0.5px/frame (≈30px/s at 60fps)
-    pos -= 0.5
-    const halfWidth = marqueeEl.value.scrollWidth / 2
-    if (Math.abs(pos) >= halfWidth) pos = 0
-    marqueeEl.value.style.transform = `translateX(${pos}px)`
-  }
-  animId = requestAnimationFrame(tick)
-}
-
-function pauseScroll()  { isPaused = true  }
-function resumeScroll() { isPaused = false }
-
-onMounted(() => {
-  animId = requestAnimationFrame(tick)
-})
-onUnmounted(() => {
-  if (animId) cancelAnimationFrame(animId)
-})
+// Duplicate logos array 4 times for endless marquee across ultra-wide viewports
+const quadLogos = computed(() => [...logos, ...logos, ...logos, ...logos])
 </script>
 
 <style scoped>
@@ -138,9 +99,23 @@ onUnmounted(() => {
   overflow: hidden;
   width: 100%;
 }
-.marquee-track {
-  will-change: transform;
+.animate-marquee {
   display: flex;
   align-items: center;
+  width: max-content;
+  animation: marquee-scroll 25s linear infinite;
+  will-change: transform;
+}
+.marquee-track-wrapper:hover .animate-marquee {
+  animation-play-state: paused;
+}
+
+@keyframes marquee-scroll {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
 }
 </style>

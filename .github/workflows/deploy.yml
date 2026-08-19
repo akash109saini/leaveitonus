@@ -20,16 +20,16 @@ jobs:
           cache: 'npm'
 
       - name: Install Dependencies
-        run: npm ci
+        run: npm install
 
       - name: Build Static Web Application
         run: npm run generate
 
       - name: Deploy to Hostinger via FTP
-        uses: SamKirsch/ftp-deploy@v4.3.5
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: .output/public/
-          server-dir: /public_html/
+          server-dir: ./
