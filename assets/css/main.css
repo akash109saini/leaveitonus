@@ -1,0 +1,216 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    background-color: #0B0B0C;
+    color: #E4E4E7;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    scroll-behavior: auto; /* Lenis handles smooth scrolling */
+  }
+
+  body {
+    background-color: #0B0B0C;
+    overflow-x: hidden;
+    color: #E4E4E7;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Syne', sans-serif;
+    letter-spacing: -0.02em;
+  }
+}
+
+.font-condensed {
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 0.03em;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0B0B0C;
+}
+::-webkit-scrollbar-thumb {
+  background: #27272A;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #FFE300;
+}
+
+/* Custom Glassmorphism */
+.glass-panel {
+  background: rgba(18, 18, 20, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-nav {
+  background: rgba(22, 22, 25, 0.65);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.6);
+}
+
+.glass-card {
+  background: linear-gradient(135deg, rgba(22, 22, 25, 0.85) 0%, rgba(14, 14, 16, 0.7) 100%);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-card:hover {
+  border-color: rgba(255, 227, 0, 0.5);
+  box-shadow: 0 10px 30px -10px rgba(255, 227, 0, 0.2);
+  transform: translateY(-4px);
+}
+
+/* High-Impact Yellow Highlight Utilities */
+.highlight-yellow {
+  background: rgba(255, 227, 0, 0.15);
+  color: #FFE300;
+  border: 1px solid rgba(255, 227, 0, 0.3);
+  padding: 0.1em 0.4em;
+  border-radius: 0.375rem;
+}
+
+.text-yellow-glow {
+  color: #FFE300;
+  text-shadow: 0 0 25px rgba(255, 227, 0, 0.5);
+}
+
+.border-yellow-glow {
+  border-color: rgba(255, 227, 0, 0.4);
+  box-shadow: 0 0 20px rgba(255, 227, 0, 0.2);
+}
+
+.card-yellow-top {
+  border-top: 2px solid #FFE300 !important;
+}
+
+/* Glow effects */
+.glow-yellow {
+  box-shadow: 0 0 25px rgba(255, 227, 0, 0.4);
+}
+
+.text-gradient-yellow {
+  background: linear-gradient(135deg, #FFFFFF 0%, #FFE300 60%, #FFEB3B 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ─── Global Button Styles (matching Image 1 reference) ─── */
+/* Primary: Solid yellow rounded button — the ONLY primary button style */
+.btn-yellow-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.95rem 2rem;
+  background: #FFE300;
+  color: #000000;
+  font-weight: 800;
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-radius: 1rem; /* rounded-2xl ~16px */
+  border: none;
+  outline: none;
+  cursor: pointer;
+  box-shadow: 0 4px 24px rgba(255, 227, 0, 0.35);
+  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.btn-yellow-primary:hover {
+  background: #FFEB3B;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(255, 227, 0, 0.55);
+}
+.btn-yellow-primary:active {
+  transform: translateY(0);
+}
+
+/* Secondary: Glass/dark pill button */
+.btn-glass-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.95rem 2rem;
+  background: rgba(255, 255, 255, 0.06);
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.btn-glass-secondary:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+}
+
+/* Navbar LET'S TALK button variant — matches Image 2: rounded-full, bold, uppercase, 15px */
+.btn-yellow-nav {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.75rem;
+  background: #FFE300;
+  color: #000000;
+  font-weight: 900;
+  font-size: 0.9375rem; /* 15px — matches Image 2 */
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border-radius: 9999px; /* rounded-full */
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 2px 18px rgba(255, 227, 0, 0.35);
+  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.btn-yellow-nav:hover {
+  background: #FFEB3B;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 24px rgba(255, 227, 0, 0.55);
+}
+
+/* Native dialog styling for video modal */
+dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+dialog[open] {
+  animation: fadeInModal 0.25s ease-out forwards;
+}
+
+@keyframes fadeInModal {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
