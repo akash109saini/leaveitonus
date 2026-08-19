@@ -6,6 +6,9 @@
     <!-- ★ Client Logo Marquee — right after hero, matching screenshot 3 -->
     <ClientLogoMarquee />
 
+    <!-- ★ Instagram Reels Video Showcase — after logo header -->
+    <InstagramReels />
+
     <!-- Services Showcase Section (Interactive Tabs) -->
     <section class="py-24 bg-brand-dark relative overflow-hidden">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -176,6 +179,7 @@ import MetricsCounter from '~/components/MetricsCounter.vue'
 import ClientLogoMarquee from '~/components/ClientLogoMarquee.vue'
 import WorkCard from '~/components/WorkCard.vue'
 import WereBuildingSection from '~/components/WereBuildingSection.vue'
+import InstagramReels from '~/components/InstagramReels.vue'
 
 const activeServiceIndex = ref(0)
 
