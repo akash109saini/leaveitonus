@@ -5,8 +5,9 @@
 -- Generated: 2026-09-05
 -- ==========================================================
 
-CREATE DATABASE IF NOT EXISTS `leaveitonus_db` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE `leaveitonus_db`;
+-- Note: For Hostinger/cPanel phpMyAdmin, select your created database on the left and import directly.
+-- CREATE DATABASE IF NOT EXISTS `leaveitonus_db` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+-- USE `leaveitonus_db`;
 
 SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `quotation_items`;
