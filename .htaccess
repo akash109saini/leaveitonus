@@ -1,0 +1,3 @@
+# Leave It On Us - Apache Configuration
+DirectoryIndex index.php index.html
+Options +FollowSymLinks
