@@ -217,6 +217,9 @@
 import { ref, reactive } from 'vue'
 import { Send, Loader2, CheckCircle2, Mail, Phone, MapPin, Instagram, Linkedin, Youtube, Twitter } from 'lucide-vue-next'
 import confetti from 'canvas-confetti'
+import { useEnquiries } from '~/composables/useEnquiries'
+
+const { createEnquiry } = useEnquiries()
 
 const form = reactive({
   name: '',
@@ -259,6 +262,17 @@ const handleSubmit = () => {
   setTimeout(() => {
     isSubmitting.value = false
     isSubmitted.value = true
+
+    // Save to admin enquiry system
+    createEnquiry({
+      name: form.name,
+      email: form.email,
+      phone: '',
+      company: form.company,
+      services: selectedServices.value,
+      budget: selectedBudget.value,
+      message: form.message
+    })
 
     // Trigger vibrant yellow celebratory confetti!
     if (process.client) {

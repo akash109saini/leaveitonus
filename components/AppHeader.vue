@@ -4,32 +4,13 @@
   >
     <div class="max-w-screen-xl mx-auto flex items-center justify-between gap-4 relative">
 
-      <!-- ── LOGO (Left) ── matching Image 2: icon + two-line text -->
-      <NuxtLink to="/" class="flex items-center gap-3 group shrink-0 min-w-[150px]">
-        <!-- Cake slice SVG (white, same size as Image 2 logo icon) -->
-        <div class="w-10 h-10 sm:w-11 sm:h-11 flex items-center justify-center shrink-0">
-          <svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full group-hover:scale-105 transition-transform duration-300">
-            <!-- Plate base -->
-            <rect x="4" y="42" width="48" height="8" rx="3" fill="#FFE300"/>
-            <!-- Cake body (slice) -->
-            <path d="M8 42 L28 10 L48 42 Z" fill="#FFFFFF"/>
-            <!-- Cake inner layer stripes -->
-            <path d="M14 42 L28 18 L42 42 Z" fill="#E5E5E5" opacity="0.4"/>
-            <!-- Cream dots on top -->
-            <circle cx="28" cy="8"  r="3.5" fill="#FFE300"/>
-            <circle cx="20" cy="13" r="2.5" fill="#FFE300"/>
-            <circle cx="36" cy="13" r="2.5" fill="#FFE300"/>
-          </svg>
-        </div>
-        <!-- Brand name: two lines like "cheesecake / digital" in Image 2 -->
-        <div class="flex flex-col leading-tight">
-          <span class="font-display font-black text-white text-lg sm:text-xl tracking-tight group-hover:text-brand-yellow transition-colors duration-200">
-            leave it
-          </span>
-          <span class="font-display font-black text-white text-lg sm:text-xl tracking-tight -mt-1">
-            on us
-          </span>
-        </div>
+      <!-- ── LOGO (Left) ── Official Leave It On Us White Logo for Dark Background -->
+      <NuxtLink to="/" class="flex items-center group shrink-0 min-w-[150px]">
+        <img
+          src="/images/logo-white.png"
+          alt="Leave It On Us Media"
+          class="h-9 sm:h-11 w-auto max-w-[200px] object-contain transition-transform duration-300 group-hover:scale-105"
+        />
       </NuxtLink>
 
       <!-- ── CENTER NAV PILL (Desktop) ── matching Image 2: solid dark charcoal pill, larger font -->

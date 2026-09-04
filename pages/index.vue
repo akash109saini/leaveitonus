@@ -168,12 +168,16 @@
         </div>
       </div>
     </section>
+
+    <!-- Enquiry / Contact Form -->
+    <EnquiryForm />
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import { ArrowRight } from 'lucide-vue-next'
+import EnquiryForm from '~/components/EnquiryForm.vue'
 import VideoHero from '~/components/VideoHero.vue'
 import MetricsCounter from '~/components/MetricsCounter.vue'
 import ClientLogoMarquee from '~/components/ClientLogoMarquee.vue'

@@ -7,18 +7,12 @@
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 mb-16">
         <!-- Brand & Mission Column -->
         <div class="lg:col-span-2 flex flex-col gap-6">
-          <NuxtLink to="/" class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-yellow to-amber-400 flex items-center justify-center font-extrabold text-black text-xl shadow-[0_0_15px_rgba(255,227,0,0.4)]">
-              ⚡
-            </div>
-            <div class="flex flex-col">
-              <span class="font-display font-extrabold text-2xl tracking-tight text-white">
-                LEAVE IT ON US<span class="text-brand-yellow">.</span>
-              </span>
-              <span class="text-[10px] uppercase tracking-widest text-brand-textMuted font-bold -mt-1">
-                CREATIVE MARKETING AGENCY
-              </span>
-            </div>
+          <NuxtLink to="/" class="inline-block">
+            <img
+              src="/images/logo-white.png"
+              alt="Leave It On Us Media"
+              class="h-10 sm:h-12 w-auto max-w-[220px] object-contain"
+            />
           </NuxtLink>
 
           <p class="text-brand-textSec text-sm leading-relaxed max-w-sm">
