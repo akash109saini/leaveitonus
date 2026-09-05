@@ -1,0 +1,16 @@
+# Leave It On Us - Apache Configuration
+DirectoryIndex index.html index.php
+Options -MultiViews +FollowSymLinks
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # If requested file or directory exists, serve directly
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # Fallback to index.html for client-side routing & clean URLs
+  RewriteRule ^ index.html [L]
+</IfModule>
