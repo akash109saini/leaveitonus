@@ -1,3 +1,17 @@
 # Leave It On Us - Apache Configuration
-DirectoryIndex index.php index.html
-Options +FollowSymLinks
+DirectoryIndex index.html index.php
+Options -MultiViews +FollowSymLinks
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # If the requested file or directory exists, serve it directly
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # Fallback to index.html for client-side Nuxt routes
+  RewriteRule ^ index.html [L]
+</IfModule>
+

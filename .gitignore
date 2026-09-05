@@ -1,4 +1,4 @@
-# Nuxt dev/build outputs
+# Nuxt dev & build outputs
 .output
 .data
 .nuxt
@@ -9,16 +9,36 @@ dist
 # Node dependencies
 node_modules
 
-# Logs
-logs
-*.log
-
-# Misc
-.DS_Store
-.fleet
-.idea
-
-# Local env files
+# Local environment files
 .env
 .env.*
 !.env.example
+
+# Local development helper files & database scripts
+index.php
+db/
+*.sql
+
+# Stray root media / scratch design files (use public/ directory instead)
+download.mp4
+us final *.png
+/video/
+
+# Logs & temp files
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.tmp
+*.bak
+*.swp
+
+# IDE & OS files
+.DS_Store
+Thumbs.db
+.idea
+.vscode
+.fleet
+
