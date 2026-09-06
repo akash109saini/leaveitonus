@@ -136,7 +136,7 @@ const pageLinks = [
 ]
 
 const socials = [
-  { name: 'Instagram', icon: Instagram, url: '#' },
+  { name: 'Instagram', icon: Instagram, url: 'https://www.instagram.com/leave_it_on_us_media/' },
   { name: 'LinkedIn', icon: Linkedin, url: '#' },
   { name: 'YouTube', icon: Youtube, url: '#' },
   { name: 'X (Twitter)', icon: Twitter, url: '#' },

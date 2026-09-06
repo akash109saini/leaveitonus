@@ -193,7 +193,7 @@
           <div class="glass-card p-6 rounded-3xl border border-white/10">
             <h4 class="text-xs uppercase font-bold tracking-wider text-brand-textMuted mb-4">Follow Our Media Lab</h4>
             <div class="grid grid-cols-2 gap-3">
-              <a href="#" class="p-3 rounded-xl bg-white/5 border border-white/5 hover:border-brand-yellow/60 hover:bg-brand-yellow/10 text-xs font-semibold text-white flex items-center gap-2 transition-all">
+              <a href="https://www.instagram.com/leave_it_on_us_media/" target="_blank" rel="noopener noreferrer" class="p-3 rounded-xl bg-white/5 border border-white/5 hover:border-brand-yellow/60 hover:bg-brand-yellow/10 text-xs font-semibold text-white flex items-center gap-2 transition-all">
                 <Instagram class="w-4 h-4 text-brand-yellow" /> Instagram
               </a>
               <a href="#" class="p-3 rounded-xl bg-white/5 border border-white/5 hover:border-brand-yellow/60 hover:bg-brand-yellow/10 text-xs font-semibold text-white flex items-center gap-2 transition-all">
