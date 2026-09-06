@@ -231,6 +231,81 @@ const SAMPLE_QUOTATIONS: Quotation[] = [
     status: 'accepted',
     createdAt: '2026-09-01T11:30:00.000Z',
     updatedAt: '2026-09-01T11:30:00.000Z'
+  },
+  {
+    id: 'lious-quote-03',
+    quotationNumber: 'LIOUS2026090601',
+    companyName: 'Leave It On Us',
+    providerSubtitle: 'Creator-Led Digital Marketing & Production Agency',
+    providerContact: 'Contact / WhatsApp: +91 98765 43210',
+    clientCompany: 'Shama Family Resturant',
+    clientName: 'Mr. Anas',
+    clientPhone: '+91 93680 54043',
+    clientEmail: '',
+    clientAddress: '',
+    serviceCategory: 'Social Media Handling & Meta Ads Growth Package',
+    lineItems: [
+      {
+        serviceId: 'svc-smm-reels',
+        serviceName: 'Social Media Handling (10 Reels & 5 Creatives)',
+        description: 'Complete Instagram & Facebook channel management including 10 high-retention food & ambiance reels, 5 custom graphic creatives, engaging copywriting, hashtag strategy, and scheduling.',
+        unit: 'Per Month (10 Reels + 5 Creatives)',
+        qty: 1,
+        unitPrice: 8000,
+        total: 8000
+      },
+      {
+        serviceId: 'svc-shoots',
+        serviceName: '2 Professional On-Location Shoots',
+        description: '2 dedicated on-location camera shoots per month with professional lighting, food plating cinematography, restaurant interior ambiance capture, and director assistance.',
+        unit: 'Per Month (2 Shoots)',
+        qty: 1,
+        unitPrice: 4000,
+        total: 4000
+      },
+      {
+        serviceId: 'svc-meta-reach',
+        serviceName: 'Meta Ads Management (80,000 Target Account Reach)',
+        description: 'Targeted Meta ads setup and media buying optimized for local customer footfall, dining awareness, and high engagement with 80,000+ guaranteed account reach.',
+        unit: 'Per Month (80,000 Reach)',
+        qty: 1,
+        unitPrice: 5000,
+        total: 5000
+      }
+    ],
+    enableBatchBreakdown: true,
+    batchTitle: 'Monthly Growth Package Breakdown — Shama Family Resturant',
+    batchItems: [
+      { description: 'Social Media Handling (10 Reels + 5 Creatives):', amount: 8000 },
+      { description: '2 Professional On-Location Shoots:', amount: 4000 },
+      { description: 'Meta Ads Management (80,000 Target Account Reach):', amount: 5000 }
+    ],
+    batchTotalText: 'Total Retainer Price per Month:',
+    batchTotalAmount: 17000,
+    subtotal: 17000,
+    taxPercent: 0,
+    taxAmount: 0,
+    discountPercent: 0,
+    discountAmount: 0,
+    grandTotal: 17000,
+    currency: 'INR',
+    date: 'September 06, 2026',
+    validUntil: 'October 06, 2026',
+    notes: 'Tailored social media & visual production growth package for Shama Family Resturant to drive local footfall, customer engagement, and viral food reels.',
+    referenceLinks: [
+      { title: 'Restaurant Food Reel Aesthetic & Hook Reference', url: 'https://youtube.com/shorts/sample-food-reel', type: 'video' },
+      { title: 'Monthly Shoot Schedule & Deliverables Plan', url: 'https://docs.google.com/document/d/shama-plan', type: 'doc' }
+    ],
+    termsTitle: 'Terms & Working Conditions',
+    termsList: [
+      '**Shooting Coordination:** On-location shoots are scheduled in advance with **Mr. Anas** during non-peak hours for optimal lighting and kitchen/staff availability.',
+      '**Revisions & Approval:** Each reel and creative asset includes **2 review iterations** prior to public scheduling.',
+      '**Meta Ad Spend:** Direct ad spend budget is paid through the client ad account for full financial transparency.'
+    ],
+    terms: '• Shooting Coordination: On-location shoots are scheduled in advance with **Mr. Anas** during non-peak hours for optimal lighting and kitchen/staff availability.\n• Revisions & Approval: Each reel and creative asset includes **2 review iterations** prior to public scheduling.\n• Meta Ad Spend: Direct ad spend budget is paid through the client ad account for full financial transparency.',
+    status: 'sent',
+    createdAt: '2026-09-06T10:00:00.000Z',
+    updatedAt: '2026-09-06T10:00:00.000Z'
   }
 ]
 
@@ -250,8 +325,8 @@ const { read: readS, write: writeS } = useAdminStorage<ServiceItem[]>(SERVICES_K
 export function useQuotations() {
   const getQuotations = (): Quotation[] => {
     const list = readQ()
-    // If the list is empty or still contains old webnetworx samples or old ref formats (less than 15 chars), update with fresh Leave It On Us quotations
-    if (!list || list.length === 0 || list.some(q => q.companyName === 'Webnetworx' || q.quotationNumber?.includes('/DM/') || (q.quotationNumber?.length ?? 0) < 15)) {
+    // If the list is empty or doesn't have at least 3 items or still contains old webnetworx samples or old ref formats (less than 15 chars), update with fresh Leave It On Us quotations
+    if (!list || list.length < 3 || list.some(q => q.companyName === 'Webnetworx' || q.quotationNumber?.includes('/DM/') || (q.quotationNumber?.length ?? 0) < 15)) {
       writeQ(SAMPLE_QUOTATIONS)
       return SAMPLE_QUOTATIONS
     }
