@@ -55,7 +55,7 @@
             <div class="inner-subcard">
               <div class="subcard-title text-sky-700 font-bold mb-3">QUOTATION INFO</div>
               <div class="flex flex-col gap-3">
-                <AdminFormField id="quotationNumber" label="Quotation Ref #" v-model="form.quotationNumber" placeholder="LIOUS/DM/2026/01" required />
+                <AdminFormField id="quotationNumber" label="Quotation Ref #" v-model="form.quotationNumber" placeholder="LIOUS2026090601" required />
                 <AdminFormField id="date" label="Quotation Date" v-model="form.date" placeholder="August 28, 2026" required />
                 <AdminFormField id="serviceCategory" label="Service Category" v-model="form.serviceCategory" placeholder="Full-Funnel Digital Marketing & Creator Growth" />
                 <AdminFormField id="validUntil" label="Valid Until" v-model="form.validUntil" placeholder="September 28, 2026" />

@@ -74,7 +74,7 @@ const SERVICES_KEY = 'lious_services'
 const SAMPLE_QUOTATIONS: Quotation[] = [
   {
     id: 'lious-quote-01',
-    quotationNumber: 'LIOUS20260828',
+    quotationNumber: 'LIOUS2026082801',
     companyName: 'Leave It On Us',
     providerSubtitle: 'Creator-Led Digital Marketing & Production Agency',
     providerContact: 'Contact / WhatsApp: +91 98765 43210',
@@ -159,7 +159,7 @@ const SAMPLE_QUOTATIONS: Quotation[] = [
   },
   {
     id: 'lious-quote-02',
-    quotationNumber: 'LIOUS20260901',
+    quotationNumber: 'LIOUS2026090101',
     companyName: 'Leave It On Us',
     providerSubtitle: 'Creator-Led Digital Marketing & Production Agency',
     providerContact: 'Contact / WhatsApp: +91 98765 43210',
@@ -250,8 +250,8 @@ const { read: readS, write: writeS } = useAdminStorage<ServiceItem[]>(SERVICES_K
 export function useQuotations() {
   const getQuotations = (): Quotation[] => {
     const list = readQ()
-    // If the list is empty or still contains old webnetworx samples or old ref formats, update with fresh Leave It On Us quotations
-    if (!list || list.length === 0 || list.some(q => q.companyName === 'Webnetworx' || q.quotationNumber?.includes('/DM/'))) {
+    // If the list is empty or still contains old webnetworx samples or old ref formats (less than 15 chars), update with fresh Leave It On Us quotations
+    if (!list || list.length === 0 || list.some(q => q.companyName === 'Webnetworx' || q.quotationNumber?.includes('/DM/') || (q.quotationNumber?.length ?? 0) < 15)) {
       writeQ(SAMPLE_QUOTATIONS)
       return SAMPLE_QUOTATIONS
     }
@@ -268,7 +268,13 @@ export function useQuotations() {
     const yyyy = now.getFullYear()
     const mm = String(now.getMonth() + 1).padStart(2, '0')
     const dd = String(now.getDate()).padStart(2, '0')
-    return `LIOUS${yyyy}${mm}${dd}`
+    const datePrefix = `LIOUS${yyyy}${mm}${dd}`
+    
+    // Calculate sequence number for today
+    const list = readQ() || []
+    const todayQuotes = list.filter(q => q.quotationNumber?.startsWith(datePrefix))
+    const seq = String(todayQuotes.length + 1).padStart(2, '0')
+    return `${datePrefix}${seq}`
   }
 
   const createQuotation = (data: Omit<Quotation, 'id' | 'createdAt' | 'updatedAt'>): Quotation => {

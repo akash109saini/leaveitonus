@@ -65,7 +65,7 @@
           <div class="info-heading">QUOTATION INFO</div>
           <div class="info-row">
             <span class="info-label">Quotation Ref:</span>
-            <span class="info-value font-bold text-amber-700">{{ q.quotationNumber || 'LIOUS20260906' }}</span>
+            <span class="info-value font-bold text-amber-700">{{ q.quotationNumber || 'LIOUS2026090601' }}</span>
           </div>
           <div class="info-row">
             <span class="info-label">Date:</span>
