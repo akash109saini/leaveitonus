@@ -91,9 +91,9 @@
           <!-- Screen viewport -->
           <div class="phone-screen">
 
-            <!-- Active Video -->
+            <!-- Active Video with top & bottom black blank space -->
             <Transition name="reel-fade" mode="out-in">
-              <div :key="activeIndex" class="relative w-full h-full">
+              <div :key="activeIndex" class="phone-video-container">
                 <video
                   ref="activeVideoRef"
                   :src="reels[activeIndex].videoUrl"
@@ -101,7 +101,7 @@
                   loop
                   :muted="isMuted"
                   playsinline
-                  class="w-full h-full object-cover"
+                  class="phone-video-el"
                 ></video>
               </div>
             </Transition>
@@ -383,8 +383,27 @@ onBeforeUnmount(() => stopAutoplay())
   right: 5.74%;
   border-radius: 26px;
   overflow: hidden;
-  background: #000;
+  background: #000000;
   z-index: 10;
+}
+
+.phone-video-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: #000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 36px;
+  padding-bottom: 36px;
+}
+
+.phone-video-el {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #000000;
 }
 
 /* Phone PNG overlay on top */
