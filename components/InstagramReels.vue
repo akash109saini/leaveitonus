@@ -105,23 +105,6 @@
                 ></video>
               </div>
             </Transition>
-
-            <!-- Sound toggle button on top right of screen -->
-            <button
-              @click.stop="toggleMute"
-              class="sound-btn"
-              :aria-label="isMuted ? 'Unmute video' : 'Mute video'"
-              :title="isMuted ? 'Click to unmute' : 'Mute'"
-            >
-              <svg v-if="isMuted" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
-                <path stroke-linecap="round" stroke-linejoin="round" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" />
-              </svg>
-              <svg v-else class="w-4 h-4 text-brand-yellow" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
-              </svg>
-            </button>
-
           </div>
 
           <!-- Phone PNG frame — fixed on top -->
@@ -131,6 +114,23 @@
             class="phone-frame-img"
             draggable="false"
           />
+
+          <!-- Sound toggle button — shifted left & highly visible -->
+          <button
+            @click.stop="toggleMute"
+            class="sound-btn"
+            :class="{ 'sound-btn--active': !isMuted }"
+            :aria-label="isMuted ? 'Unmute video' : 'Mute video'"
+            :title="isMuted ? 'Click to unmute sound' : 'Click to mute sound'"
+          >
+            <svg v-if="isMuted" class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" />
+            </svg>
+            <svg v-else class="w-4 h-4 text-black" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77zm-2.5 9.77H8.5L5 9.5H2v5h3l3.5 3.5V6.5l3 3v3.5zm2.5-4.77v2.22c.98.58 1.5 1.61 1.5 2.78s-.52 2.2-1.5 2.78v2.22c2.06-.74 3.5-2.7 3.5-5s-1.44-4.26-3.5-5z" />
+            </svg>
+          </button>
 
         </div>
         <!-- /phone -->
@@ -418,29 +418,38 @@ onBeforeUnmount(() => stopAutoplay())
   display: block;
 }
 
-/* Sound button */
+/* Sound button — shifted left & highly visible */
 .sound-btn {
   position: absolute;
-  top: 14px;
-  right: 14px;
-  z-index: 25;
-  width: 32px;
-  height: 32px;
+  top: 22px;
+  right: 28px;
+  z-index: 30;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
-  background: rgba(0, 0, 0, 0.65);
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(0, 0, 0, 0.85);
+  border: 1.5px solid rgba(255, 227, 0, 0.8);
+  box-shadow: 0 0 14px rgba(255, 227, 0, 0.4), 0 4px 12px rgba(0, 0, 0, 0.6);
   color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  backdrop-filter: blur(8px);
-  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+  backdrop-filter: blur(10px);
+  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 .sound-btn:hover {
-  transform: scale(1.1);
-  background: rgba(0, 0, 0, 0.85);
+  transform: scale(1.14);
+  background: #ffe300;
   border-color: #ffe300;
+  color: #000;
+  box-shadow: 0 0 22px rgba(255, 227, 0, 0.7);
+}
+.sound-btn--active {
+  background: #ffe300;
+  border-color: #ffe300;
+  color: #000;
+  box-shadow: 0 0 20px rgba(255, 227, 0, 0.65);
 }
 
 /* ═══ SIDE CARDS ═════════════════════════════════════════════════ */
