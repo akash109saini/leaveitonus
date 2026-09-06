@@ -24,6 +24,12 @@ export interface BatchItem {
   amount: number
 }
 
+export interface ReferenceLink {
+  title: string
+  url: string
+  type?: 'video' | 'doc' | 'drive' | 'sheet' | 'link'
+}
+
 export interface Quotation {
   id: string
   quotationNumber: string
@@ -32,7 +38,7 @@ export interface Quotation {
   providerContact?: string
   clientName: string
   clientCompany: string
-  clientEmail: string
+  clientEmail?: string
   clientPhone: string
   clientAddress: string
   serviceCategory: string
@@ -42,6 +48,7 @@ export interface Quotation {
   batchItems?: BatchItem[]
   batchTotalText?: string
   batchTotalAmount?: number
+  referenceLinks?: ReferenceLink[]
   subtotal: number
   taxPercent: number
   taxAmount: number
@@ -67,14 +74,14 @@ const SERVICES_KEY = 'lious_services'
 const SAMPLE_QUOTATIONS: Quotation[] = [
   {
     id: 'lious-quote-01',
-    quotationNumber: 'LIOUS/DM/2026/01',
+    quotationNumber: 'LIOUS20260828',
     companyName: 'Leave It On Us',
     providerSubtitle: 'Creator-Led Digital Marketing & Production Agency',
-    providerContact: 'Contact / WhatsApp: +91 98765 43210 · hello@leaveitonus.com',
+    providerContact: 'Contact / WhatsApp: +91 98765 43210',
     clientCompany: 'Aura Lifestyle Apparel',
     clientName: 'Ms. Priya Sharma',
     clientPhone: '+91 98201 54321',
-    clientEmail: 'priya@auralifestyle.in',
+    clientEmail: '',
     clientAddress: 'Bandra West, Mumbai, Maharashtra',
     serviceCategory: 'Full-Funnel Digital Marketing & Creator Growth',
     lineItems: [
@@ -135,6 +142,10 @@ const SAMPLE_QUOTATIONS: Quotation[] = [
     date: 'August 28, 2026',
     validUntil: 'September 28, 2026',
     notes: 'Package tailored for scaling direct-to-consumer revenue and brand attention.',
+    referenceLinks: [
+      { title: 'Brand Aesthetic & Visual Moodboard Reel', url: 'https://youtube.com/shorts/sample1', type: 'video' },
+      { title: 'Content Calendar & Strategy Playbook', url: 'https://docs.google.com/document/d/sample-doc', type: 'doc' }
+    ],
     termsTitle: 'Terms & Working Conditions',
     termsList: [
       '**Creative Strategy Kickoff:** Dedicated script briefs & visual moodboards delivered within **3 working days** of agreement.',
@@ -148,14 +159,14 @@ const SAMPLE_QUOTATIONS: Quotation[] = [
   },
   {
     id: 'lious-quote-02',
-    quotationNumber: 'LIOUS/DM/2026/02',
+    quotationNumber: 'LIOUS20260901',
     companyName: 'Leave It On Us',
     providerSubtitle: 'Creator-Led Digital Marketing & Production Agency',
-    providerContact: 'Contact / WhatsApp: +91 98765 43210 · hello@leaveitonus.com',
+    providerContact: 'Contact / WhatsApp: +91 98765 43210',
     clientCompany: 'Zenith Health & Nutrition',
     clientName: 'Mr. Rohit Mehra',
     clientPhone: '+91 97112 88990',
-    clientEmail: 'rohit@zenithnutrition.com',
+    clientEmail: '',
     clientAddress: 'Indiranagar, Bengaluru, Karnataka',
     serviceCategory: 'Social Media Management & Paid Ads Funnel',
     lineItems: [
@@ -206,6 +217,10 @@ const SAMPLE_QUOTATIONS: Quotation[] = [
     date: 'September 01, 2026',
     validUntil: 'October 01, 2026',
     notes: 'Designed to establish market authority and scale paid customer acquisition profitably.',
+    referenceLinks: [
+      { title: 'Meta Ads Retargeting Architecture Flowchart', url: 'https://whimsical.com/sample-flow', type: 'doc' },
+      { title: 'High-Converting UGC Hook Examples (Drive Folder)', url: 'https://drive.google.com/drive/folders/sample', type: 'drive' }
+    ],
     termsTitle: 'Terms & Working Conditions',
     termsList: [
       '**Competitor & Brand Audit:** Complete organic and paid media audit provided **free of cost** upon project signup.',
@@ -235,8 +250,8 @@ const { read: readS, write: writeS } = useAdminStorage<ServiceItem[]>(SERVICES_K
 export function useQuotations() {
   const getQuotations = (): Quotation[] => {
     const list = readQ()
-    // If the list is empty or still contains old webnetworx samples, update with fresh Leave It On Us quotations
-    if (!list || list.length === 0 || list.some(q => q.companyName === 'Webnetworx')) {
+    // If the list is empty or still contains old webnetworx samples or old ref formats, update with fresh Leave It On Us quotations
+    if (!list || list.length === 0 || list.some(q => q.companyName === 'Webnetworx' || q.quotationNumber?.includes('/DM/'))) {
       writeQ(SAMPLE_QUOTATIONS)
       return SAMPLE_QUOTATIONS
     }
@@ -249,8 +264,11 @@ export function useQuotations() {
   }
 
   const generateQuotationNumber = (): string => {
-    const count = getQuotations().length + 1
-    return `LIOUS/DM/${new Date().getFullYear()}/${String(count).padStart(2, '0')}`
+    const now = new Date()
+    const yyyy = now.getFullYear()
+    const mm = String(now.getMonth() + 1).padStart(2, '0')
+    const dd = String(now.getDate()).padStart(2, '0')
+    return `LIOUS${yyyy}${mm}${dd}`
   }
 
   const createQuotation = (data: Omit<Quotation, 'id' | 'createdAt' | 'updatedAt'>): Quotation => {

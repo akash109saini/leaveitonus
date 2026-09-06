@@ -170,6 +170,36 @@
             placeholder="• Creative Strategy Kickoff: Dedicated script briefs & visual moodboards delivered within **3 working days** of agreement.&#10;• Content Revisions: Includes **2 rounds of feedback and revisions** per video asset prior to final publishing.&#10;• Transparent Reporting: Bi-weekly growth review calls and **24/7 real-time dashboard** access provided."
           />
         </div>
+
+        <!-- 6. Reference Videos & Documentation Links -->
+        <div class="editor-card">
+          <div class="card-heading-row">
+            <div>
+              <div class="card-heading">6. Reference Videos &amp; Documentation Links</div>
+              <div class="text-xs text-slate-500">Attach sample video links, moodboards, PDF playbooks, or Google Drive folders for client review.</div>
+            </div>
+            <button class="btn-sub-add" @click="addReferenceLink">
+              + Add Reference Link
+            </button>
+          </div>
+
+          <div v-if="form.referenceLinks && form.referenceLinks.length > 0" class="ref-links-edit-list">
+            <div v-for="(rLink, rIdx) in form.referenceLinks" :key="rIdx" class="ref-link-input-row">
+              <select v-model="rLink.type" class="item-input w-36">
+                <option value="video">🎬 Video Ref</option>
+                <option value="doc">📄 Document</option>
+                <option value="drive">📁 Google Drive</option>
+                <option value="link">🔗 Web Link</option>
+              </select>
+              <input v-model="rLink.title" placeholder="Link Title (e.g. Sample Viral Hook Video)" class="item-input flex-1" />
+              <input v-model="rLink.url" placeholder="https://..." class="item-input flex-1" />
+              <button class="item-remove" title="Remove Link" @click="form.referenceLinks.splice(rIdx, 1)">✕</button>
+            </div>
+          </div>
+          <div v-else class="text-sm text-slate-400 py-4 text-center border border-dashed border-slate-200 rounded-lg">
+            No reference links added yet. Click "+ Add Reference Link" above to attach reference videos or documents.
+          </div>
+        </div>
       </div>
 
       <!-- Sidebar summary card -->
@@ -223,14 +253,14 @@ const availableServices = ref<ServiceItem[]>([])
 
 const form = ref<Quotation>({
   id: '',
-  quotationNumber: 'LIOUS/DM/2026/01',
+  quotationNumber: 'LIOUS20260906',
   companyName: 'Leave It On Us',
   providerSubtitle: 'Creator-Led Digital Marketing & Production Agency',
-  providerContact: 'Contact / WhatsApp: +91 98765 43210 · hello@leaveitonus.com',
+  providerContact: 'Contact / WhatsApp: +91 98765 43210',
   clientCompany: 'Aura Lifestyle Apparel',
   clientName: 'Ms. Priya Sharma',
   clientPhone: '+91 98201 54321',
-  clientEmail: 'priya@auralifestyle.in',
+  clientEmail: '',
   clientAddress: 'Bandra West, Mumbai, Maharashtra',
   serviceCategory: 'Full-Funnel Digital Marketing & Creator Growth',
   lineItems: [
@@ -277,6 +307,10 @@ const form = ref<Quotation>({
   ],
   batchTotalText: 'Total per Month (Complete Creator Engine):',
   batchTotalAmount: 140000,
+  referenceLinks: [
+    { title: 'Brand Aesthetic & Visual Moodboard Reel', url: 'https://youtube.com/shorts/sample1', type: 'video' },
+    { title: 'Content Calendar & Strategy Playbook', url: 'https://docs.google.com/document/d/sample-doc', type: 'doc' }
+  ],
   subtotal: 140000,
   taxPercent: 0,
   taxAmount: 0,
@@ -293,6 +327,11 @@ const form = ref<Quotation>({
   createdAt: '',
   updatedAt: ''
 })
+
+const addReferenceLink = () => {
+  if (!form.value.referenceLinks) form.value.referenceLinks = []
+  form.value.referenceLinks.push({ title: '', url: '', type: 'video' })
+}
 
 onMounted(() => {
   availableServices.value = getServices()
@@ -492,6 +531,18 @@ const save = () => {
 .batch-item-input-row { display: flex; gap: 8px; align-items: center; margin-bottom: 6px; }
 .btn-sub-add { font-size: 12px; font-weight: 700; color: #0284c7; background: none; border: none; cursor: pointer; text-align: left; padding: 4px 0; }
 .btn-sub-add:hover { text-decoration: underline; }
+
+/* Reference links edit list */
+.ref-links-edit-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.ref-link-input-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
 
 /* Toggle */
 .toggle-switch { display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 12.5px; font-weight: 600; color: #334155; }

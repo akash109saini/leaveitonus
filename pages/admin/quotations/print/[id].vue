@@ -28,7 +28,7 @@
         <div class="brand-right">
           <div class="company-title">{{ q.companyName || 'Leave It On Us' }}</div>
           <div class="company-tagline">{{ q.providerSubtitle || 'Creator-Led Digital Marketing & Production Agency' }}</div>
-          <div class="company-contact">{{ q.providerContact || 'Contact / WhatsApp: +91 98765 43210 · hello@leaveitonus.com' }}</div>
+          <div class="company-contact">{{ q.providerContact || 'Contact / WhatsApp: +91 98765 43210' }}</div>
         </div>
       </div>
 
@@ -58,10 +58,6 @@
             <span class="info-label">Mobile:</span>
             <span class="info-value">{{ q.clientPhone || '+91 98201 54321' }}</span>
           </div>
-          <div v-if="q.clientEmail" class="info-row">
-            <span class="info-label">Email:</span>
-            <span class="info-value">{{ q.clientEmail }}</span>
-          </div>
         </div>
 
         <!-- Quotation Info Column -->
@@ -69,7 +65,7 @@
           <div class="info-heading">QUOTATION INFO</div>
           <div class="info-row">
             <span class="info-label">Quotation Ref:</span>
-            <span class="info-value font-bold text-amber-700">{{ q.quotationNumber || 'LIOUS/DM/2026/01' }}</span>
+            <span class="info-value font-bold text-amber-700">{{ q.quotationNumber || 'LIOUS20260906' }}</span>
           </div>
           <div class="info-row">
             <span class="info-label">Date:</span>
@@ -170,6 +166,31 @@
               <span v-html="renderTerm(line)"></span>
             </div>
           </div>
+        </div>
+      </div>
+
+      <!-- 7. REFERENCE VIDEOS & DOCUMENTATION LINKS (Yellow/Gold Card) -->
+      <div v-if="q.referenceLinks && q.referenceLinks.length > 0" class="reference-links-card">
+        <div class="ref-card-title">
+          <span class="ref-icon">🔗</span> Reference Videos &amp; Documentation Links
+        </div>
+        <div class="ref-links-list">
+          <a
+            v-for="(rLink, rIdx) in q.referenceLinks"
+            :key="rIdx"
+            :href="rLink.url"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="ref-link-item"
+          >
+            <div class="ref-link-main">
+              <span class="ref-type-badge" :class="`ref-type--${rLink.type || 'video'}`">
+                {{ rLink.type === 'video' ? '🎬 Video Ref' : rLink.type === 'doc' ? '📄 Documentation' : rLink.type === 'drive' ? '📁 Google Drive' : '🔗 Web Link' }}
+              </span>
+              <span class="ref-link-title">{{ rLink.title || rLink.url }}</span>
+            </div>
+            <span class="ref-link-url">{{ rLink.url }} ↗</span>
+          </a>
         </div>
       </div>
     </div>
@@ -670,6 +691,101 @@ const triggerPrint = () => {
   font-size: 12px;
   color: #334155;
   line-height: 1.5;
+}
+
+/* 7. Reference Links Box */
+.reference-links-card {
+  margin-top: 20px;
+  background-color: #fefce8;
+  border: 1.5px solid #fde047;
+  border-radius: 6px;
+  padding: 16px 20px;
+}
+
+.ref-card-title {
+  font-size: 13px;
+  font-weight: 800;
+  color: #92400e;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.ref-links-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ref-link-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 9px 12px;
+  background: #ffffff;
+  border: 1px solid #fef08a;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.ref-link-item:hover {
+  border-color: #eab308;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.ref-link-main {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ref-type-badge {
+  font-size: 10.5px;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 9999px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.ref-type--video {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.ref-type--doc {
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+.ref-type--drive {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.ref-type--link {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+.ref-link-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.ref-link-url {
+  font-size: 11px;
+  font-weight: 600;
+  color: #b45309;
+  max-width: 260px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 /* Print Media Styles */
