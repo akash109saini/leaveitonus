@@ -1,11 +1,11 @@
 <template>
   <!-- Client Logo Marquee Strip — Slow right-to-left infinite scroll, pause on hover -->
-  <section class="py-10 sm:py-14 bg-brand-dark border-y border-white/10 overflow-hidden relative select-none">
+  <section class="py-10 sm:py-14 bg-brand-dark border-y border-white/5 overflow-hidden relative select-none">
     <!-- Fade edges (left & right) -->
     <div class="absolute left-0 top-0 bottom-0 w-24 sm:w-44 z-10 bg-gradient-to-r from-brand-dark to-transparent pointer-events-none"></div>
     <div class="absolute right-0 top-0 bottom-0 w-24 sm:w-44 z-10 bg-gradient-to-l from-brand-dark to-transparent pointer-events-none"></div>
 
-    <div class="max-w-7xl mx-auto px-4 text-center mb-6">
+    <div class="max-w-7xl mx-auto px-4 text-center mb-8">
       <p class="text-xs uppercase tracking-widest font-extrabold text-brand-textMuted">
         TRUSTED BY MARKET-LEADING BRANDS &amp; INDUSTRY CREATORS
       </p>
@@ -13,18 +13,18 @@
 
     <!-- Marquee track wrapper — pause on hover -->
     <div class="marquee-track-wrapper group">
-      <div class="marquee-track animate-marquee flex items-center gap-6 sm:gap-8 whitespace-nowrap group-hover:[animation-play-state:paused]">
+      <div class="marquee-track animate-marquee flex items-center gap-8 sm:gap-12 whitespace-nowrap group-hover:[animation-play-state:paused]">
         <!-- 3 sets of logos for 100% seamless loop on all screen widths with zero gap -->
         <div 
           v-for="(logo, idx) in loopLogos" 
           :key="idx" 
-          class="logo-item flex items-center justify-center shrink-0"
+          class="logo-item flex items-center justify-center shrink-0 px-2 sm:px-4"
         >
-          <div class="flex items-center justify-center w-36 h-20 sm:w-44 sm:h-24 px-4 py-3 rounded-2xl bg-white/95 hover:bg-white border border-white/20 shadow-md hover:shadow-[0_0_20px_rgba(255,227,0,0.4)] transition-all duration-300 cursor-pointer group/card transform hover:scale-105">
+          <div class="flex items-center justify-center h-16 sm:h-20 cursor-pointer group/card transform hover:scale-110 transition-transform duration-300">
             <img 
               :src="logo.src" 
               :alt="logo.alt" 
-              class="max-h-12 sm:max-h-14 max-w-full object-contain filter contrast-105 group-hover/card:scale-105 transition-transform duration-300"
+              class="max-h-12 sm:max-h-16 max-w-[140px] sm:max-w-[180px] object-contain filter brightness-105 opacity-85 group-hover/card:opacity-100 group-hover/card:brightness-125 transition-all duration-300"
               loading="lazy"
             />
           </div>

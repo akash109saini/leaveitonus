@@ -38,36 +38,36 @@
     </section>
 
     <!-- Infinite Scrolling Logo Marquee Strip (Dual Row) -->
-    <section class="py-10 bg-brand-surface/60 border-y border-white/10 overflow-hidden relative mb-20">
+    <section class="py-10 bg-brand-dark border-y border-white/5 overflow-hidden relative mb-20 select-none">
       <div class="absolute left-0 top-0 bottom-0 w-24 sm:w-48 z-10 bg-gradient-to-r from-brand-dark to-transparent pointer-events-none"></div>
       <div class="absolute right-0 top-0 bottom-0 w-24 sm:w-48 z-10 bg-gradient-to-l from-brand-dark to-transparent pointer-events-none"></div>
 
       <!-- Row 1 (Left to Right / Forward) -->
       <div class="flex overflow-hidden mb-6 group">
-        <div class="flex gap-6 items-center animate-marquee whitespace-nowrap group-hover:[animation-play-state:paused]">
+        <div class="flex gap-8 sm:gap-12 items-center animate-marquee whitespace-nowrap group-hover:[animation-play-state:paused]">
           <div 
             v-for="logo in row1Logos" 
             :key="`r1-${logo.id}`"
-            class="flex items-center justify-center w-36 h-20 sm:w-44 sm:h-24 px-4 py-3 rounded-2xl bg-white/95 hover:bg-white border border-white/20 shadow-md hover:shadow-[0_0_20px_rgba(255,227,0,0.35)] transition-all duration-300 shrink-0 transform hover:scale-105"
+            class="flex items-center justify-center h-16 sm:h-20 px-2 sm:px-4 cursor-pointer group/item shrink-0 transform hover:scale-110 transition-transform duration-300"
           >
             <img 
               :src="logo.src" 
               :alt="`Client Partner ${logo.id}`" 
-              class="max-h-12 sm:max-h-14 max-w-full object-contain filter contrast-105"
+              class="max-h-12 sm:max-h-16 max-w-[140px] sm:max-w-[180px] object-contain filter brightness-105 opacity-85 group-hover/item:opacity-100 group-hover/item:brightness-125 transition-all duration-300"
               loading="lazy"
             />
           </div>
         </div>
-        <div class="flex gap-6 items-center animate-marquee whitespace-nowrap group-hover:[animation-play-state:paused]" aria-hidden="true">
+        <div class="flex gap-8 sm:gap-12 items-center animate-marquee whitespace-nowrap group-hover:[animation-play-state:paused]" aria-hidden="true">
           <div 
             v-for="logo in row1Logos" 
             :key="`r1-dup-${logo.id}`"
-            class="flex items-center justify-center w-36 h-20 sm:w-44 sm:h-24 px-4 py-3 rounded-2xl bg-white/95 hover:bg-white border border-white/20 shadow-md hover:shadow-[0_0_20px_rgba(255,227,0,0.35)] transition-all duration-300 shrink-0 transform hover:scale-105"
+            class="flex items-center justify-center h-16 sm:h-20 px-2 sm:px-4 cursor-pointer group/item shrink-0 transform hover:scale-110 transition-transform duration-300"
           >
             <img 
               :src="logo.src" 
               :alt="`Client Partner ${logo.id}`" 
-              class="max-h-12 sm:max-h-14 max-w-full object-contain filter contrast-105"
+              class="max-h-12 sm:max-h-16 max-w-[140px] sm:max-w-[180px] object-contain filter brightness-105 opacity-85 group-hover/item:opacity-100 group-hover/item:brightness-125 transition-all duration-300"
               loading="lazy"
             />
           </div>
@@ -76,30 +76,30 @@
 
       <!-- Row 2 (Right to Left / Reverse) -->
       <div class="flex overflow-hidden group">
-        <div class="flex gap-6 items-center animate-marquee-reverse whitespace-nowrap group-hover:[animation-play-state:paused]">
+        <div class="flex gap-8 sm:gap-12 items-center animate-marquee-reverse whitespace-nowrap group-hover:[animation-play-state:paused]">
           <div 
             v-for="logo in row2Logos" 
             :key="`r2-${logo.id}`"
-            class="flex items-center justify-center w-36 h-20 sm:w-44 sm:h-24 px-4 py-3 rounded-2xl bg-white/95 hover:bg-white border border-white/20 shadow-md hover:shadow-[0_0_20px_rgba(255,227,0,0.35)] transition-all duration-300 shrink-0 transform hover:scale-105"
+            class="flex items-center justify-center h-16 sm:h-20 px-2 sm:px-4 cursor-pointer group/item shrink-0 transform hover:scale-110 transition-transform duration-300"
           >
             <img 
               :src="logo.src" 
               :alt="`Client Partner ${logo.id}`" 
-              class="max-h-12 sm:max-h-14 max-w-full object-contain filter contrast-105"
+              class="max-h-12 sm:max-h-16 max-w-[140px] sm:max-w-[180px] object-contain filter brightness-105 opacity-85 group-hover/item:opacity-100 group-hover/item:brightness-125 transition-all duration-300"
               loading="lazy"
             />
           </div>
         </div>
-        <div class="flex gap-6 items-center animate-marquee-reverse whitespace-nowrap group-hover:[animation-play-state:paused]" aria-hidden="true">
+        <div class="flex gap-8 sm:gap-12 items-center animate-marquee-reverse whitespace-nowrap group-hover:[animation-play-state:paused]" aria-hidden="true">
           <div 
             v-for="logo in row2Logos" 
             :key="`r2-dup-${logo.id}`"
-            class="flex items-center justify-center w-36 h-20 sm:w-44 sm:h-24 px-4 py-3 rounded-2xl bg-white/95 hover:bg-white border border-white/20 shadow-md hover:shadow-[0_0_20px_rgba(255,227,0,0.35)] transition-all duration-300 shrink-0 transform hover:scale-105"
+            class="flex items-center justify-center h-16 sm:h-20 px-2 sm:px-4 cursor-pointer group/item shrink-0 transform hover:scale-110 transition-transform duration-300"
           >
             <img 
               :src="logo.src" 
               :alt="`Client Partner ${logo.id}`" 
-              class="max-h-12 sm:max-h-14 max-w-full object-contain filter contrast-105"
+              class="max-h-12 sm:max-h-16 max-w-[140px] sm:max-w-[180px] object-contain filter brightness-105 opacity-85 group-hover/item:opacity-100 group-hover/item:brightness-125 transition-all duration-300"
               loading="lazy"
             />
           </div>
@@ -145,14 +145,14 @@
         <div 
           v-for="logo in filteredLogos" 
           :key="logo.id"
-          class="group relative flex flex-col items-center justify-center p-5 rounded-2xl bg-white/95 hover:bg-white border border-white/20 hover:border-brand-yellow shadow-md hover:shadow-[0_0_25px_rgba(255,227,0,0.4)] transition-all duration-300 transform hover:-translate-y-1.5 cursor-pointer h-32 sm:h-36"
+          class="group relative flex flex-col items-center justify-center p-4 rounded-2xl bg-white/[0.02] hover:bg-white/[0.08] border border-white/5 hover:border-brand-yellow/50 hover:shadow-[0_0_25px_rgba(255,227,0,0.2)] transition-all duration-300 transform hover:-translate-y-1.5 cursor-pointer h-28 sm:h-36"
         >
           <!-- Logo Image -->
           <div class="w-full h-full flex items-center justify-center p-2">
             <img 
               :src="logo.src" 
               :alt="`Client Logo ${logo.id}`" 
-              class="max-h-16 sm:max-h-20 max-w-full object-contain filter contrast-105 transition-transform duration-300 group-hover:scale-105"
+              class="max-h-14 sm:max-h-18 max-w-full object-contain filter brightness-105 opacity-85 group-hover:opacity-100 group-hover:scale-110 group-hover:brightness-125 transition-all duration-300"
               loading="lazy"
             />
           </div>
