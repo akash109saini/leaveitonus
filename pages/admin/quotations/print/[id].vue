@@ -69,7 +69,7 @@
           <div class="info-heading">QUOTATION INFO</div>
           <div class="info-row">
             <span class="info-label">Quotation Ref:</span>
-            <span class="info-value font-bold text-sky-700">{{ q.quotationNumber || 'LIOUS/DM/2026/01' }}</span>
+            <span class="info-value font-bold text-amber-700">{{ q.quotationNumber || 'LIOUS/DM/2026/01' }}</span>
           </div>
           <div class="info-row">
             <span class="info-label">Date:</span>
@@ -317,21 +317,22 @@ const triggerPrint = () => {
 
 .toolbar-btn--secondary {
   background: #ffffff;
-  color: #0284c7;
-  border: 1px solid #bae6fd;
+  color: #b45309;
+  border: 1px solid #fde68a;
 }
 .toolbar-btn--secondary:hover {
-  background: #f0f9ff;
+  background: #fefce8;
 }
 
 .toolbar-btn--primary {
-  background: #0284c7;
-  color: #ffffff;
-  border: 1px solid #0284c7;
-  box-shadow: 0 2px 8px rgba(2, 132, 199, 0.25);
+  background: #ffe300;
+  color: #000000;
+  border: 1px solid #facc15;
+  font-weight: 800;
+  box-shadow: 0 2px 8px rgba(255, 227, 0, 0.35);
 }
 .toolbar-btn--primary:hover {
-  background: #0369a1;
+  background: #fde047;
 }
 
 /* Paper Sheet Layout */
@@ -374,8 +375,8 @@ const triggerPrint = () => {
 .company-title {
   font-family: 'Syne', sans-serif;
   font-size: 22px;
-  font-weight: 800;
-  color: #0084cc;
+  font-weight: 900;
+  color: #0f172a;
   letter-spacing: -0.3px;
 }
 
@@ -394,8 +395,8 @@ const triggerPrint = () => {
 
 /* Divider line */
 .header-divider {
-  height: 2.5px;
-  background-color: #00A3E0;
+  height: 3px;
+  background-color: #ffe300;
   margin-bottom: 24px;
 }
 
@@ -412,7 +413,7 @@ const triggerPrint = () => {
 .banner-accent-bar {
   width: 7px;
   height: 48px;
-  background-color: #0084cc;
+  background-color: #ffe300;
   flex-shrink: 0;
 }
 
@@ -429,9 +430,10 @@ const triggerPrint = () => {
 .info-card-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  border: 1px solid #7dd3fc;
-  border-radius: 2px;
+  border: 1.5px solid #fde047;
+  border-radius: 4px;
   margin-bottom: 24px;
+  background-color: #ffffff;
 }
 
 .info-column {
@@ -442,13 +444,13 @@ const triggerPrint = () => {
 }
 
 .info-column--left {
-  border-right: 1px solid #bae6fd;
+  border-right: 1.5px solid #fde68a;
 }
 
 .info-heading {
   font-size: 12px;
   font-weight: 800;
-  color: #0084cc;
+  color: #b45309;
   letter-spacing: 0.5px;
   margin-bottom: 4px;
 }
@@ -477,16 +479,17 @@ const triggerPrint = () => {
 }
 
 .services-table thead tr {
-  background-color: #0084cc;
-  color: #ffffff;
+  background-color: #ffe300;
+  color: #000000;
 }
 
 .services-table th {
-  padding: 9px 14px;
+  padding: 10px 14px;
   font-size: 12px;
-  font-weight: 800;
+  font-weight: 900;
   letter-spacing: 0.5px;
   text-align: left;
+  color: #000000;
 }
 
 .th-sno {
@@ -512,7 +515,7 @@ const triggerPrint = () => {
 }
 
 .table-row:nth-child(even) {
-  background-color: #f8fafc;
+  background-color: #fcfbf5;
 }
 
 .services-table td {
@@ -553,8 +556,8 @@ const triggerPrint = () => {
 
 /* 5. Batch Breakdown Box */
 .batch-breakdown-card {
-  background-color: #f0f9ff;
-  border: 1px solid #7dd3fc;
+  background-color: #fefce8;
+  border: 1.5px solid #fde047;
   border-radius: 6px;
   padding: 16px 20px;
   margin-bottom: 24px;
@@ -563,7 +566,7 @@ const triggerPrint = () => {
 .batch-card-title {
   font-size: 13.5px;
   font-weight: 800;
-  color: #0077b6;
+  color: #92400e;
   margin-bottom: 12px;
 }
 
@@ -596,19 +599,19 @@ const triggerPrint = () => {
   justify-content: space-between;
   align-items: center;
   padding-top: 10px;
-  border-top: 1px solid #bae6fd;
+  border-top: 1.5px solid #fde047;
 }
 
 .batch-total-label {
   font-size: 13px;
   font-weight: 800;
-  color: #0077b6;
+  color: #78350F;
 }
 
 .batch-total-value {
-  font-size: 15px;
-  font-weight: 800;
-  color: #0077b6;
+  font-size: 16px;
+  font-weight: 900;
+  color: #92400e;
 }
 
 /* Standard Totals Card */
@@ -631,12 +634,12 @@ const triggerPrint = () => {
 }
 
 .st-grand {
-  border-top: 1px solid #cbd5e1;
+  border-top: 1.5px solid #fde047;
   margin-top: 6px;
   padding-top: 8px;
   font-size: 14px;
   font-weight: 800;
-  color: #0084cc;
+  color: #b45309;
 }
 
 /* 6. Terms & Working Conditions Box */
