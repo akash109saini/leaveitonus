@@ -187,6 +187,7 @@
             <div v-for="(rLink, rIdx) in form.referenceLinks" :key="rIdx" class="ref-link-input-row">
               <select v-model="rLink.type" class="item-input w-36">
                 <option value="video">🎬 Video Ref</option>
+                <option value="instagram">📸 Instagram</option>
                 <option value="doc">📄 Document</option>
                 <option value="drive">📁 Google Drive</option>
                 <option value="link">🔗 Web Link</option>

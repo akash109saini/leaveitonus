@@ -54,9 +54,13 @@
             <span class="info-label">Contact Person:</span>
             <span class="info-value">{{ q.clientName || 'Ms. Priya Sharma' }}</span>
           </div>
-          <div class="info-row">
+          <div v-if="q.clientPhone" class="info-row">
             <span class="info-label">Mobile:</span>
-            <span class="info-value">{{ q.clientPhone || '+91 98201 54321' }}</span>
+            <span class="info-value">{{ q.clientPhone }}</span>
+          </div>
+          <div v-if="q.clientEmail" class="info-row">
+            <span class="info-label">Email:</span>
+            <span class="info-value">{{ q.clientEmail }}</span>
           </div>
         </div>
 
@@ -115,7 +119,8 @@
           <template v-if="q.batchItems && q.batchItems.length > 0">
             <div v-for="(bItem, bIdx) in q.batchItems" :key="bIdx" class="batch-item-row">
               <span class="batch-item-desc">• {{ bItem.description }}</span>
-              <span class="batch-item-amount">{{ formatRate(bItem.amount) }}</span>
+              <span v-if="bItem.amount" class="batch-item-amount">{{ formatRate(bItem.amount) }}</span>
+              <span v-else class="batch-item-amount text-emerald-700 font-semibold">Included</span>
             </div>
           </template>
           <template v-else>
@@ -147,7 +152,7 @@
           <span>- {{ formatRate(q.discountAmount) }}</span>
         </div>
         <div class="st-row st-grand">
-          <span>Grand Total:</span>
+          <span>Total Retainer / Month:</span>
           <span>{{ formatRate(q.grandTotal) }}</span>
         </div>
       </div>
@@ -185,7 +190,7 @@
           >
             <div class="ref-link-main">
               <span class="ref-type-badge" :class="`ref-type--${rLink.type || 'video'}`">
-                {{ rLink.type === 'video' ? '🎬 Video Ref' : rLink.type === 'doc' ? '📄 Documentation' : rLink.type === 'drive' ? '📁 Google Drive' : '🔗 Web Link' }}
+                {{ rLink.type === 'instagram' ? '📸 Instagram' : rLink.type === 'video' ? '🎬 Video Ref' : rLink.type === 'doc' ? '📄 Documentation' : rLink.type === 'drive' ? '📁 Google Drive' : '🔗 Web Link' }}
               </span>
               <span class="ref-link-title">{{ rLink.title || rLink.url }}</span>
             </div>
@@ -198,7 +203,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, computed, watchEffect } from 'vue'
 import { useRoute } from 'vue-router'
 import { useQuotations, type Quotation } from '~/composables/useQuotations'
 
@@ -244,6 +249,22 @@ const q = ref<Quotation>({
   updatedAt: ''
 })
 
+const printFilename = computed(() => {
+  const company = (q.value.clientCompany || q.value.clientName || 'Client').trim()
+  const sanitized = company.replace(/[/\\?%*:|"<>]/g, '').replace(/\s+/g, '-')
+  return `${sanitized}-Quotation`
+})
+
+useHead({
+  title: printFilename
+})
+
+watchEffect(() => {
+  if (import.meta.client && printFilename.value) {
+    document.title = printFilename.value
+  }
+})
+
 onMounted(() => {
   const found = getQuotation(id)
   if (found) {
@@ -253,6 +274,9 @@ onMounted(() => {
     if (list && list.length > 0) {
       q.value = list[0]
     }
+  }
+  if (import.meta.client) {
+    document.title = printFilename.value
   }
 })
 
@@ -282,6 +306,7 @@ const formatRate = (amt: number) => {
 
 const triggerPrint = () => {
   if (import.meta.client) {
+    document.title = printFilename.value
     window.print()
   }
 }
@@ -560,6 +585,7 @@ const triggerPrint = () => {
   font-size: 11.5px;
   color: #64748b;
   line-height: 1.45;
+  white-space: pre-line;
 }
 
 .td-unit {
@@ -755,6 +781,11 @@ const triggerPrint = () => {
 .ref-type--video {
   background: #fee2e2;
   color: #b91c1c;
+}
+
+.ref-type--instagram {
+  background: #fce7f3;
+  color: #be185d;
 }
 
 .ref-type--doc {

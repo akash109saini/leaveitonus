@@ -27,7 +27,7 @@ export interface BatchItem {
 export interface ReferenceLink {
   title: string
   url: string
-  type?: 'video' | 'doc' | 'drive' | 'sheet' | 'link'
+  type?: 'video' | 'doc' | 'drive' | 'sheet' | 'link' | 'instagram'
 }
 
 export interface Quotation {
@@ -238,7 +238,7 @@ const SAMPLE_QUOTATIONS: Quotation[] = [
     companyName: 'Leave It On Us',
     providerSubtitle: 'Creator-Led Digital Marketing & Production Agency',
     providerContact: 'Contact / WhatsApp: +91 98765 43210',
-    clientCompany: 'Shama Family Resturant',
+    clientCompany: 'Shama Family Restaurant',
     clientName: 'Mr. Anas',
     clientPhone: '+91 93680 54043',
     clientEmail: '',
@@ -246,39 +246,21 @@ const SAMPLE_QUOTATIONS: Quotation[] = [
     serviceCategory: 'Social Media Handling & Meta Ads Growth Package',
     lineItems: [
       {
-        serviceId: 'svc-smm-reels',
-        serviceName: 'Social Media Handling (10 Reels & 5 Creatives)',
-        description: 'Complete Instagram & Facebook channel management including 10 high-retention food & ambiance reels, 5 custom graphic creatives, engaging copywriting, hashtag strategy, and scheduling.',
-        unit: 'Per Month (10 Reels + 5 Creatives)',
+        serviceId: 'svc-smm-growth-suite',
+        serviceName: 'Comprehensive Social Media Handling, Production & Meta Ads Growth Package',
+        description: 'Complete all-inclusive monthly growth package including:\n• Social Media Handling: 10 high-retention food & ambiance reels, 5 custom graphic creatives, engaging copywriting, hashtag strategy & scheduling\n• 2 Professional On-Location Shoots: Dedicated camera shoots per month with professional lighting, food plating cinematography & interior ambiance capture\n• Meta Ads Management: Targeted local customer footfall & dining awareness campaigns optimized for 80,000+ guaranteed account reach',
+        unit: 'Per Month (Complete Package)',
         qty: 1,
-        unitPrice: 8000,
-        total: 8000
-      },
-      {
-        serviceId: 'svc-shoots',
-        serviceName: '2 Professional On-Location Shoots',
-        description: '2 dedicated on-location camera shoots per month with professional lighting, food plating cinematography, restaurant interior ambiance capture, and director assistance.',
-        unit: 'Per Month (2 Shoots)',
-        qty: 1,
-        unitPrice: 4000,
-        total: 4000
-      },
-      {
-        serviceId: 'svc-meta-reach',
-        serviceName: 'Meta Ads Management (80,000 Target Account Reach)',
-        description: 'Targeted Meta ads setup and media buying optimized for local customer footfall, dining awareness, and high engagement with 80,000+ guaranteed account reach.',
-        unit: 'Per Month (80,000 Reach)',
-        qty: 1,
-        unitPrice: 5000,
-        total: 5000
+        unitPrice: 17000,
+        total: 17000
       }
     ],
-    enableBatchBreakdown: true,
-    batchTitle: 'Monthly Growth Package Breakdown — Shama Family Resturant',
+    enableBatchBreakdown: false,
+    batchTitle: 'Monthly Growth Package Deliverables — Shama Family Restaurant',
     batchItems: [
-      { description: 'Social Media Handling (10 Reels + 5 Creatives):', amount: 8000 },
-      { description: '2 Professional On-Location Shoots:', amount: 4000 },
-      { description: 'Meta Ads Management (80,000 Target Account Reach):', amount: 5000 }
+      { description: 'Social Media Handling (10 Reels & 5 Creatives)', amount: 0 },
+      { description: '2 Professional On-Location Shoots per Month', amount: 0 },
+      { description: 'Meta Ads Management (80,000 Target Account Reach)', amount: 0 }
     ],
     batchTotalText: 'Total Retainer Price per Month:',
     batchTotalAmount: 17000,
@@ -291,21 +273,105 @@ const SAMPLE_QUOTATIONS: Quotation[] = [
     currency: 'INR',
     date: 'September 06, 2026',
     validUntil: 'October 06, 2026',
-    notes: 'Tailored social media & visual production growth package for Shama Family Resturant to drive local footfall, customer engagement, and viral food reels.',
+    notes: 'Tailored social media & visual production growth package for Shama Family Restaurant to drive local footfall, customer engagement, and viral food reels.',
     referenceLinks: [
-      { title: 'Restaurant Food Reel Aesthetic & Hook Reference', url: 'https://youtube.com/shorts/sample-food-reel', type: 'video' },
-      { title: 'Monthly Shoot Schedule & Deliverables Plan', url: 'https://docs.google.com/document/d/shama-plan', type: 'doc' }
+      {
+        title: 'Food Experience Reel Reference',
+        url: 'https://www.instagram.com/p/DWWI627CWvq/?hl=en',
+        type: 'instagram'
+      },
+      {
+        title: 'Creative & Graphic Post Reference',
+        url: 'https://www.instagram.com/p/DZH7NliE22N/?hl=en',
+        type: 'instagram'
+      },
+      {
+        title: 'Influencer Marketing Reel Reference',
+        url: 'https://www.instagram.com/p/DZZ9WCXBydf/?hl=en',
+        type: 'instagram'
+      },
+      {
+        title: 'Food & Ambiance Photography Reference',
+        url: 'https://www.instagram.com/p/DU27Szlk7U4/?hl=en',
+        type: 'instagram'
+      },
+      {
+        title: 'Kitchen & Making Reel Reference',
+        url: 'https://www.instagram.com/p/DXJMhxKiB63/',
+        type: 'instagram'
+      },
+      {
+        title: 'Presentation & Plating Reel Reference',
+        url: 'https://www.instagram.com/p/DZ2acA9PhW8/',
+        type: 'instagram'
+      }
     ],
     termsTitle: 'Terms & Working Conditions',
     termsList: [
       '**Shooting Coordination:** On-location shoots are scheduled in advance with **Mr. Anas** during non-peak hours for optimal lighting and kitchen/staff availability.',
-      '**Revisions & Approval:** Each reel and creative asset includes **2 review iterations** prior to public scheduling.',
+      '**Payment Terms:** **50% payment advance** required upon project confirmation / commencement of monthly services.',
       '**Meta Ad Spend:** Direct ad spend budget is paid through the client ad account for full financial transparency.'
     ],
-    terms: '• Shooting Coordination: On-location shoots are scheduled in advance with **Mr. Anas** during non-peak hours for optimal lighting and kitchen/staff availability.\n• Revisions & Approval: Each reel and creative asset includes **2 review iterations** prior to public scheduling.\n• Meta Ad Spend: Direct ad spend budget is paid through the client ad account for full financial transparency.',
+    terms: '• Shooting Coordination: On-location shoots are scheduled in advance with **Mr. Anas** during non-peak hours for optimal lighting and kitchen/staff availability.\n• Payment Terms: **50% payment advance** required upon project confirmation / commencement of monthly services.\n• Meta Ad Spend: Direct ad spend budget is paid through the client ad account for full financial transparency.',
     status: 'sent',
     createdAt: '2026-09-06T10:00:00.000Z',
     updatedAt: '2026-09-06T10:00:00.000Z'
+  },
+  {
+    id: 'lious-quote-04',
+    quotationNumber: 'LIOUS2026090701',
+    companyName: 'Leave It On Us',
+    providerSubtitle: 'Creator-Led Digital Marketing & Production Agency',
+    providerContact: 'Contact / WhatsApp: +91 98765 43210',
+    clientCompany: 'Healthophia',
+    clientName: 'Mr. Puneet',
+    clientPhone: '',
+    clientEmail: '',
+    clientAddress: '',
+    serviceCategory: 'Social Media Performance Marketing & Content Production',
+    lineItems: [
+      {
+        serviceId: 'svc-healthophia-perf-mktg',
+        serviceName: 'Social Media Performance Marketing (Instagram & Facebook)',
+        description: 'Comprehensive monthly performance marketing & creator engine for Healthophia:\n• 7–8 High Quality Reels (covering all 7 departments with customized Healthophia branding)\n• Professional Reel Scripting & Concept Storyboarding\n• 15 Custom Graphic Creatives & Campaign Banners\n• Creative Copywriting & High-Converting Captions\n• Major Festivals Wishing Creatives\n• On-Demand Creatives & Tactical Reels\n• 3–4 Professional On-Site Shoots per Month\n• End-to-End Meta Ads Management (Targeting, Audience Optimization & ROAS Scaling across Instagram & Facebook)',
+        unit: 'Per Month (Complete Package)',
+        qty: 1,
+        unitPrice: 40000,
+        total: 40000
+      }
+    ],
+    enableBatchBreakdown: false,
+    batchTitle: 'Monthly Performance Marketing Deliverables — Healthophia',
+    batchItems: [
+      { description: '7–8 High Quality Departmental Reels & Scripting', amount: 0 },
+      { description: '15 Custom Creatives, Festive Posts & Copywriting', amount: 0 },
+      { description: '3–4 Professional On-Site Video & Photo Shoots', amount: 0 },
+      { description: 'Meta Ads Management across Instagram & Facebook', amount: 0 }
+    ],
+    batchTotalText: 'Total Retainer Price per Month:',
+    batchTotalAmount: 40000,
+    subtotal: 40000,
+    taxPercent: 0,
+    taxAmount: 0,
+    discountPercent: 0,
+    discountAmount: 0,
+    grandTotal: 40000,
+    currency: 'INR',
+    date: 'September 07, 2026',
+    validUntil: 'October 07, 2026',
+    notes: 'Comprehensive monthly social media performance marketing and multi-department visual content production suite tailored for Healthophia.',
+    referenceLinks: [],
+    termsTitle: 'Terms & Working Conditions',
+    termsList: [
+      '**Payment Terms:** **50% advance payment** required upon project confirmation / commencement of monthly services.',
+      '**On-Site Shoot Scheduling:** On-site shoots should be **scheduled at least one day in advance** for team and equipment planning.',
+      '**Direct Ad Spend:** Direct ad spend budget is **paid directly by the client** through their Meta ad account.',
+      '**Talent & Model Costs:** Model and influencer fees (if applicable) are **paid directly by the client**.'
+    ],
+    terms: '• Payment Terms: **50% advance payment** required upon project confirmation / commencement of monthly services.\n• On-Site Shoot Scheduling: On-site shoots should be **scheduled at least one day in advance** for team and equipment planning.\n• Direct Ad Spend: Direct ad spend budget is **paid directly by the client** through their Meta ad account.\n• Talent & Model Costs: Model and influencer fees (if applicable) are **paid directly by the client**.',
+    status: 'sent',
+    createdAt: '2026-09-07T12:00:00.000Z',
+    updatedAt: '2026-09-07T12:00:00.000Z'
   }
 ]
 
@@ -324,12 +390,42 @@ const { read: readS, write: writeS } = useAdminStorage<ServiceItem[]>(SERVICES_K
 
 export function useQuotations() {
   const getQuotations = (): Quotation[] => {
-    const list = readQ()
+    let list = readQ()
     // If the list is empty or doesn't have at least 3 items or still contains old webnetworx samples or old ref formats (less than 15 chars), update with fresh Leave It On Us quotations
     if (!list || list.length < 3 || list.some(q => q.companyName === 'Webnetworx' || q.quotationNumber?.includes('/DM/') || (q.quotationNumber?.length ?? 0) < 15)) {
       writeQ(SAMPLE_QUOTATIONS)
       return SAMPLE_QUOTATIONS
     }
+
+    // Automatically sync LIOUS2026090601 if it has stale terms (e.g. 2 review iterations), broken multiple line items, or lacks updated Instagram references
+    const q3Idx = list.findIndex(q => q.quotationNumber === 'LIOUS2026090601' || q.id === 'lious-quote-03')
+    if (q3Idx !== -1) {
+      const q3 = list[q3Idx]
+      const needsSync = q3.terms?.includes('2 review iterations')
+        || (q3.lineItems && q3.lineItems.length > 1)
+        || !q3.referenceLinks?.some(r => r.url.includes('DWWI627CWvq'))
+      if (needsSync) {
+        const sampleQ3 = SAMPLE_QUOTATIONS.find(s => s.id === 'lious-quote-03')
+        if (sampleQ3) {
+          list[q3Idx] = { ...sampleQ3 }
+          writeQ(list)
+        }
+      }
+    }
+
+    // Automatically ensure LIOUS2026090701 (Healthophia) is added or synced in list
+    const q4Idx = list.findIndex(q => q.quotationNumber === 'LIOUS2026090701' || q.id === 'lious-quote-04' || q.clientCompany === 'Healthophia')
+    const sampleQ4 = SAMPLE_QUOTATIONS.find(s => s.id === 'lious-quote-04')
+    if (sampleQ4) {
+      if (q4Idx === -1) {
+        list.push({ ...sampleQ4 })
+        writeQ(list)
+      } else {
+        list[q4Idx] = { ...sampleQ4 }
+        writeQ(list)
+      }
+    }
+
     return list
   }
 
