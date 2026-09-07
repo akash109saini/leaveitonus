@@ -199,20 +199,22 @@
       </div><!-- /stage -->
 
       <!-- ═══ NAVIGATION below phone ═══ -->
-      <div class="flex flex-col items-center gap-5 mt-8">
+      <div class="flex flex-col items-center gap-3 mt-8">
 
-        <div class="flex items-center gap-5">
+        <div class="flex items-center gap-3 sm:gap-5">
           <button @click="prev" class="nav-arrow" aria-label="Previous">
             <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
               <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
             </svg>
           </button>
-          <div class="flex items-center gap-2">
+          <div class="flex items-center gap-1.5 max-w-[280px] sm:max-w-xl flex-wrap justify-center py-1">
             <button
               v-for="(_, idx) in reels" :key="idx"
               @click="goTo(idx)"
               class="dot"
               :class="activeIndex === idx ? 'dot-active' : 'dot-inactive'"
+              :title="`Reel ${idx + 1}: ${reels[idx].title}`"
+              :aria-label="`Go to reel ${idx + 1}`"
             ></button>
           </div>
           <button @click="next" class="nav-arrow" aria-label="Next">
@@ -221,6 +223,10 @@
             </svg>
           </button>
         </div>
+
+        <span class="text-[11px] font-mono font-medium text-white/40 tracking-wider">
+          {{ String(activeIndex + 1).padStart(2, '0') }} / {{ String(reels.length).padStart(2, '0') }}
+        </span>
 
         <div class="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 w-full border-t border-white/10 pt-5">
           <Transition name="txt-fade" mode="out-in">
@@ -266,51 +272,179 @@ interface Reel {
 const reels: Reel[] = [
   {
     id: 1,
-    title: 'Top 10 tips to reduce Stress',
-    creator: 'Leave It On Us Media',
-    tag: 'Wellness',
+    title: 'Warning Signs of Brain Stroke',
+    creator: 'Dr. Manjesh Rathi • DMR Hospital',
+    tag: 'Neurology',
     videoUrl: '/reels/reel-1.mp4',
-    instagramUrl: 'https://www.instagram.com/reel/DcnsQ54M8ce/'
+    instagramUrl: 'https://www.instagram.com/p/DaxUPdzsklE/'
   },
   {
     id: 2,
-    title: 'Behind the Scenes: Production Day',
-    creator: 'Leave It On Us Media',
-    tag: 'BTS',
+    title: 'A New Era of Healthcare in Moradabad',
+    creator: 'DMR Super Speciality Hospital',
+    tag: 'Hospital',
     videoUrl: '/reels/reel-2.mp4',
-    instagramUrl: 'https://www.instagram.com/reel/DXMasObgb9W/'
+    instagramUrl: 'https://www.instagram.com/p/DYXaQxTpesB/'
   },
   {
     id: 3,
-    title: 'Creative Campaign Shoot',
-    creator: 'Leave It On Us Media',
-    tag: 'Creative',
+    title: 'Dehydration & Brain Fog Effects',
+    creator: 'Dr. Manjesh Rathi • DMR Hospital',
+    tag: 'Health Tips',
     videoUrl: '/reels/reel-3.mp4',
-    instagramUrl: 'https://www.instagram.com/reel/DcQ5nLkId61/'
+    instagramUrl: 'https://www.instagram.com/p/DXuAQRLjnpw/'
   },
   {
     id: 4,
-    title: 'Viral Content Strategy',
-    creator: 'Leave It On Us Media',
-    tag: 'Strategy',
+    title: 'Neuro Development & Child Care Signs',
+    creator: 'Dr. Manjesh Rathi • DMR Hospital',
+    tag: 'Child Care',
     videoUrl: '/reels/reel-4.mp4',
-    instagramUrl: 'https://www.instagram.com/reel/Dcs5GOANnxr/'
+    instagramUrl: 'https://www.instagram.com/p/DV-aMpMACh5/'
   },
   {
     id: 5,
-    title: 'Interview with CEO & Founders',
-    creator: 'Leave It On Us Media',
-    tag: 'Interview',
+    title: 'TMU Business Incubation Centre',
+    creator: 'Teerthanker Mahaveer University',
+    tag: 'Startups',
     videoUrl: '/reels/reel-5.mp4',
-    instagramUrl: 'https://www.instagram.com/reel/DcIxqCujq9I/'
+    instagramUrl: 'https://www.instagram.com/p/DTc5yuek8IB/'
   },
   {
     id: 6,
-    title: 'Creative Hooks for Higher Reach',
-    creator: 'Leave It On Us Media',
-    tag: 'Growth Tips',
+    title: 'Celestia: Dental Freshers’ Welcome',
+    creator: 'Teerthanker Mahaveer University',
+    tag: 'Campus Life',
     videoUrl: '/reels/reel-6.mp4',
-    instagramUrl: 'https://www.instagram.com/reel/Dc30KKBMIcr/'
+    instagramUrl: 'https://www.instagram.com/p/DSpc1GNAU_s/'
+  },
+  {
+    id: 7,
+    title: 'Timeless Flavours & Authentic Tandoor',
+    creator: 'Punjab Tandoor Company',
+    tag: 'Culinary',
+    videoUrl: '/reels/reel-7.mp4',
+    instagramUrl: 'https://www.instagram.com/p/DXJMhxKiB63/'
+  },
+  {
+    id: 8,
+    title: 'Smiles Back: First Day Back to School',
+    creator: 'MIT World School',
+    tag: 'Education',
+    videoUrl: '/reels/reel-8.mp4',
+    instagramUrl: 'https://www.instagram.com/p/DaUQSSxz0ol/'
+  },
+  {
+    id: 9,
+    title: 'Nurturing Passions & Music Room',
+    creator: 'MIT World School',
+    tag: 'Creativity',
+    videoUrl: '/reels/reel-9.mp4',
+    instagramUrl: 'https://www.instagram.com/p/DbCyexNzJkg/'
+  },
+  {
+    id: 10,
+    title: 'Where Talent Finds Its Stage: Kathak & Music',
+    creator: 'MIT World School',
+    tag: 'Arts & Culture',
+    videoUrl: '/reels/reel-10.mp4',
+    instagramUrl: 'https://www.instagram.com/p/Dab74H2TK35/'
+  },
+  {
+    id: 11,
+    title: 'Step Into A World of Tranquility',
+    creator: 'Aatman Wellness Centre',
+    tag: 'Ayurveda',
+    videoUrl: '/reels/reel-11.mp4',
+    instagramUrl: 'https://www.instagram.com/p/DYHC2CMvtJI/'
+  },
+  {
+    id: 12,
+    title: 'Grand Inauguration Ceremony',
+    creator: 'Aatman Wellness Centre',
+    tag: 'Wellness',
+    videoUrl: '/reels/reel-12.mp4',
+    instagramUrl: 'https://www.instagram.com/p/DZDVmQAvaEj/'
+  },
+  {
+    id: 13,
+    title: 'Safe & Joyful Holi Health Tips',
+    creator: 'Dr. Moneet Agarwal • BMC Hospital',
+    tag: 'Health Tips',
+    videoUrl: '/reels/reel-13.mp4',
+    instagramUrl: 'https://www.instagram.com/p/DHINBerzbJD/'
+  },
+  {
+    id: 14,
+    title: 'Ramadan Fasting & Wellness Guide',
+    creator: 'Dr. Moneet Agarwal • BMC Hospital',
+    tag: 'Health Tips',
+    videoUrl: '/reels/reel-14.mp4',
+    instagramUrl: 'https://www.instagram.com/p/DHfYTWdzZKc/'
+  },
+  {
+    id: 15,
+    title: 'Kidney Care During Summer Heat',
+    creator: 'Utkarsh Medicare • Dr. Mohit Tandon',
+    tag: 'Nephrology',
+    videoUrl: '/reels/reel-15.mp4',
+    instagramUrl: 'https://www.instagram.com/p/DZsTcWoT-vc/'
+  },
+  {
+    id: 16,
+    title: 'Cold Sodas vs Kidney Health',
+    creator: 'Utkarsh Medicare • Dr. Mohit Tandon',
+    tag: 'Health Tips',
+    videoUrl: '/reels/reel-16.mp4',
+    instagramUrl: 'https://www.instagram.com/p/DYKtxrFzLjE/'
+  },
+  {
+    id: 17,
+    title: 'The Heat-Sugar Connection & Hydration',
+    creator: 'Utkarsh Medicare • Dr. Mohit Tandon',
+    tag: 'Diabetes Care',
+    videoUrl: '/reels/reel-17.mp4',
+    instagramUrl: 'https://www.instagram.com/p/DYCZjVQze5K/'
+  },
+  {
+    id: 18,
+    title: 'Birthday Celebrations & Joyful Play',
+    creator: 'Tumble Town Moradabad',
+    tag: 'Kids Fun',
+    videoUrl: '/reels/reel-18.mp4',
+    instagramUrl: 'https://www.instagram.com/p/C3qHyP1hukC/'
+  },
+  {
+    id: 19,
+    title: 'Grand Opening of Tumble Town',
+    creator: 'Tumble Town Clubhouse',
+    tag: 'Kids Fun',
+    videoUrl: '/reels/reel-19.mp4',
+    instagramUrl: 'https://www.instagram.com/p/C3dCvbVLXyR/'
+  },
+  {
+    id: 20,
+    title: 'Transforming Smiles: Braces Journey',
+    creator: 'Dr. Dhruv Tiwari • Dental Square',
+    tag: 'Orthodontics',
+    videoUrl: '/reels/reel-20.mp4',
+    instagramUrl: 'https://www.instagram.com/p/DQOJz2OEgU1/'
+  },
+  {
+    id: 21,
+    title: '4 Common Dental Myths Busted',
+    creator: 'Dr. Ayush Kaushik • Dental Square',
+    tag: 'Dental Care',
+    videoUrl: '/reels/reel-21.mp4',
+    instagramUrl: 'https://www.instagram.com/p/DMe3rf5px8A/'
+  },
+  {
+    id: 22,
+    title: 'Oral Hygiene & Bad Breath Care',
+    creator: 'Dr. Ayush Kaushik • Dental Square',
+    tag: 'Dental Care',
+    videoUrl: '/reels/reel-22.mp4',
+    instagramUrl: 'https://www.instagram.com/p/DM2j-XmxqDf/'
   },
 ]
 
@@ -541,22 +675,23 @@ onBeforeUnmount(() => stopAutoplay())
 }
 
 .dot {
-  height: 8px;
+  height: 6px;
   border-radius: 9999px;
   cursor: pointer;
-  transition: all .4s;
+  transition: all .3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .dot-active {
-  width: 28px;
+  width: 22px;
   background: #ffe300;
   box-shadow: 0 0 8px rgba(255,227,0,.65);
 }
 .dot-inactive {
-  width: 8px;
+  width: 6px;
   background: rgba(255,255,255,.25);
 }
 .dot-inactive:hover {
-  background: rgba(255,255,255,.5);
+  background: rgba(255,255,255,.6);
+  transform: scale(1.15);
 }
 
 /* ═══ TRANSITIONS ═══════════════════════════════════════════════ */
