@@ -377,6 +377,7 @@ const SAMPLE_QUOTATIONS: Quotation[] = [
     status: 'sent',
     createdAt: '2026-09-07T12:00:00.000Z',
     updatedAt: '2026-09-07T12:00:00.000Z'
+  },
   {
     id: 'lious-quote-05',
     quotationNumber: 'LIOUS2026090801',
