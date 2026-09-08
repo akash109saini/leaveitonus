@@ -48,11 +48,11 @@
           <div class="info-heading">CLIENT DETAILS</div>
           <div class="info-row">
             <span class="info-label">Company:</span>
-            <span class="info-value font-semibold">{{ q.clientCompany || q.clientName || 'Aura Lifestyle Apparel' }}</span>
+            <span class="info-value font-semibold">{{ q.clientCompany || q.clientName || 'Client' }}</span>
           </div>
-          <div class="info-row">
+          <div v-if="q.clientName" class="info-row">
             <span class="info-label">Contact Person:</span>
-            <span class="info-value">{{ q.clientName || 'Ms. Priya Sharma' }}</span>
+            <span class="info-value">{{ q.clientName }}</span>
           </div>
           <div v-if="q.clientPhone" class="info-row">
             <span class="info-label">Mobile:</span>

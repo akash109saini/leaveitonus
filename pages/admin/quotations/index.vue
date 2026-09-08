@@ -35,7 +35,11 @@
       <template #cell-clientName="{ row }">
         <div class="cell-title">
           <div class="cell-main">{{ row.clientCompany || row.clientName }}</div>
-          <div class="cell-sub">{{ row.clientName }}<template v-if="row.clientPhone"> · {{ row.clientPhone }}</template></div>
+          <div v-if="row.clientName || row.clientPhone" class="cell-sub">
+            <span v-if="row.clientName">{{ row.clientName }}</span>
+            <span v-if="row.clientName && row.clientPhone"> · </span>
+            <span v-if="row.clientPhone">{{ row.clientPhone }}</span>
+          </div>
         </div>
       </template>
 

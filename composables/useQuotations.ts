@@ -324,42 +324,47 @@ const SAMPLE_QUOTATIONS: Quotation[] = [
     providerSubtitle: 'Creator-Led Digital Marketing & Production Agency',
     providerContact: 'Contact / WhatsApp: +91 98765 43210',
     clientCompany: 'Healthophia',
-    clientName: 'Mr. Puneet',
+    clientName: '',
     clientPhone: '',
     clientEmail: '',
     clientAddress: '',
-    serviceCategory: 'Social Media Performance Marketing & Content Production',
+    serviceCategory: 'Full-Stack Performance Marketing, Social Media & Digital Operations',
     lineItems: [
       {
         serviceId: 'svc-healthophia-perf-mktg',
-        serviceName: 'Social Media Performance Marketing (Instagram & Facebook)',
-        description: 'Comprehensive monthly performance marketing & creator engine for Healthophia:\n• 7–8 High Quality Reels (covering all 7 departments with customized Healthophia branding)\n• Professional Reel Scripting & Concept Storyboarding\n• 15 Custom Graphic Creatives & Campaign Banners\n• Creative Copywriting & High-Converting Captions\n• Major Festivals Wishing Creatives\n• On-Demand Creatives & Tactical Reels\n• 3–4 Professional On-Site Shoots per Month\n• End-to-End Meta Ads Management (Targeting, Audience Optimization & ROAS Scaling across Instagram & Facebook)',
+        serviceName: 'Full-Stack Digital Marketing & Creator Engine (Healthophia)',
+        description: 'Comprehensive monthly performance marketing, content production & digital operations suite for Healthophia:\n• 14 High Quality Reels (covering all 7 departments with customized Healthophia branding)\n• 20–25 Custom Graphic Creatives & Campaign Banners\n• 5 Engaging Stories (Interactive Q&As, health tips, quizzes & highlights)\n• Website Management & Timely Content Updates\n• Google My Business (GMB) & Google Maps Optimization for all departments\n• Leads Management Sheets & Real-Time CRM Tracking\n• Target Account Reach: Around 1.5 – 2 Lakh Instagram & Meta Reach\n• Professional Reel Scripting & Concept Storyboarding\n• Creative Copywriting & High-Converting Captions\n• Major Festivals Wishing Creatives & Announcements\n• 3–4 Professional On-Site Shoots per Month\n• End-to-End Meta Ads Management (Audience Targeting, Creative Testing & ROAS Scaling across Instagram & Facebook)',
         unit: 'Per Month (Complete Package)',
         qty: 1,
-        unitPrice: 40000,
-        total: 40000
+        unitPrice: 85000,
+        total: 85000
       }
     ],
     enableBatchBreakdown: false,
-    batchTitle: 'Monthly Performance Marketing Deliverables — Healthophia',
+    batchTitle: 'Monthly Growth & Performance Deliverables — Healthophia',
     batchItems: [
-      { description: '7–8 High Quality Departmental Reels & Scripting', amount: 0 },
-      { description: '15 Custom Creatives, Festive Posts & Copywriting', amount: 0 },
-      { description: '3–4 Professional On-Site Video & Photo Shoots', amount: 0 },
-      { description: 'Meta Ads Management across Instagram & Facebook', amount: 0 }
+      { description: '14 High Quality Departmental Reels & Scripting', amount: 0 },
+      { description: '20–25 Custom Creatives & Campaign Banners', amount: 0 },
+      { description: '5 Engaging Interactive Stories', amount: 0 },
+      { description: 'Website Management & Content Updates', amount: 0 },
+      { description: 'GMB Optimization for All Departments', amount: 0 },
+      { description: 'Leads Management Sheets & CRM Tracking', amount: 0 },
+      { description: 'Around 1.5 – 2 Lakh Instagram Account Reach', amount: 0 },
+      { description: '3–4 Professional On-Site Shoots per Month', amount: 0 },
+      { description: 'End-to-End Meta Ads Management (Instagram & Facebook)', amount: 0 }
     ],
     batchTotalText: 'Total Retainer Price per Month:',
-    batchTotalAmount: 40000,
-    subtotal: 40000,
+    batchTotalAmount: 85000,
+    subtotal: 85000,
     taxPercent: 0,
     taxAmount: 0,
     discountPercent: 0,
     discountAmount: 0,
-    grandTotal: 40000,
+    grandTotal: 85000,
     currency: 'INR',
     date: 'September 07, 2026',
     validUntil: 'October 07, 2026',
-    notes: 'Comprehensive monthly social media performance marketing and multi-department visual content production suite tailored for Healthophia.',
+    notes: 'Comprehensive monthly social media performance marketing, multi-department visual content production, GMB, website and leads management suite tailored for Healthophia.',
     referenceLinks: [],
     termsTitle: 'Terms & Working Conditions',
     termsList: [
@@ -388,7 +393,7 @@ const DEFAULT_SERVICES: ServiceItem[] = [
 const { read: readQ, write: writeQ } = useAdminStorage<Quotation[]>(QUOTATIONS_KEY, SAMPLE_QUOTATIONS)
 const { read: readS, write: writeS } = useAdminStorage<ServiceItem[]>(SERVICES_KEY, DEFAULT_SERVICES)
 
-const SEED_FLAG_KEY = 'lious_quotes_v5_init'
+const SEED_FLAG_KEY = 'lious_quotes_v6_healthophia_update'
 
 export function useQuotations() {
   const getQuotations = (): Quotation[] => {
@@ -411,12 +416,16 @@ export function useQuotations() {
       return cleaned
     }
 
-    // One-time check to ensure default sample quotations (like Healthophia) exist if missing
-    if (import.meta.client && !localStorage.getItem(SEED_FLAG_KEY)) {
+    // One-time sync / update for Healthophia quotation with updated scope & 85,000 price
+    if (import.meta.client && localStorage.getItem(SEED_FLAG_KEY) !== 'true') {
       let modified = false
       for (const sample of SAMPLE_QUOTATIONS) {
-        if (!list.some(q => q.id === sample.id || q.quotationNumber === sample.quotationNumber)) {
+        const idx = list.findIndex(q => q.id === sample.id || q.quotationNumber === sample.quotationNumber)
+        if (idx === -1) {
           list.push({ ...sample })
+          modified = true
+        } else if (sample.id === 'lious-quote-04' || sample.quotationNumber === 'LIOUS2026090701') {
+          list[idx] = { ...sample }
           modified = true
         }
       }

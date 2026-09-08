@@ -44,10 +44,10 @@
             <div class="inner-subcard">
               <div class="subcard-title text-sky-700 font-bold mb-3">CLIENT DETAILS</div>
               <div class="flex flex-col gap-3">
-                <AdminFormField id="clientCompany" label="Company / Brand Name" v-model="form.clientCompany" placeholder="Aura Lifestyle Apparel" required />
-                <AdminFormField id="clientName" label="Contact Person" v-model="form.clientName" placeholder="Ms. Priya Sharma" required />
-                <AdminFormField id="clientPhone" label="Mobile / WhatsApp" type="tel" v-model="form.clientPhone" placeholder="+91 98201 54321" required />
-                <AdminFormField id="clientEmail" label="Email (Optional)" type="email" v-model="form.clientEmail" placeholder="priya@auralifestyle.in" />
+                <AdminFormField id="clientCompany" label="Company / Brand Name" v-model="form.clientCompany" placeholder="e.g. Healthophia / Aura Lifestyle" required />
+                <AdminFormField id="clientName" label="Contact Person (Optional)" v-model="form.clientName" placeholder="e.g. Mr. Puneet / Ms. Priya (Optional)" />
+                <AdminFormField id="clientPhone" label="Mobile / WhatsApp (Optional)" type="tel" v-model="form.clientPhone" placeholder="+91 98201 54321 (Optional)" />
+                <AdminFormField id="clientEmail" label="Email (Optional)" type="email" v-model="form.clientEmail" placeholder="client@example.com (Optional)" />
               </div>
             </div>
 
