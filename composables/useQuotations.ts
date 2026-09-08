@@ -377,6 +377,63 @@ const SAMPLE_QUOTATIONS: Quotation[] = [
     status: 'sent',
     createdAt: '2026-09-07T12:00:00.000Z',
     updatedAt: '2026-09-07T12:00:00.000Z'
+  {
+    id: 'lious-quote-05',
+    quotationNumber: 'LIOUS2026090801',
+    companyName: 'Leave It On Us',
+    providerSubtitle: 'Creator-Led Digital Marketing & Production Agency',
+    providerContact: 'Contact / WhatsApp: +91 98765 43210',
+    clientCompany: 'DMR Hospital',
+    clientName: '',
+    clientPhone: '',
+    clientEmail: '',
+    clientAddress: '',
+    serviceCategory: 'Healthcare Web Architecture, Portal & Management System',
+    lineItems: [
+      {
+        serviceId: 'svc-dmr-hospital-web',
+        serviceName: 'DMR Hospital Website & Patient Management Portal',
+        description: 'Full-scale custom healthcare portal, advanced patient management & multi-role web platform for DMR Hospital:\n• Advanced Doctor Directory with department, specialty & search filters\n• Detailed Doctor Profiles (Qualifications, bio, OPD schedule, consulting fee & booking CTA)\n• Multi-Role & Admin Access (Super Admin, Hospital Desk, Department Managers & Doctors)\n• New Patient Online Registration & Instant OPD Appointment Booking\n• Follow-up Appointment Booking & Record Lookup\n• Automated Reminders & Real-time Notifications for registrations and appointment confirmations (SMS/WhatsApp/Email)\n• Seamless Appointment Rescheduling & Cancellation workflow\n• Comprehensive Healthcare CMS: Blogs, Health Tips & Medical News management\n• Full Suite of Hospital Pages: Patient Testimonials & Video Reviews, Insurance & TPA Desk Info, About Hospital & Leadership, Department Pages, Doctors Roster, Photo/Video Gallery, Contact & Emergency 24/7 Desk, Camps & Events Page\n• Dedicated Doctor Admin Panel (Personal OPD schedule, appointment calendar, patient queue & daily OPD list)\n• Responsive Mobile-First Architecture, High-Speed Performance & SSL Security',
+        unit: 'Complete Web Platform & Portal',
+        qty: 1,
+        unitPrice: 90000,
+        total: 90000
+      }
+    ],
+    enableBatchBreakdown: false,
+    batchTitle: 'Full Healthcare Platform Deliverables — DMR Hospital',
+    batchItems: [
+      { description: 'Advanced Doctor Directory, Search & Detailed Doctor Profiles', amount: 0 },
+      { description: 'New Patient Registration, OPD Booking & Follow-up Workflow', amount: 0 },
+      { description: 'Automated Notifications & Reminders (SMS/WhatsApp/Email)', amount: 0 },
+      { description: 'Dedicated Doctor Admin Panel & Multi-Role Access', amount: 0 },
+      { description: 'Full Hospital Pages Suite, Insurance/TPA Desk & Video Reviews', amount: 0 },
+      { description: 'Blogs & Health Tips Content Management System (CMS)', amount: 0 }
+    ],
+    batchTotalText: 'Total Project Cost (Turnkey Platform):',
+    batchTotalAmount: 90000,
+    subtotal: 90000,
+    taxPercent: 0,
+    taxAmount: 0,
+    discountPercent: 0,
+    discountAmount: 0,
+    grandTotal: 90000,
+    currency: 'INR',
+    date: 'September 08, 2026',
+    validUntil: 'October 08, 2026',
+    notes: 'Complete turnkey healthcare website, patient OPD booking system, doctor management panel, and hospital digital presence suite designed specifically for DMR Hospital.',
+    referenceLinks: [],
+    termsTitle: 'Terms & Working Conditions',
+    termsList: [
+      '**Payment Milestone Terms:** **50% advance upon project sign-off**, **30% upon beta portal review/staging approval**, and **20% upon final deployment & domain go-live**.',
+      '**Development & Delivery Timeline:** Standard delivery within **4 to 6 weeks** from receiving hospital assets, doctor data, and credentials.',
+      '**Support & Maintenance:** Includes **1 full year of technical support**, SSL certificate configuration, server deployment, and database backup routines.',
+      '**Third-Party Gateways:** SMS / WhatsApp gateway credits and Payment Gateway account charges are billed directly on actuals.'
+    ],
+    terms: '• Payment Milestone Terms: **50% advance upon project sign-off**, **30% upon beta portal review/staging approval**, and **20% upon final deployment & domain go-live**.\n• Development & Delivery Timeline: Standard delivery within **4 to 6 weeks** from receiving hospital assets, doctor data, and credentials.\n• Support & Maintenance: Includes **1 full year of technical support**, SSL certificate configuration, server deployment, and database backup routines.\n• Third-Party Gateways: SMS / WhatsApp gateway credits and Payment Gateway account charges are billed directly on actuals.',
+    status: 'sent',
+    createdAt: '2026-09-08T10:00:00.000Z',
+    updatedAt: '2026-09-08T10:00:00.000Z'
   }
 ]
 
@@ -388,12 +445,13 @@ const DEFAULT_SERVICES: ServiceItem[] = [
   { id: 'svc-5', name: 'High-Converting UGC Video Creatives', description: 'Batch of 8 authentic UGC video variations and problem-solution angles for paid ads.', unit: 'Per Batch', defaultUnitPrice: 32000, category: 'Content' },
   { id: 'svc-6', name: 'Brand Commercial / TVC Production', description: 'Full-scale cinematic commercial production with VFX, color grading, and sound design.', unit: 'Per Video', defaultUnitPrice: 150000, category: 'Production' },
   { id: 'svc-7', name: 'On-Page SEO & Content Strategy', description: 'Technical SEO audit, keyword mapping, high-intent blog publishing, and rank tracking.', unit: 'Per Month', defaultUnitPrice: 20000, category: 'Digital' },
+  { id: 'svc-8', name: 'Healthcare Web Architecture & Patient Portal', description: 'Custom hospital portal, doctor directory, appointment booking, and multi-role admin system.', unit: 'Per Project', defaultUnitPrice: 90000, category: 'Production' }
 ]
 
 const { read: readQ, write: writeQ } = useAdminStorage<Quotation[]>(QUOTATIONS_KEY, SAMPLE_QUOTATIONS)
 const { read: readS, write: writeS } = useAdminStorage<ServiceItem[]>(SERVICES_KEY, DEFAULT_SERVICES)
 
-const SEED_FLAG_KEY = 'lious_quotes_v6_healthophia_update'
+const SEED_FLAG_KEY = 'lious_quotes_v7_dmr_hospital'
 
 export function useQuotations() {
   const getQuotations = (): Quotation[] => {
@@ -416,7 +474,7 @@ export function useQuotations() {
       return cleaned
     }
 
-    // One-time sync / update for Healthophia quotation with updated scope & 85,000 price
+    // One-time sync / update to ensure default sample quotations (Healthophia & DMR Hospital) exist and are up to date
     if (import.meta.client && localStorage.getItem(SEED_FLAG_KEY) !== 'true') {
       let modified = false
       for (const sample of SAMPLE_QUOTATIONS) {
@@ -424,7 +482,7 @@ export function useQuotations() {
         if (idx === -1) {
           list.push({ ...sample })
           modified = true
-        } else if (sample.id === 'lious-quote-04' || sample.quotationNumber === 'LIOUS2026090701') {
+        } else if (sample.id === 'lious-quote-04' || sample.quotationNumber === 'LIOUS2026090701' || sample.id === 'lious-quote-05' || sample.quotationNumber === 'LIOUS2026090801') {
           list[idx] = { ...sample }
           modified = true
         }
