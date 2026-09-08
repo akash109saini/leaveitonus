@@ -94,32 +94,35 @@
           </div>
 
           <!-- Items Table -->
-          <div class="items-table">
-            <div class="items-header">
-              <span class="ih-no">#</span>
-              <span class="ih-service">Service Description</span>
-              <span class="ih-unit">Unit</span>
-              <span class="ih-rate">Rate (₹)</span>
-              <span class="ih-qty">Qty</span>
-              <span class="ih-total">Total</span>
-              <span></span>
-            </div>
-            <div v-if="form.lineItems.length === 0" class="items-empty">
-              No service line items added yet. Click "+ Add Custom Line" or insert from catalog above.
-            </div>
-            <div class="item-row" v-for="(item, idx) in form.lineItems" :key="idx">
-              <span class="item-sno">{{ idx + 1 }}</span>
-              <div class="item-fields">
-                <input v-model="item.serviceName" placeholder="Service Name (e.g. Short-Form Video Production)" class="item-input font-semibold" @input="recalc(idx)" />
-                <textarea v-model="item.description" placeholder="Description / deliverables..." class="item-input item-desc" rows="2"></textarea>
+          <div class="mobile-table-scroll-hint">↔ Scroll table horizontally to edit all columns</div>
+          <div class="items-table-scroll">
+            <div class="items-table">
+              <div class="items-header">
+                <span class="ih-no">#</span>
+                <span class="ih-service">Service Description</span>
+                <span class="ih-unit">Unit</span>
+                <span class="ih-rate">Rate (₹)</span>
+                <span class="ih-qty">Qty</span>
+                <span class="ih-total">Total</span>
+                <span></span>
               </div>
-              <input v-model="item.unit" placeholder="Per Month" class="item-input item-unit" />
-              <input v-model.number="item.unitPrice" type="number" min="0" step="1000" class="item-input item-price" @input="recalc(idx)" />
-              <input v-model.number="item.qty" type="number" min="1" class="item-input item-qty" @input="recalc(idx)" />
-              <div class="item-total">{{ formatCurrency(item.total) }}</div>
-              <button class="item-remove" @click="removeLine(idx)" title="Remove item">✕</button>
+              <div v-if="form.lineItems.length === 0" class="items-empty">
+                No service line items added yet. Click "+ Add Custom Line" or insert from catalog above.
+              </div>
+              <div class="item-row" v-for="(item, idx) in form.lineItems" :key="idx">
+                <span class="item-sno">{{ idx + 1 }}</span>
+                <div class="item-fields">
+                  <input v-model="item.serviceName" placeholder="Service Name (e.g. Short-Form Video Production)" class="item-input font-semibold" @input="recalc(idx)" />
+                  <textarea v-model="item.description" placeholder="Description / deliverables..." class="item-input item-desc" rows="2"></textarea>
+                </div>
+                <input v-model="item.unit" placeholder="Per Month" class="item-input item-unit" />
+                <input v-model.number="item.unitPrice" type="number" min="0" step="1000" class="item-input item-price" @input="recalc(idx)" />
+                <input v-model.number="item.qty" type="number" min="1" class="item-input item-qty" @input="recalc(idx)" />
+                <div class="item-total">{{ formatCurrency(item.total) }}</div>
+                <button class="item-remove" @click="removeLine(idx)" title="Remove item">✕</button>
+              </div>
+              <button class="btn-add-line" @click="addBlankLine">+ Add Custom Service Line</button>
             </div>
-            <button class="btn-add-line" @click="addBlankLine">+ Add Custom Service Line</button>
           </div>
         </div>
 
@@ -338,7 +341,12 @@ onMounted(() => {
   availableServices.value = getServices()
   if (!isNew.value) {
     const q = getQuotation(id)
-    if (q) form.value = { ...q }
+    if (q) {
+      form.value = JSON.parse(JSON.stringify(q))
+      if (!form.value.terms && form.value.termsList && form.value.termsList.length > 0) {
+        form.value.terms = form.value.termsList.map((t: string) => `• ${t}`).join('\n')
+      }
+    }
   }
 })
 
@@ -365,7 +373,7 @@ const recalcTotals = () => {
   const afterDiscount = subtotal - form.value.discountAmount
   form.value.taxAmount = Math.round(afterDiscount * (form.value.taxPercent / 100))
   form.value.grandTotal = afterDiscount + form.value.taxAmount
-  if (!form.value.batchTotalAmount) {
+  if (!form.value.batchTotalAmount && form.value.enableBatchBreakdown) {
     form.value.batchTotalAmount = form.value.grandTotal
   }
 }
@@ -394,7 +402,15 @@ const removeLine = (idx: number) => {
 }
 
 const save = () => {
-  const payload = { ...form.value }
+  recalcTotals()
+  recalcBatchTotal()
+  if (form.value.terms) {
+    form.value.termsList = form.value.terms
+      .split('\n')
+      .map((line: string) => line.replace(/^[•\-\*]\s*/, '').trim())
+      .filter(Boolean)
+  }
+  const payload = JSON.parse(JSON.stringify(form.value))
   if (isNew.value) {
     const created = createQuotation(payload)
     router.replace(`/admin/quotations/${created.id}`)
@@ -410,8 +426,8 @@ const save = () => {
 .page-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 24px; gap: 16px; flex-wrap: wrap; }
 .back-link { display: inline-block; font-size: 12.5px; color: #64748b; text-decoration: none; margin-bottom: 4px; font-weight: 600; transition: color 0.2s; }
 .back-link:hover { color: #0284c7; }
-.page-title { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 800; color: #0f172a; }
-.header-actions { display: flex; gap: 10px; align-items: center; margin-top: 24px; flex-wrap: wrap; }
+.page-title { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 800; color: #0f172a; word-break: break-word; }
+.header-actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
 
 .btn-primary {
   background: #0284c7; color: #ffffff; border: none; border-radius: 8px;
@@ -448,7 +464,7 @@ const save = () => {
 }
 
 .card-heading { font-size: 14.5px; font-weight: 800; color: #0f172a; font-family: 'Syne', sans-serif; }
-.card-heading-row { display: flex; align-items: center; justify-content: space-between; }
+.card-heading-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
 
 .inner-subcard {
   background: #f8fafc;
@@ -486,7 +502,36 @@ const save = () => {
 @media (max-width: 680px) { .form-grid-2, .form-grid-3 { grid-template-columns: 1fr; } }
 
 /* Items table */
-.items-table { display: flex; flex-direction: column; border: 1px solid #e2e8f0; border-radius: 10px; overflow: hidden; }
+.mobile-table-scroll-hint {
+  display: none;
+  font-size: 11px;
+  color: #0284c7;
+  font-weight: 600;
+  padding: 4px 10px;
+  background: #f0f9ff;
+  border-radius: 6px;
+  border: 1px solid #bae6fd;
+  width: fit-content;
+  margin-bottom: 8px;
+}
+@media (max-width: 768px) {
+  .mobile-table-scroll-hint { display: inline-block; }
+}
+
+.items-table-scroll {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+}
+
+.items-table {
+  display: flex;
+  flex-direction: column;
+  min-width: 680px;
+  border: none;
+}
 .items-header {
   display: grid; grid-template-columns: 32px 1fr 120px 90px 60px 95px 28px;
   gap: 8px; padding: 10px 14px; background: #f8fafc; font-size: 11px;
@@ -564,4 +609,53 @@ const save = () => {
   font-weight: 700; text-decoration: none; transition: all 0.2s;
 }
 .print-btn:hover { background: #dcfce7; }
+
+@media (max-width: 640px) {
+  .page-title {
+    font-size: 18px;
+  }
+  .header-actions {
+    width: 100%;
+    gap: 8px;
+  }
+  .header-actions .status-select,
+  .header-actions .btn-ghost,
+  .header-actions .btn-primary {
+    flex: 1;
+    font-size: 12px;
+    padding: 8px 12px;
+    text-align: center;
+    justify-content: center;
+  }
+  .editor-card {
+    padding: 16px;
+  }
+  .ref-link-input-row {
+    flex-direction: column;
+    align-items: stretch;
+    background: #f8fafc;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    position: relative;
+  }
+  .ref-link-input-row .w-36 {
+    width: 100%;
+  }
+  .ref-link-input-row .item-remove {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+  }
+  .batch-item-input-row {
+    flex-wrap: wrap;
+    background: #ffffff;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #bae6fd;
+  }
+  .batch-item-input-row .item-input.w-28 {
+    width: 110px;
+  }
+}
 </style>

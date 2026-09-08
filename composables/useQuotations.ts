@@ -388,42 +388,42 @@ const DEFAULT_SERVICES: ServiceItem[] = [
 const { read: readQ, write: writeQ } = useAdminStorage<Quotation[]>(QUOTATIONS_KEY, SAMPLE_QUOTATIONS)
 const { read: readS, write: writeS } = useAdminStorage<ServiceItem[]>(SERVICES_KEY, DEFAULT_SERVICES)
 
+const SEED_FLAG_KEY = 'lious_quotes_v5_init'
+
 export function useQuotations() {
   const getQuotations = (): Quotation[] => {
     let list = readQ()
-    // If the list is empty or doesn't have at least 3 items or still contains old webnetworx samples or old ref formats (less than 15 chars), update with fresh Leave It On Us quotations
-    if (!list || list.length < 3 || list.some(q => q.companyName === 'Webnetworx' || q.quotationNumber?.includes('/DM/') || (q.quotationNumber?.length ?? 0) < 15)) {
+    // Initial seed if no data exists at all
+    if (!list || !Array.isArray(list) || list.length === 0) {
       writeQ(SAMPLE_QUOTATIONS)
       return SAMPLE_QUOTATIONS
     }
 
-    // Automatically sync LIOUS2026090601 if it has stale terms (e.g. 2 review iterations), broken multiple line items, or lacks updated Instagram references
-    const q3Idx = list.findIndex(q => q.quotationNumber === 'LIOUS2026090601' || q.id === 'lious-quote-03')
-    if (q3Idx !== -1) {
-      const q3 = list[q3Idx]
-      const needsSync = q3.terms?.includes('2 review iterations')
-        || (q3.lineItems && q3.lineItems.length > 1)
-        || !q3.referenceLinks?.some(r => r.url.includes('DWWI627CWvq'))
-      if (needsSync) {
-        const sampleQ3 = SAMPLE_QUOTATIONS.find(s => s.id === 'lious-quote-03')
-        if (sampleQ3) {
-          list[q3Idx] = { ...sampleQ3 }
-          writeQ(list)
+    // One-time legacy cleanup if old Webnetworx samples are detected
+    if (list.some(q => q.companyName === 'Webnetworx')) {
+      const cleaned = list.filter(q => q.companyName !== 'Webnetworx')
+      for (const sample of SAMPLE_QUOTATIONS) {
+        if (!cleaned.some(q => q.id === sample.id || q.quotationNumber === sample.quotationNumber)) {
+          cleaned.push({ ...sample })
         }
       }
+      writeQ(cleaned)
+      return cleaned
     }
 
-    // Automatically ensure LIOUS2026090701 (Healthophia) is added or synced in list
-    const q4Idx = list.findIndex(q => q.quotationNumber === 'LIOUS2026090701' || q.id === 'lious-quote-04' || q.clientCompany === 'Healthophia')
-    const sampleQ4 = SAMPLE_QUOTATIONS.find(s => s.id === 'lious-quote-04')
-    if (sampleQ4) {
-      if (q4Idx === -1) {
-        list.push({ ...sampleQ4 })
-        writeQ(list)
-      } else {
-        list[q4Idx] = { ...sampleQ4 }
-        writeQ(list)
+    // One-time check to ensure default sample quotations (like Healthophia) exist if missing
+    if (import.meta.client && !localStorage.getItem(SEED_FLAG_KEY)) {
+      let modified = false
+      for (const sample of SAMPLE_QUOTATIONS) {
+        if (!list.some(q => q.id === sample.id || q.quotationNumber === sample.quotationNumber)) {
+          list.push({ ...sample })
+          modified = true
+        }
       }
+      if (modified) writeQ(list)
+      try {
+        localStorage.setItem(SEED_FLAG_KEY, 'true')
+      } catch {}
     }
 
     return list

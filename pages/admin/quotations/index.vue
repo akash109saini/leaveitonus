@@ -189,4 +189,23 @@ const doDelete = () => {
 .action-btn--print:hover { background: #dcfce7; }
 .action-btn--delete { background: #fef2f2; border-color: #fee2e2; color: #ef4444; }
 .action-btn--delete:hover { background: #fee2e2; }
+
+@media (max-width: 640px) {
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .page-title {
+    font-size: 20px;
+  }
+  .btn-primary {
+    width: 100%;
+    justify-content: center;
+  }
+  .action-btns {
+    flex-direction: row;
+    gap: 4px;
+  }
+}
 </style>

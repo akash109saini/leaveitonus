@@ -263,4 +263,30 @@ const doDelete = () => {
 
 .drawer-enter-active, .drawer-leave-active { transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
 .drawer-enter-from, .drawer-leave-to { transform: translateX(100%); }
+
+@media (max-width: 640px) {
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .filter-group {
+    margin-top: 8px;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    flex-wrap: nowrap;
+    padding-bottom: 6px;
+  }
+  .filter-btn {
+    flex-shrink: 0;
+  }
+  .enquiry-drawer {
+    width: 100%;
+    max-width: 100vw;
+  }
+  .detail-grid {
+    grid-template-columns: 1fr;
+  }
+}
 </style>

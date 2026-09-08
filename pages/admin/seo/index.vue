@@ -77,4 +77,14 @@ const pageIcons: Record<string, string> = {
 
 .page-edit-btn { font-size: 12.5px; font-weight: 700; color: #64748b; transition: all 0.2s; flex-shrink: 0; padding-top: 2px; }
 .page-card:hover .page-edit-btn { color: #0284c7; transform: translateX(3px); }
+
+@media (max-width: 640px) {
+  .pages-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .page-card {
+    padding: 14px 16px;
+  }
+}
 </style>

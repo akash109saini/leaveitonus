@@ -131,7 +131,10 @@ const filteredData = computed(() => {
 }
 .adt-actions { display: flex; gap: 8px; margin-left: auto; }
 
-.adt-table-wrap { overflow-x: auto; }
+.adt-table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
 
 .adt-table {
   width: 100%;
@@ -186,5 +189,27 @@ const filteredData = computed(() => {
   border-top: 1px solid #f1f5f9;
   text-align: right;
   background: #f8fafc;
+}
+
+@media (max-width: 640px) {
+  .adt-toolbar {
+    padding: 10px 12px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+  .adt-search {
+    width: 100%;
+  }
+  .adt-actions {
+    margin-left: 0;
+    width: 100%;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+  .adt-table th, .adt-table td {
+    padding: 10px 12px;
+    font-size: 12px;
+  }
 }
 </style>

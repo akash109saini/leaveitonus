@@ -1,10 +1,16 @@
 <template>
-  <aside class="admin-sidebar" :class="{ 'admin-sidebar--collapsed': collapsed }">
+  <aside
+    class="admin-sidebar"
+    :class="{
+      'admin-sidebar--collapsed': collapsed,
+      'admin-sidebar--mobile-open': mobileOpen
+    }"
+  >
     <!-- Logo -->
     <div class="sidebar-logo">
-      <NuxtLink to="/admin" class="logo-link">
+      <NuxtLink to="/admin" class="logo-link" @click="handleNavClick">
         <img
-          v-if="!collapsed"
+          v-if="!collapsed || mobileOpen"
           src="/images/logo-black.png"
           alt="Leave It On Us Admin"
           class="sidebar-logo-full"
@@ -17,57 +23,60 @@
           />
         </div>
       </NuxtLink>
+      <button class="mobile-sidebar-close" @click="$emit('close')" title="Close menu" aria-label="Close menu">
+        ✕
+      </button>
     </div>
 
     <!-- Admin Badge -->
     <transition name="fade-text">
-      <div v-if="!collapsed" class="sidebar-badge">ADMIN PORTAL</div>
+      <div v-if="!collapsed || mobileOpen" class="sidebar-badge">ADMIN PORTAL</div>
     </transition>
 
     <!-- Navigation -->
     <nav class="sidebar-nav">
-      <div class="nav-section-label" v-if="!collapsed">Overview</div>
-      <NuxtLink to="/admin" class="nav-item" :class="{ active: route.path === '/admin' }" :title="collapsed ? 'Dashboard' : ''">
+      <div class="nav-section-label" v-if="!collapsed || mobileOpen">Overview</div>
+      <NuxtLink to="/admin" class="nav-item" :class="{ active: route.path === '/admin' }" :title="collapsed && !mobileOpen ? 'Dashboard' : ''" @click="handleNavClick">
         <span class="nav-icon">📊</span>
-        <transition name="fade-text"><span v-if="!collapsed">Dashboard</span></transition>
+        <transition name="fade-text"><span v-if="!collapsed || mobileOpen">Dashboard</span></transition>
       </NuxtLink>
 
-      <div class="nav-section-label" v-if="!collapsed">Content & Media</div>
-      <NuxtLink to="/admin/blogs" class="nav-item" :class="{ active: route.path.startsWith('/admin/blogs') }" :title="collapsed ? 'Blogs' : ''">
+      <div class="nav-section-label" v-if="!collapsed || mobileOpen">Content & Media</div>
+      <NuxtLink to="/admin/blogs" class="nav-item" :class="{ active: route.path.startsWith('/admin/blogs') }" :title="collapsed && !mobileOpen ? 'Blogs' : ''" @click="handleNavClick">
         <span class="nav-icon">✍️</span>
-        <transition name="fade-text"><span v-if="!collapsed">Blog Management</span></transition>
+        <transition name="fade-text"><span v-if="!collapsed || mobileOpen">Blog Management</span></transition>
       </NuxtLink>
 
-      <div class="nav-section-label" v-if="!collapsed">Business & Sales</div>
-      <NuxtLink to="/admin/quotations" class="nav-item" :class="{ active: route.path.startsWith('/admin/quotations') }" :title="collapsed ? 'Quotations' : ''">
+      <div class="nav-section-label" v-if="!collapsed || mobileOpen">Business & Sales</div>
+      <NuxtLink to="/admin/quotations" class="nav-item" :class="{ active: route.path.startsWith('/admin/quotations') }" :title="collapsed && !mobileOpen ? 'Quotations' : ''" @click="handleNavClick">
         <span class="nav-icon">📋</span>
-        <transition name="fade-text"><span v-if="!collapsed">Quotation Management</span></transition>
+        <transition name="fade-text"><span v-if="!collapsed || mobileOpen">Quotation Management</span></transition>
       </NuxtLink>
 
-      <NuxtLink to="/admin/services" class="nav-item" :class="{ active: route.path.startsWith('/admin/services') }" :title="collapsed ? 'Services' : ''">
+      <NuxtLink to="/admin/services" class="nav-item" :class="{ active: route.path.startsWith('/admin/services') }" :title="collapsed && !mobileOpen ? 'Services' : ''" @click="handleNavClick">
         <span class="nav-icon">⚡</span>
-        <transition name="fade-text"><span v-if="!collapsed">Services Catalog</span></transition>
+        <transition name="fade-text"><span v-if="!collapsed || mobileOpen">Services Catalog</span></transition>
       </NuxtLink>
 
-      <NuxtLink to="/admin/enquiries" class="nav-item" :class="{ active: route.path.startsWith('/admin/enquiries') }" :title="collapsed ? 'Enquiries' : ''">
+      <NuxtLink to="/admin/enquiries" class="nav-item" :class="{ active: route.path.startsWith('/admin/enquiries') }" :title="collapsed && !mobileOpen ? 'Enquiries' : ''" @click="handleNavClick">
         <span class="nav-icon">📩</span>
         <transition name="fade-text">
-          <span v-if="!collapsed" class="nav-label-wrap">
+          <span v-if="!collapsed || mobileOpen" class="nav-label-wrap">
             Enquiries
             <span v-if="newEnquiryCount > 0" class="nav-badge">{{ newEnquiryCount }}</span>
           </span>
         </transition>
-        <span v-if="collapsed && newEnquiryCount > 0" class="nav-badge nav-badge--dot"></span>
+        <span v-if="collapsed && !mobileOpen && newEnquiryCount > 0" class="nav-badge nav-badge--dot"></span>
       </NuxtLink>
 
-      <div class="nav-section-label" v-if="!collapsed">Settings & Optimization</div>
-      <NuxtLink to="/admin/seo" class="nav-item" :class="{ active: route.path.startsWith('/admin/seo') }" :title="collapsed ? 'SEO' : ''">
+      <div class="nav-section-label" v-if="!collapsed || mobileOpen">Settings & Optimization</div>
+      <NuxtLink to="/admin/seo" class="nav-item" :class="{ active: route.path.startsWith('/admin/seo') }" :title="collapsed && !mobileOpen ? 'SEO' : ''" @click="handleNavClick">
         <span class="nav-icon">🔍</span>
-        <transition name="fade-text"><span v-if="!collapsed">SEO Management</span></transition>
+        <transition name="fade-text"><span v-if="!collapsed || mobileOpen">SEO Management</span></transition>
       </NuxtLink>
     </nav>
 
-    <!-- Toggle Button -->
+    <!-- Toggle Button (Desktop only) -->
     <button class="sidebar-toggle" @click="$emit('toggle')" :title="collapsed ? 'Expand' : 'Collapse'">
       <span :style="{ transform: collapsed ? 'rotate(180deg)' : 'none', display: 'inline-block', transition: 'transform 0.3s' }">‹</span>
     </button>
@@ -79,12 +88,20 @@ import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { useEnquiries } from '~/composables/useEnquiries'
 
-defineProps<{ collapsed: boolean }>()
-defineEmits(['toggle'])
+defineProps<{
+  collapsed: boolean
+  mobileOpen?: boolean
+}>()
+
+const emit = defineEmits(['toggle', 'close'])
 
 const route = useRoute()
 const { getNewCount } = useEnquiries()
 const newEnquiryCount = computed(() => getNewCount())
+
+const handleNavClick = () => {
+  emit('close')
+}
 </script>
 
 <style scoped>
@@ -99,7 +116,7 @@ const newEnquiryCount = computed(() => getNewCount())
   display: flex;
   flex-direction: column;
   z-index: 100;
-  transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   overflow: hidden;
   box-shadow: 1px 0 3px 0 rgba(0, 0, 0, 0.02);
 }
@@ -111,6 +128,7 @@ const newEnquiryCount = computed(() => getNewCount())
 .sidebar-logo {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 12px;
   padding: 18px 16px;
   border-bottom: 1px solid #f1f5f9;
@@ -121,7 +139,7 @@ const newEnquiryCount = computed(() => getNewCount())
   display: flex;
   align-items: center;
   text-decoration: none;
-  width: 100%;
+  flex: 1;
 }
 
 .sidebar-logo-full {
@@ -150,6 +168,29 @@ const newEnquiryCount = computed(() => getNewCount())
   max-width: none;
   object-fit: cover;
   object-position: left center;
+}
+
+.mobile-sidebar-close {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+  color: #64748b;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.mobile-sidebar-close:hover {
+  background: #fee2e2;
+  border-color: #fca5a5;
+  color: #ef4444;
 }
 
 .sidebar-badge {
@@ -264,4 +305,23 @@ const newEnquiryCount = computed(() => getNewCount())
 
 .fade-text-enter-active, .fade-text-leave-active { transition: opacity 0.2s, width 0.2s; }
 .fade-text-enter-from, .fade-text-leave-to { opacity: 0; }
+
+@media (max-width: 1024px) {
+  .admin-sidebar {
+    width: 280px !important;
+    max-width: 85vw !important;
+    transform: translateX(-100%);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+  }
+  .admin-sidebar.admin-sidebar--mobile-open {
+    transform: translateX(0);
+  }
+  .sidebar-toggle {
+    display: none;
+  }
+  .mobile-sidebar-close {
+    display: flex;
+  }
+}
 </style>

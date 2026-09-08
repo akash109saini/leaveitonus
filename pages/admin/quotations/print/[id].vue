@@ -161,14 +161,9 @@
       <div class="terms-card">
         <div class="terms-title">{{ q.termsTitle || 'Terms & Working Conditions' }}</div>
         <div class="terms-content">
-          <div v-if="q.termsList && q.termsList.length > 0" class="terms-list">
-            <div v-for="(term, tIdx) in q.termsList" :key="tIdx" class="term-bullet">
+          <div class="terms-list">
+            <div v-for="(term, tIdx) in displayTerms" :key="tIdx" class="term-bullet">
               • <span v-html="renderTerm(term)"></span>
-            </div>
-          </div>
-          <div v-else class="terms-raw">
-            <div v-for="(line, lIdx) in parsedTerms" :key="lIdx" class="term-bullet">
-              <span v-html="renderTerm(line)"></span>
             </div>
           </div>
         </div>
@@ -280,9 +275,14 @@ onMounted(() => {
   }
 })
 
-const parsedTerms = computed(() => {
-  if (!q.value.terms) return []
-  return q.value.terms.split('\n').filter(Boolean)
+const displayTerms = computed(() => {
+  if (q.value.terms) {
+    return q.value.terms.split('\n').map(l => l.replace(/^[•\-\*]\s*/, '').trim()).filter(Boolean)
+  }
+  if (q.value.termsList && q.value.termsList.length > 0) {
+    return q.value.termsList
+  }
+  return []
 })
 
 const renderTerm = (text: string) => {
@@ -815,8 +815,59 @@ const triggerPrint = () => {
   color: #b45309;
   max-width: 260px;
   overflow: hidden;
-  text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+/* Mobile Styles */
+@media (max-width: 640px) {
+  .print-container {
+    padding: 16px 8px;
+  }
+  .print-toolbar {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .toolbar-btn {
+    font-size: 12px;
+    padding: 7px 12px;
+    flex: 1;
+    justify-content: center;
+  }
+  .toolbar-btn--back {
+    margin-right: 0;
+    width: 100%;
+    order: -1;
+  }
+  .sheet {
+    padding: 22px 14px;
+    border-radius: 4px;
+  }
+  .sheet-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+  .brand-right {
+    text-align: left;
+  }
+  .info-card-grid {
+    grid-template-columns: 1fr;
+  }
+  .info-column--left {
+    border-right: none;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  .items-table-header {
+    display: none;
+  }
+  .items-table-row {
+    grid-template-columns: 1fr;
+    gap: 6px;
+    padding: 12px 10px;
+  }
+  .item-col--qty, .item-col--rate, .item-col--total {
+    text-align: left;
+  }
 }
 
 /* Print Media Styles */

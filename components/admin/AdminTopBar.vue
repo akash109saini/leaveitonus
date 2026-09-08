@@ -1,7 +1,7 @@
 <template>
   <header class="admin-topbar">
     <div class="topbar-left">
-      <button class="hamburger" @click="$emit('toggle-sidebar')" title="Toggle Sidebar">
+      <button class="hamburger" @click="$emit('toggle-sidebar')" title="Toggle Sidebar" aria-label="Toggle Sidebar">
         <span></span><span></span><span></span>
       </button>
       <div class="breadcrumb">
@@ -13,11 +13,13 @@
       </div>
     </div>
     <div class="topbar-right">
-      <NuxtLink to="/" target="_blank" class="view-site-btn">
-        <span>🌐</span> View Public Site
+      <NuxtLink to="/" target="_blank" class="view-site-btn" title="View Public Site">
+        <span>🌐</span>
+        <span class="btn-text">View Public Site</span>
       </NuxtLink>
-      <button class="logout-btn" @click="logout">
-        <span>⎋</span> Logout
+      <button class="logout-btn" @click="logout" title="Logout">
+        <span>⎋</span>
+        <span class="btn-text">Logout</span>
       </button>
     </div>
   </header>
@@ -58,22 +60,32 @@ const logout = () => {
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.03);
 }
 
-.topbar-left { display: flex; align-items: center; gap: 16px; }
+.topbar-left { display: flex; align-items: center; gap: 14px; min-width: 0; }
 
 .hamburger {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   gap: 5px;
   background: none;
   border: none;
   cursor: pointer;
-  padding: 4px;
+  padding: 6px;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+.hamburger:hover {
+  background: #f1f5f9;
 }
 .hamburger span {
   display: block;
-  width: 18px;
+  width: 20px;
   height: 2px;
-  background: #64748b;
+  background: #475569;
   border-radius: 2px;
   transition: background 0.2s;
 }
@@ -84,6 +96,9 @@ const logout = () => {
   align-items: center;
   gap: 4px;
   font-size: 13px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .bc-home {
@@ -96,7 +111,7 @@ const logout = () => {
 .bc-current { color: #0f172a; font-weight: 600; }
 .bc-link { color: #64748b; }
 
-.topbar-right { display: flex; align-items: center; gap: 10px; }
+.topbar-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
 
 .view-site-btn, .logout-btn {
   display: flex;
@@ -109,6 +124,7 @@ const logout = () => {
   cursor: pointer;
   transition: all 0.2s;
   text-decoration: none;
+  white-space: nowrap;
 }
 
 .view-site-btn {
@@ -131,5 +147,25 @@ const logout = () => {
   background: #fee2e2;
   border-color: #fca5a5;
   color: #dc2626;
+}
+
+@media (max-width: 640px) {
+  .admin-topbar {
+    padding: 0 12px;
+    height: 56px;
+  }
+  .breadcrumb {
+    font-size: 12px;
+  }
+  .bc-link, .bc-sep {
+    display: none;
+  }
+  .btn-text {
+    display: none;
+  }
+  .view-site-btn, .logout-btn {
+    padding: 8px 10px;
+    font-size: 14px;
+  }
 }
 </style>

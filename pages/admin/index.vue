@@ -307,4 +307,54 @@ const stats = computed(() => [
   border: 1px solid #e2e8f0;
   border-radius: 12px;
 }
+
+@media (max-width: 640px) {
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+  .page-title {
+    font-size: 20px;
+  }
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+  .stat-card {
+    padding: 12px;
+    gap: 10px;
+  }
+  .stat-value {
+    font-size: 22px;
+  }
+  .stat-icon-wrap {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+  }
+  .modules-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .module-card {
+    padding: 14px 16px;
+  }
+  .recent-item {
+    padding: 12px 14px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .recent-info {
+    min-width: 140px;
+  }
+}
+
+@media (max-width: 400px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+}
 </style>
