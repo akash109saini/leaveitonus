@@ -81,7 +81,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import AdminDataTable from '~/components/admin/AdminDataTable.vue'
 import AdminStatusBadge from '~/components/admin/AdminStatusBadge.vue'
 import AdminModal from '~/components/admin/AdminModal.vue'
@@ -89,11 +89,18 @@ import { useQuotations, type Quotation } from '~/composables/useQuotations'
 
 definePageMeta({ layout: 'admin', middleware: 'admin-auth' })
 
-const { getQuotations, deleteQuotation } = useQuotations()
+const { getQuotations, deleteQuotation, syncQuotationsFromApi } = useQuotations()
 const filterStatus = ref('')
 const showDeleteModal = ref(false)
 const deleteTarget = ref<Quotation | null>(null)
 const allQuotations = ref(getQuotations())
+
+onMounted(async () => {
+  const synced = await syncQuotationsFromApi()
+  if (synced && synced.length > 0) {
+    allQuotations.value = synced
+  }
+})
 
 const quotations = computed(() =>
   filterStatus.value

@@ -435,6 +435,62 @@ const SAMPLE_QUOTATIONS: Quotation[] = [
     status: 'sent',
     createdAt: '2026-09-08T10:00:00.000Z',
     updatedAt: '2026-09-08T10:00:00.000Z'
+  },
+  {
+    id: 'lious-quote-06',
+    quotationNumber: 'LIOUS2026090901',
+    companyName: 'Leave It On Us',
+    providerSubtitle: 'Creator-Led Digital Marketing & Production Agency',
+    providerContact: 'Contact / WhatsApp: +91 98765 43210',
+    clientCompany: 'Bhagwati Bhojnalaya',
+    clientName: 'Mr. Mohit',
+    clientPhone: '+91 98374 52655',
+    clientEmail: '',
+    clientAddress: '',
+    serviceCategory: 'Social Media Digital Marketing & Production Package',
+    lineItems: [
+      {
+        serviceName: 'Social Media Digital Marketing & Production Package',
+        description: 'Complete monthly social media digital marketing and food content production suite for Bhagwati Bhojnalaya:\n• 1 Professional On-Location Shoot (cinematography, ambiance, food preparation & kitchen aesthetics)\n• 15 Total Content Deliverables per month (7–8 high-retention reels & 7–8 custom graphic creatives/stories)\n• Professional Reel Script Writing & Hook Strategy\n• End-to-End Meta Ads Management (audience targeting, local footfall reach & visibility optimization across Instagram & Facebook)',
+        unit: 'Per Month (Complete Package)',
+        qty: 1,
+        unitPrice: 13500,
+        total: 13500
+      }
+    ],
+    enableBatchBreakdown: true,
+    batchTitle: 'Monthly Growth Package Breakdown — Bhagwati Bhojnalaya',
+    batchItems: [
+      { description: '1 Professional On-Location Camera Shoot:', amount: 4000 },
+      { description: '7–8 High-Retention Food Reels & Script Writing:', amount: 5500 },
+      { description: '7–8 Custom Graphic Creatives & Stories:', amount: 2000 },
+      { description: 'Meta Ads Campaign Setup & Management:', amount: 2000 }
+    ],
+    batchTotalText: 'Total Retainer Price per Month:',
+    batchTotalAmount: 13500,
+    subtotal: 13500,
+    taxPercent: 0,
+    taxAmount: 0,
+    discountPercent: 0,
+    discountAmount: 0,
+    grandTotal: 13500,
+    currency: 'INR',
+    date: 'September 09, 2026',
+    validUntil: 'October 09, 2026',
+    notes: 'Custom digital marketing and food production retainer engineered to grow brand awareness, footfall, and local customer reach for Bhagwati Bhojnalaya.',
+    referenceLinks: [],
+    termsTitle: 'Terms & Working Conditions',
+    termsList: [
+      '**Payment Terms:** **50% advance payment** required upon project confirmation / commencement of monthly services.',
+      '**Media Placement:** The quotation does not include direct **media placement / Meta ad spend costs** (billed directly through client account for 100% transparency).',
+      '**Shoot Supplies:** All **food items, beverages, and ingredients** required for the shoot must be provided by the client.',
+      '**Agency Props:** **Props sourced by the agency** (e.g., background boards, specialized table linens, ambient lighting decor) are provided for shoot aesthetics.',
+      '**Models & Talent:** Models (whether restaurant staff or hired actors/influencers) **payment is to be provided directly by the client**.'
+    ],
+    terms: '• Payment Terms: **50% advance payment** required upon project confirmation / commencement of monthly services.\n• Media Placement: The quotation does not include direct **media placement / Meta ad spend costs** (billed directly through client ad account for 100% transparency).\n• Shoot Supplies: All **food items, beverages, and ingredients** required for the shoot must be provided fresh by the client.\n• Agency Props: **Props sourced by the agency** (e.g., background boards, specialized table linens, ambient lighting decor) are provided for shoot aesthetics.\n• Models & Talent: Models (whether restaurant staff or hired actors/influencers) **payment is to be provided directly by the client**.',
+    status: 'sent',
+    createdAt: '2026-09-09T10:50:00.000Z',
+    updatedAt: '2026-09-09T10:50:00.000Z'
   }
 ]
 
@@ -452,9 +508,53 @@ const DEFAULT_SERVICES: ServiceItem[] = [
 const { read: readQ, write: writeQ } = useAdminStorage<Quotation[]>(QUOTATIONS_KEY, SAMPLE_QUOTATIONS)
 const { read: readS, write: writeS } = useAdminStorage<ServiceItem[]>(SERVICES_KEY, DEFAULT_SERVICES)
 
-const SEED_FLAG_KEY = 'lious_quotes_v7_dmr_hospital'
+const SEED_FLAG_KEY = 'lious_quotes_v8_bhagwati_bhojnalaya'
+
+export const getApiBase = (): string => {
+  if (import.meta.server) return 'https://leaveitonusmedia.com/api'
+  if (typeof window !== 'undefined') {
+    if (window.location.hostname === 'leaveitonusmedia.com') {
+      return '/api'
+    }
+  }
+  return 'https://leaveitonusmedia.com/api'
+}
 
 export function useQuotations() {
+  const syncQuotationsFromApi = async (): Promise<Quotation[]> => {
+    if (!import.meta.client) return readQ() || SAMPLE_QUOTATIONS
+    try {
+      const res = await fetch(`${getApiBase()}/quotations.php`)
+      if (res.ok) {
+        const json = await res.json()
+        if (json.success && Array.isArray(json.data) && json.data.length > 0) {
+          writeQ(json.data)
+          return json.data
+        }
+      }
+    } catch (e) {
+      console.warn('Could not sync quotations from live MySQL API, using local cache:', e)
+    }
+    return readQ() || SAMPLE_QUOTATIONS
+  }
+
+  const syncServicesFromApi = async (): Promise<ServiceItem[]> => {
+    if (!import.meta.client) return readS() || DEFAULT_SERVICES
+    try {
+      const res = await fetch(`${getApiBase()}/services.php`)
+      if (res.ok) {
+        const json = await res.json()
+        if (json.success && Array.isArray(json.data) && json.data.length > 0) {
+          writeS(json.data)
+          return json.data
+        }
+      }
+    } catch (e) {
+      console.warn('Could not sync services from live MySQL API, using local cache:', e)
+    }
+    return readS() || DEFAULT_SERVICES
+  }
+
   const getQuotations = (): Quotation[] => {
     let list = readQ()
     // Initial seed if no data exists at all
@@ -483,7 +583,11 @@ export function useQuotations() {
         if (idx === -1) {
           list.push({ ...sample })
           modified = true
-        } else if (sample.id === 'lious-quote-04' || sample.quotationNumber === 'LIOUS2026090701' || sample.id === 'lious-quote-05' || sample.quotationNumber === 'LIOUS2026090801') {
+        } else if (
+          sample.id === 'lious-quote-04' || sample.quotationNumber === 'LIOUS2026090701' ||
+          sample.id === 'lious-quote-05' || sample.quotationNumber === 'LIOUS2026090801' ||
+          sample.id === 'lious-quote-06' || sample.quotationNumber === 'LIOUS2026090901'
+        ) {
           list[idx] = { ...sample }
           modified = true
         }
@@ -530,6 +634,31 @@ export function useQuotations() {
       updatedAt: now
     }
     writeQ([q, ...list])
+
+    // Push to live server database automatically
+    if (import.meta.client) {
+      fetch(`${getApiBase()}/quotations.php`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(q)
+      }).then(async (res) => {
+        if (res.ok) {
+          const json = await res.json()
+          if (json.data && json.data.id) {
+            // Refresh cache with server response if needed
+            const current = readQ() || []
+            const idx = current.findIndex(item => item.id === q.id)
+            if (idx !== -1) {
+              current[idx] = json.data
+              writeQ(current)
+            }
+          }
+        }
+      }).catch(err => {
+        console.error('Error saving quotation to live database:', err)
+      })
+    }
+
     return q
   }
 
@@ -540,6 +669,18 @@ export function useQuotations() {
     const updated = { ...list[idx], ...data, updatedAt: new Date().toISOString() }
     list[idx] = updated
     writeQ(list)
+
+    // Push updated quotation to live server database automatically
+    if (import.meta.client) {
+      fetch(`${getApiBase()}/quotations.php?id=${encodeURIComponent(id)}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updated)
+      }).catch(err => {
+        console.error('Error updating quotation on live database:', err)
+      })
+    }
+
     return updated
   }
 
@@ -548,6 +689,16 @@ export function useQuotations() {
     const filtered = list.filter((q) => q.id !== id)
     if (filtered.length === list.length) return false
     writeQ(filtered)
+
+    // Push deletion to live server database automatically
+    if (import.meta.client) {
+      fetch(`${getApiBase()}/quotations.php?id=${encodeURIComponent(id)}`, {
+        method: 'DELETE'
+      }).catch(err => {
+        console.error('Error deleting quotation from live database:', err)
+      })
+    }
+
     return true
   }
 
@@ -567,6 +718,18 @@ export function useQuotations() {
     const list = getServices()
     const s: ServiceItem = { ...data, id: adminGenerateId() }
     writeS([...list, s])
+
+    // Push to live server database automatically
+    if (import.meta.client) {
+      fetch(`${getApiBase()}/services.php`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(s)
+      }).catch(err => {
+        console.error('Error saving service to live database:', err)
+      })
+    }
+
     return s
   }
 
@@ -576,6 +739,18 @@ export function useQuotations() {
     if (idx === -1) return null
     list[idx] = { ...list[idx], ...data }
     writeS(list)
+
+    // Push to live server database automatically
+    if (import.meta.client) {
+      fetch(`${getApiBase()}/services.php?id=${encodeURIComponent(id)}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(list[idx])
+      }).catch(err => {
+        console.error('Error updating service on live database:', err)
+      })
+    }
+
     return list[idx]
   }
 
@@ -584,11 +759,23 @@ export function useQuotations() {
     const filtered = list.filter((s) => s.id !== id)
     if (filtered.length === list.length) return false
     writeS(filtered)
+
+    // Push to live server database automatically
+    if (import.meta.client) {
+      fetch(`${getApiBase()}/services.php?id=${encodeURIComponent(id)}`, {
+        method: 'DELETE'
+      }).catch(err => {
+        console.error('Error deleting service from live database:', err)
+      })
+    }
+
     return true
   }
 
   return {
     getQuotations, getQuotation, createQuotation, updateQuotation, deleteQuotation,
-    getServices, getService, createService, updateService, deleteService
+    getServices, getService, createService, updateService, deleteService,
+    syncQuotationsFromApi, syncServicesFromApi, getApiBase
   }
 }
+

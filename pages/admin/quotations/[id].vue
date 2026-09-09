@@ -247,7 +247,7 @@ definePageMeta({ layout: 'admin', middleware: 'admin-auth' })
 
 const route = useRoute()
 const router = useRouter()
-const { getQuotation, createQuotation, updateQuotation, getServices } = useQuotations()
+const { getQuotation, createQuotation, updateQuotation, getServices, syncQuotationsFromApi, syncServicesFromApi } = useQuotations()
 
 const id = route.params.id as string
 const isNew = computed(() => id === 'new')
@@ -337,10 +337,16 @@ const addReferenceLink = () => {
   form.value.referenceLinks.push({ title: '', url: '', type: 'video' })
 }
 
-onMounted(() => {
+onMounted(async () => {
   availableServices.value = getServices()
+  syncServicesFromApi().then(res => { if (res && res.length) availableServices.value = res })
+
   if (!isNew.value) {
-    const q = getQuotation(id)
+    let q = getQuotation(id)
+    if (!q) {
+      const synced = await syncQuotationsFromApi()
+      q = synced.find(item => item.id === id || item.quotationNumber === id)
+    }
     if (q) {
       form.value = JSON.parse(JSON.stringify(q))
       if (!form.value.terms && form.value.termsList && form.value.termsList.length > 0) {

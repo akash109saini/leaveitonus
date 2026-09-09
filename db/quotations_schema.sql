@@ -241,3 +241,55 @@ INSERT INTO `quotation_line_items` (
 ('lious-quote-03', 'svc-smm-reels', 'Social Media Handling (10 Reels & 5 Creatives)', 'Complete Instagram & Facebook channel management including 10 high-retention food & ambiance reels, 5 custom graphic creatives, engaging copywriting, hashtag strategy, and scheduling.', 'Per Month (10 Reels + 5 Creatives)', 1, 8000.00, 8000.00, 1),
 ('lious-quote-03', 'svc-shoots', '2 Professional On-Location Shoots', '2 dedicated on-location camera shoots per month with professional lighting, food plating cinematography, restaurant interior ambiance capture, and director assistance.', 'Per Month (2 Shoots)', 1, 4000.00, 4000.00, 2),
 ('lious-quote-03', 'svc-meta-reach', 'Meta Ads Management (80,000 Target Account Reach)', 'Targeted Meta ads setup and media buying optimized for local customer footfall, dining awareness, and high engagement with 80,000+ guaranteed account reach.', 'Per Month (80,000 Reach)', 1, 5000.00, 5000.00, 3);
+
+
+-- 5. Insert Quotation: Bhagwati Bhojnalaya (LIOUS2026090901)
+INSERT INTO `quotations` (
+  `id`, `quotation_number`, `company_name`, `provider_subtitle`, `provider_contact`,
+  `client_company`, `client_name`, `client_phone`, `client_email`, `client_address`,
+  `service_category`, `enable_batch_breakdown`, `batch_title`, `batch_items`, `batch_total_text`, `batch_total_amount`,
+  `subtotal`, `tax_percent`, `tax_amount`, `discount_percent`, `discount_amount`, `grand_total`,
+  `currency`, `date`, `valid_until`, `notes`, `terms_title`, `terms_list`, `terms`, `status`
+) VALUES (
+  'lious-quote-06',
+  'LIOUS2026090901',
+  'Leave It On Us',
+  'Creator-Led Digital Marketing & Production Agency',
+  'Contact / WhatsApp: +91 98765 43210',
+  'Bhagwati Bhojnalaya',
+  'Mr. Mohit',
+  '98374 52655',
+  NULL,
+  NULL,
+  'Social Media Digital Marketing & Production Package',
+  1,
+  'Monthly Growth Package Breakdown — Bhagwati Bhojnalaya',
+  '[{"description":"1 Professional On-Location Camera Shoot:","amount":4000},{"description":"7–8 High-Retention Food Reels & Script Writing:","amount":5500},{"description":"7–8 Custom Graphic Creatives & Stories:","amount":2000},{"description":"Meta Ads Campaign Setup & Management:","amount":2000}]',
+  'Total Retainer Price per Month:',
+  13500.00,
+  13500.00, 0.00, 0.00, 0.00, 0.00, 13500.00,
+  'INR',
+  'September 09, 2026',
+  'October 09, 2026',
+  'Custom digital marketing and food production retainer engineered to grow brand awareness, footfall, and local customer reach for Bhagwati Bhojnalaya.',
+  'Terms & Working Conditions',
+  '["Payment Terms: 50% advance payment required upon project confirmation / commencement of monthly services.","Media Placement: The quotation does not include direct media placement / Meta ad spend costs (billed directly through client account for 100% transparency).","Shoot Supplies: All food items, beverages, and ingredients required for the shoot must be provided by the client.","Agency Props: Props sourced by the agency (e.g., background boards, specialized table linens, ambient lighting decor) are provided by the agency.","Models & Talent: Models (whether restaurant staff or hired actors/influencers) payment is to be provided directly by the client."]',
+  '• Payment Terms: **50% advance payment** required upon project confirmation / commencement of monthly services.\n• Media Placement: The quotation does not include direct **media placement / Meta ad spend costs** (billed directly through client ad account for 100% transparency).\n• Shoot Supplies: All **food items, beverages, and ingredients** required for the shoot must be provided fresh by the client.\n• Agency Props: **Props sourced by the agency** (e.g., background boards, specialized table linens, ambient lighting decor) are provided for shoot aesthetics.\n• Models & Talent: Models (whether restaurant staff or hired actors/influencers) **payment is to be provided directly by the client**.',
+  'sent'
+) ON DUPLICATE KEY UPDATE `grand_total` = VALUES(`grand_total`);
+
+-- Bhagwati Bhojnalaya Line Item
+INSERT INTO `quotation_line_items` (
+  `quotation_id`, `service_id`, `service_name`, `description`, `unit`, `qty`, `unit_price`, `total`, `sort_order`
+) VALUES (
+  'lious-quote-06',
+  'svc-bhagwati-smm-pkg',
+  'Social Media Digital Marketing & Production Package',
+  'Complete monthly social media digital marketing and food content production suite for Bhagwati Bhojnalaya:\n• 1 Professional On-Location Shoot (cinematography, ambiance, food preparation & kitchen aesthetics)\n• 15 Total Content Deliverables per month (7–8 high-retention reels & 7–8 custom graphic creatives/stories)\n• Professional Reel Script Writing & Hook Strategy\n• End-to-End Meta Ads Management (audience targeting, local footfall reach & visibility optimization across Instagram & Facebook)',
+  'Per Month (Complete Package)',
+  1,
+  13500.00,
+  13500.00,
+  1
+);
+

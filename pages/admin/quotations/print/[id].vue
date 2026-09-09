@@ -206,7 +206,7 @@ definePageMeta({ layout: false })
 
 const route = useRoute()
 const id = route.params.id as string
-const { getQuotation, getQuotations } = useQuotations()
+const { getQuotation, getQuotations, syncQuotationsFromApi } = useQuotations()
 
 const q = ref<Quotation>({
   id: '',
@@ -260,8 +260,13 @@ watchEffect(() => {
   }
 })
 
-onMounted(() => {
-  const found = getQuotation(id)
+onMounted(async () => {
+  let found = getQuotation(id)
+  if (!found) {
+    const synced = await syncQuotationsFromApi()
+    found = synced.find(item => item.id === id || item.quotationNumber === id)
+  }
+
   if (found) {
     q.value = found
   } else {

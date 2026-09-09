@@ -107,7 +107,7 @@ import { useQuotations, type ServiceItem } from '~/composables/useQuotations'
 
 definePageMeta({ layout: 'admin', middleware: 'admin-auth' })
 
-const { getServices, createService, updateService, deleteService } = useQuotations()
+const { getServices, createService, updateService, deleteService, syncServicesFromApi } = useQuotations()
 
 const services = ref<ServiceItem[]>([])
 const showForm = ref(false)
@@ -119,7 +119,13 @@ const editingId = ref('')
 
 const form = ref({ name: '', description: '', unit: 'Per Image', category: 'Product Editing', defaultUnitPrice: 40 })
 
-onMounted(() => { services.value = getServices() })
+onMounted(async () => {
+  services.value = getServices()
+  const synced = await syncServicesFromApi()
+  if (synced && synced.length > 0) {
+    services.value = synced
+  }
+})
 
 const formatCurrency = (n: number) =>
   new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 2 }).format(n || 0)
