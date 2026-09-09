@@ -86,8 +86,26 @@
         </div>
       </div>
 
-      <!-- SERVICE LINE ITEMS TABLE -->
-      <table class="services-table">
+      <!-- SERVICE DELIVERABLES TABLE (Structured Service Domain / Deliverables & Description / Monthly Frequency) -->
+      <table v-if="q.serviceDeliverables && q.serviceDeliverables.length > 0" class="deliverables-table">
+        <thead>
+          <tr>
+            <th class="th-deliv-domain">Service Domain</th>
+            <th class="th-deliv-desc">Deliverables &amp; Description</th>
+            <th class="th-deliv-freq">Monthly Frequency</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(item, idx) in q.serviceDeliverables" :key="idx" class="deliv-table-row">
+            <td class="td-deliv-domain">{{ item.domain }}</td>
+            <td class="td-deliv-desc" v-html="renderFormattedText(item.description)"></td>
+            <td class="td-deliv-freq">{{ item.frequency }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- STANDARD SERVICE LINE ITEMS TABLE -->
+      <table v-else class="services-table">
         <thead>
           <tr>
             <th class="th-sno">S.NO</th>
@@ -108,6 +126,25 @@
           </tr>
         </tbody>
       </table>
+
+      <!-- DEDICATED TEAM & ACCOUNT MANAGEMENT SECTION -->
+      <div v-if="q.teamMembers && q.teamMembers.length > 0" class="team-management-section">
+        <h3 class="team-section-title">{{ q.teamTitle || '3. Dedicated Team & Account Management' }}</h3>
+        <table class="team-table">
+          <thead>
+            <tr>
+              <th class="th-team-role">Role</th>
+              <th class="th-team-resp">Responsibility</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(member, mIdx) in q.teamMembers" :key="mIdx" class="team-table-row">
+              <td class="td-team-role">{{ member.role }}</td>
+              <td class="td-team-resp" v-html="renderFormattedText(member.responsibility)"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
       <!-- BATCH PRICING / GROWTH PACKAGE BREAKDOWN BOX (Cyan-Blue Box) -->
       <div v-if="q.enableBatchBreakdown !== false && (q.batchItems?.length || q.lineItems?.length)" class="batch-breakdown-card">
@@ -221,6 +258,9 @@ const defaultEmptyQuote: Quotation = {
   clientAddress: '',
   serviceCategory: 'Digital Marketing & Content Production',
   lineItems: [],
+  serviceDeliverables: [],
+  teamTitle: '3. Dedicated Team & Account Management',
+  teamMembers: [],
   enableBatchBreakdown: false,
   batchTitle: '',
   batchItems: [],
@@ -294,6 +334,11 @@ const displayTerms = computed(() => {
 })
 
 const renderTerm = (text: string) => {
+  if (!text) return ''
+  return text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+}
+
+const renderFormattedText = (text: string) => {
   if (!text) return ''
   return text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
 }
@@ -523,6 +568,148 @@ const triggerPrint = () => {
 
 .info-value {
   color: #334155;
+}
+
+/* 4. Service Deliverables Table (Brand Yellow Header) */
+.deliverables-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 24px;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+}
+
+.deliverables-table thead tr {
+  background-color: #ffe300;
+  color: #000000;
+}
+
+.deliverables-table th {
+  padding: 10px 14px;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+  text-align: left;
+  color: #000000;
+}
+
+.th-deliv-domain {
+  width: 25%;
+}
+
+.th-deliv-desc {
+  width: 55%;
+}
+
+.th-deliv-freq {
+  width: 20%;
+  text-align: left;
+}
+
+.deliv-table-row {
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.deliv-table-row:nth-child(even) {
+  background-color: #fcfbf5;
+}
+
+.deliverables-table td {
+  padding: 12px 14px;
+  vertical-align: top;
+  font-size: 12.5px;
+  line-height: 1.45;
+}
+
+.td-deliv-domain {
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.td-deliv-desc {
+  color: #334155;
+}
+
+.td-deliv-desc strong {
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.td-deliv-freq {
+  color: #334155;
+  font-weight: 500;
+}
+
+/* Dedicated Team & Account Management Section */
+.team-management-section {
+  margin-top: 20px;
+  margin-bottom: 24px;
+}
+
+.team-section-title {
+  font-size: 16px;
+  font-weight: 800;
+  color: #000000;
+  margin-bottom: 12px;
+  letter-spacing: -0.2px;
+}
+
+.team-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+}
+
+.team-table thead tr {
+  background-color: #ffe300;
+  color: #000000;
+}
+
+.team-table th {
+  padding: 10px 14px;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+  text-align: left;
+  color: #000000;
+}
+
+.th-team-role {
+  width: 32%;
+}
+
+.th-team-resp {
+  width: 68%;
+}
+
+.team-table-row {
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.team-table-row:nth-child(even) {
+  background-color: #f8fafc;
+}
+
+.team-table td {
+  padding: 11px 14px;
+  vertical-align: top;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.td-team-role {
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.td-team-resp {
+  color: #334155;
+}
+
+.td-team-resp strong {
+  font-weight: 700;
+  color: #0f172a;
 }
 
 /* 4. Services Table */
@@ -903,6 +1090,25 @@ const triggerPrint = () => {
   @page {
     margin: 10mm 12mm;
     size: A4 portrait;
+  }
+  .deliverables-table thead tr {
+    background-color: #ffe300 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .deliverables-table th {
+    color: #000000 !important;
+  }
+  .team-table thead tr {
+    background-color: #ffe300 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .team-table th {
+    color: #000000 !important;
+  }
+  .team-section-title {
+    color: #000000 !important;
   }
 }
 </style>

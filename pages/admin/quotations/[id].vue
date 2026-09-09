@@ -126,6 +126,67 @@
           </div>
         </div>
 
+        <!-- 3B. Structured Service Deliverables Table (Service Domain / Description / Frequency) -->
+        <div class="editor-card">
+          <div class="card-heading-row">
+            <div>
+              <div class="card-heading">3B. Service Deliverables Table (Domain / Deliverables &amp; Description / Frequency)</div>
+              <div class="text-xs text-slate-500">When added, this custom domain &amp; frequency table replaces the standard line items table on the print view.</div>
+            </div>
+            <button class="btn-sub-add" @click="addDeliverable">
+              + Add Deliverable Row
+            </button>
+          </div>
+
+          <div v-if="form.serviceDeliverables && form.serviceDeliverables.length > 0" class="flex flex-col gap-3 mt-3">
+            <div v-for="(deliv, dIdx) in form.serviceDeliverables" :key="dIdx" class="p-3 border border-slate-200 rounded-lg bg-slate-50 relative">
+              <button class="absolute top-2 right-2 item-remove" @click="form.serviceDeliverables.splice(dIdx, 1)" title="Remove deliverable">✕</button>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-2">
+                <input v-model="deliv.domain" placeholder="Service Domain (e.g. Short-Form Video (Reels))" class="item-input font-bold" />
+                <input v-model="deliv.frequency" placeholder="Monthly Frequency (e.g. 8 – 10 Videos / Active Monthly)" class="item-input" />
+              </div>
+              <textarea v-model="deliv.description" placeholder="Deliverables & Description (use **bold** for highlights)..." class="item-input w-full" rows="2"></textarea>
+            </div>
+          </div>
+          <div v-else class="text-sm text-slate-400 py-3 text-center border border-dashed border-slate-200 rounded-lg mt-2">
+            No custom service deliverables table added. Standard line items will be displayed.
+          </div>
+        </div>
+
+        <!-- 3C. Dedicated Team & Account Management -->
+        <div class="editor-card">
+          <div class="card-heading-row">
+            <div>
+              <div class="card-heading">3C. Dedicated Team &amp; Account Management Section</div>
+              <div class="text-xs text-slate-500">Display dedicated agency team roles and responsibilities on the quotation.</div>
+            </div>
+            <button class="btn-sub-add" @click="addTeamMember">
+              + Add Team Member
+            </button>
+          </div>
+
+          <div class="mt-3">
+            <AdminFormField id="teamTitle" label="Section Title" v-model="form.teamTitle" placeholder="3. Dedicated Team & Account Management" />
+          </div>
+
+          <div v-if="form.teamMembers && form.teamMembers.length > 0" class="flex flex-col gap-2 mt-3">
+            <div v-for="(member, mIdx) in form.teamMembers" :key="mIdx" class="grid grid-cols-1 md:grid-cols-12 gap-2 items-center p-2 border border-slate-200 rounded bg-slate-50">
+              <div class="md:col-span-4">
+                <input v-model="member.role" placeholder="Role (e.g. Dedicated Account Manager)" class="item-input w-full font-semibold" />
+              </div>
+              <div class="md:col-span-7">
+                <input v-model="member.responsibility" placeholder="Responsibility / Scope of Work..." class="item-input w-full" />
+              </div>
+              <div class="md:col-span-1 text-right">
+                <button class="item-remove" @click="form.teamMembers.splice(mIdx, 1)" title="Remove member">✕</button>
+              </div>
+            </div>
+          </div>
+          <div v-else class="text-sm text-slate-400 py-3 text-center border border-dashed border-slate-200 rounded-lg mt-2">
+            No dedicated team members added.
+          </div>
+        </div>
+
         <!-- 4. Batch Pricing / Package Breakdown Section -->
         <div class="editor-card">
           <div class="card-heading-row">
@@ -301,6 +362,9 @@ const form = ref<Quotation>({
       total: 20000
     }
   ],
+  serviceDeliverables: [],
+  teamTitle: '3. Dedicated Team & Account Management',
+  teamMembers: [],
   enableBatchBreakdown: true,
   batchTitle: 'Monthly Growth Package Breakdown (3-Month Campaign)',
   batchItems: [
@@ -331,6 +395,16 @@ const form = ref<Quotation>({
   createdAt: '',
   updatedAt: ''
 })
+
+const addDeliverable = () => {
+  if (!form.value.serviceDeliverables) form.value.serviceDeliverables = []
+  form.value.serviceDeliverables.push({ domain: '', description: '', frequency: '' })
+}
+
+const addTeamMember = () => {
+  if (!form.value.teamMembers) form.value.teamMembers = []
+  form.value.teamMembers.push({ role: '', responsibility: '' })
+}
 
 const addReferenceLink = () => {
   if (!form.value.referenceLinks) form.value.referenceLinks = []

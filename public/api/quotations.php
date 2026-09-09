@@ -28,6 +28,9 @@ function format_quotation_from_db($row, $line_items = []) {
         'batchItems' => !empty($row['batch_items']) ? json_decode($row['batch_items'], true) : [],
         'batchTotalText' => $row['batch_total_text'] ?: '',
         'batchTotalAmount' => (float)$row['batch_total_amount'],
+        'serviceDeliverables' => !empty($row['service_deliverables']) ? json_decode($row['service_deliverables'], true) : [],
+        'teamTitle' => $row['team_title'] ?? '3. Dedicated Team & Account Management',
+        'teamMembers' => !empty($row['team_members']) ? json_decode($row['team_members'], true) : [],
         'subtotal' => (float)$row['subtotal'],
         'taxPercent' => (float)$row['tax_percent'],
         'taxAmount' => (float)$row['tax_amount'],
@@ -148,10 +151,29 @@ if ($method === 'POST' || $method === 'PUT') {
     $valid_until = $input['validUntil'] ?? null;
     $notes = $input['notes'] ?? null;
     $reference_links = !empty($input['referenceLinks']) ? json_encode($input['referenceLinks'], JSON_UNESCAPED_UNICODE) : null;
+    $service_deliverables = !empty($input['serviceDeliverables']) ? json_encode($input['serviceDeliverables'], JSON_UNESCAPED_UNICODE) : null;
+    $team_title = $input['teamTitle'] ?? '3. Dedicated Team & Account Management';
+    $team_members = !empty($input['teamMembers']) ? json_encode($input['teamMembers'], JSON_UNESCAPED_UNICODE) : null;
     $terms_title = $input['termsTitle'] ?? 'Terms & Working Conditions';
     $terms_list = !empty($input['termsList']) ? json_encode($input['termsList'], JSON_UNESCAPED_UNICODE) : null;
     $terms = $input['terms'] ?? null;
     $status = in_array($input['status'] ?? '', ['draft', 'sent', 'accepted', 'rejected']) ? $input['status'] : 'draft';
+
+    // Auto-migrate new columns if missing
+    try {
+        $cols = $pdo->query("SHOW COLUMNS FROM quotations")->fetchAll(PDO::FETCH_COLUMN);
+        if ($cols && !in_array('service_deliverables', $cols)) {
+            $pdo->exec("ALTER TABLE quotations ADD COLUMN service_deliverables JSON DEFAULT NULL");
+        }
+        if ($cols && !in_array('team_title', $cols)) {
+            $pdo->exec("ALTER TABLE quotations ADD COLUMN team_title VARCHAR(255) DEFAULT NULL");
+        }
+        if ($cols && !in_array('team_members', $cols)) {
+            $pdo->exec("ALTER TABLE quotations ADD COLUMN team_members JSON DEFAULT NULL");
+        }
+    } catch (Exception $e) {
+        // Continue if check fails
+    }
 
     try {
         $pdo->beginTransaction();
@@ -161,7 +183,8 @@ if ($method === 'POST' || $method === 'PUT') {
                 id, quotation_number, company_name, provider_subtitle, provider_contact,
                 client_company, client_name, client_phone, client_email, client_address,
                 service_category, enable_batch_breakdown, batch_title, batch_items,
-                batch_total_text, batch_total_amount, subtotal, tax_percent, tax_amount,
+                batch_total_text, batch_total_amount, service_deliverables, team_title, team_members,
+                subtotal, tax_percent, tax_amount,
                 discount_percent, discount_amount, grand_total, currency, date, valid_until,
                 notes, reference_links, terms_title, terms_list, terms, status, updated_at
             ) VALUES (
@@ -169,6 +192,7 @@ if ($method === 'POST' || $method === 'PUT') {
                 ?, ?, ?, ?, ?,
                 ?, ?, ?, ?,
                 ?, ?, ?, ?, ?,
+                ?, ?, ?,
                 ?, ?, ?, ?, ?, ?,
                 ?, ?, ?, ?, ?, ?, NOW()
             )
@@ -188,6 +212,9 @@ if ($method === 'POST' || $method === 'PUT') {
                 batch_items = VALUES(batch_items),
                 batch_total_text = VALUES(batch_total_text),
                 batch_total_amount = VALUES(batch_total_amount),
+                service_deliverables = VALUES(service_deliverables),
+                team_title = VALUES(team_title),
+                team_members = VALUES(team_members),
                 subtotal = VALUES(subtotal),
                 tax_percent = VALUES(tax_percent),
                 tax_amount = VALUES(tax_amount),
@@ -211,7 +238,8 @@ if ($method === 'POST' || $method === 'PUT') {
             $qid, $quotation_number, $company_name, $provider_subtitle, $provider_contact,
             $client_company, $client_name, $client_phone, $client_email, $client_address,
             $service_category, $enable_batch, $batch_title, $batch_items,
-            $batch_total_text, $batch_total_amount, $subtotal, $tax_percent, $tax_amount,
+            $batch_total_text, $batch_total_amount, $service_deliverables, $team_title, $team_members,
+            $subtotal, $tax_percent, $tax_amount,
             $discount_percent, $discount_amount, $grand_total, $currency, $date, $valid_until,
             $notes, $reference_links, $terms_title, $terms_list, $terms, $status
         ]);

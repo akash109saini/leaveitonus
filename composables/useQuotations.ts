@@ -30,6 +30,17 @@ export interface ReferenceLink {
   type?: 'video' | 'doc' | 'drive' | 'sheet' | 'link' | 'instagram'
 }
 
+export interface ServiceDeliverable {
+  domain: string
+  description: string
+  frequency: string
+}
+
+export interface TeamMember {
+  role: string
+  responsibility: string
+}
+
 export interface Quotation {
   id: string
   quotationNumber: string
@@ -48,6 +59,9 @@ export interface Quotation {
   batchItems?: BatchItem[]
   batchTotalText?: string
   batchTotalAmount?: number
+  serviceDeliverables?: ServiceDeliverable[]
+  teamTitle?: string
+  teamMembers?: TeamMember[]
   referenceLinks?: ReferenceLink[]
   subtotal: number
   taxPercent: number
@@ -454,8 +468,8 @@ const SAMPLE_QUOTATIONS: Quotation[] = [
         description: 'Complete monthly social media digital marketing and food content production suite for Bhagwati Bhojnalaya:\n• 1 Professional On-Location Shoot (cinematography, ambiance, food preparation & kitchen aesthetics)\n• 15 Total Content Deliverables per month (7–8 high-retention reels & 7–8 custom graphic creatives/stories)\n• Professional Reel Script Writing & Hook Strategy\n• End-to-End Meta Ads Management (audience targeting, local footfall reach & visibility optimization across Instagram & Facebook)',
         unit: 'Per Month (Complete Package)',
         qty: 1,
-        unitPrice: 13500,
-        total: 13500
+        unitPrice: 12000,
+        total: 12000
       }
     ],
     enableBatchBreakdown: false,
@@ -463,12 +477,12 @@ const SAMPLE_QUOTATIONS: Quotation[] = [
     batchItems: [],
     batchTotalText: '',
     batchTotalAmount: 0,
-    subtotal: 13500,
+    subtotal: 12000,
     taxPercent: 0,
     taxAmount: 0,
     discountPercent: 0,
     discountAmount: 0,
-    grandTotal: 13500,
+    grandTotal: 12000,
     currency: 'INR',
     date: 'September 09, 2026',
     validUntil: 'October 09, 2026',
@@ -480,12 +494,13 @@ const SAMPLE_QUOTATIONS: Quotation[] = [
       '**Media Placement:** The quotation does not include direct **media placement / Meta ad spend costs** (billed directly through client account for 100% transparency).',
       '**Shoot Supplies:** All **food items, beverages, and ingredients** required for the shoot must be provided by the client.',
       '**Agency Props:** **Props sourced by the agency** (e.g., background boards, specialized table linens, ambient lighting decor) are provided for shoot aesthetics.',
-      '**Models & Talent:** Models (whether restaurant staff or hired actors/influencers) **payment is to be provided directly by the client**.'
+      '**Models & Talent:** Models (whether restaurant staff or hired actors/influencers) **payment is to be provided directly by the client**.',
+      '**Introductory Pricing:** The promotional package price is **₹12,000 for the first month**. From the second month onward, the standard monthly retainer will be **₹13,500**.'
     ],
-    terms: '• Payment Terms: **50% advance payment** required upon project confirmation / commencement of monthly services.\n• Media Placement: The quotation does not include direct **media placement / Meta ad spend costs** (billed directly through client ad account for 100% transparency).\n• Shoot Supplies: All **food items, beverages, and ingredients** required for the shoot must be provided fresh by the client.\n• Agency Props: **Props sourced by the agency** (e.g., background boards, specialized table linens, ambient lighting decor) are provided for shoot aesthetics.\n• Models & Talent: Models (whether restaurant staff or hired actors/influencers) **payment is to be provided directly by the client**.',
+    terms: '• Payment Terms: **50% advance payment** required upon project confirmation / commencement of monthly services.\n• Media Placement: The quotation does not include direct **media placement / Meta ad spend costs** (billed directly through client ad account for 100% transparency).\n• Shoot Supplies: All **food items, beverages, and ingredients** required for the shoot must be provided fresh by the client.\n• Agency Props: **Props sourced by the agency** (e.g., background boards, specialized table linens, ambient lighting decor) are provided for shoot aesthetics.\n• Models & Talent: Models (whether restaurant staff or hired actors/influencers) **payment is to be provided directly by the client**.\n• Introductory Pricing: The promotional package price is **₹12,000 for the first month**. From the second month onward, the standard monthly retainer will be **₹13,500**.',
     status: 'sent',
     createdAt: '2026-09-09T10:50:00.000Z',
-    updatedAt: '2026-09-09T10:50:00.000Z'
+    updatedAt: '2026-09-09T12:15:00.000Z'
   },
   {
     id: 'lious-quote-07',
@@ -502,11 +517,57 @@ const SAMPLE_QUOTATIONS: Quotation[] = [
     lineItems: [
       {
         serviceName: 'Comprehensive School Digital Marketing & Video Production Suite',
-        description: 'Full-funnel digital marketing, social media growth, and professional campus production for Springfield School, Moradabad:\n• 4 to 5 On-Site Professional Video Shoots per month covering school infrastructure, campus life, sports, annual events, student activities, and modern classrooms\n• 8 to 10 High-Quality Social Media Reels per month with high-retention editing, sound design, and viral storytelling\n• Concept Development & Professional Scripting tailored for school admissions, student achievements, and parent engagement\n• 5 to 7 Custom-Designed Static & Carousel Creatives per month for official announcements, holiday greetings, exams, and milestones\n• End-to-End Meta Ads Management (Facebook & Instagram campaigns targeted to parents in Moradabad for admissions & brand awareness; ad spend excluded)\n• Social Media Profile Optimization & Active Community Management across Instagram & Facebook',
+        description: 'Full-funnel digital marketing, social media growth, campus video production & dedicated management team for Springfield School, Moradabad (8–10 Reels, 5–6 Creatives, Meta Ads, Scheduled Shoots & Dedicated Account Manager)',
         unit: 'Per Month (Complete Suite)',
         qty: 1,
         unitPrice: 25000,
         total: 25000
+      }
+    ],
+    serviceDeliverables: [
+      {
+        domain: 'Short-Form Video (Reels)',
+        description: 'High-energy, narrative-driven reels covering school events, student vox-pops, faculty spotlights, and campus life.',
+        frequency: '8 – 10 Videos'
+      },
+      {
+        domain: 'Static & Carousel Creatives',
+        description: 'Professionally designed informative carousels, event announcements, milestone achievements, and festival graphics.',
+        frequency: '5 – 6 Creatives'
+      },
+      {
+        domain: 'Platform Management',
+        description: 'End-to-end publishing, caption drafting, hashtag optimization, and community engagement on **Instagram** and **Facebook**.',
+        frequency: 'Active Monthly'
+      },
+      {
+        domain: 'Meta Ads Management',
+        description: 'Setup, audience targeting, optimization, and reporting for admission campaigns, reach, and brand awareness.',
+        frequency: 'Included'
+      },
+      {
+        domain: 'Professional Production',
+        description: 'On-campus high-quality shoot conducted using professional cinema/mirrorless camera equipment, lighting, and audio gear.',
+        frequency: 'Scheduled Shoots'
+      }
+    ],
+    teamTitle: '3. Dedicated Team & Account Management',
+    teamMembers: [
+      {
+        role: 'Dedicated Account Manager',
+        responsibility: 'Single point of contact for weekly scheduling, content approvals, coordination, and performance reports.'
+      },
+      {
+        role: 'Professional Videographer',
+        responsibility: 'Handles on-ground camera operations, visual composition, audio capture, and b-roll direction.'
+      },
+      {
+        role: 'Content Creator & Scriptwriter',
+        responsibility: 'Formulates creative concepts, student/teacher interview scripts, and engaging copy.'
+      },
+      {
+        role: 'Graphic Designer & Video Editor',
+        responsibility: 'Executes post-production color grading, motion graphics, audio sync, and brand-consistent social creatives.'
       }
     ],
     enableBatchBreakdown: false,
@@ -552,7 +613,7 @@ const DEFAULT_SERVICES: ServiceItem[] = [
 const { read: readQ, write: writeQ } = useAdminStorage<Quotation[]>(QUOTATIONS_KEY, SAMPLE_QUOTATIONS)
 const { read: readS, write: writeS } = useAdminStorage<ServiceItem[]>(SERVICES_KEY, DEFAULT_SERVICES)
 
-const SEED_FLAG_KEY = 'lious_quotes_v10_springfield_school'
+const SEED_FLAG_KEY = 'lious_quotes_v12_springfield_team'
 
 export const getApiBase = (): string => {
   if (import.meta.server) return 'https://leaveitonusmedia.com/api'
