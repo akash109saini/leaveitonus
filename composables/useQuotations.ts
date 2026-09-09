@@ -486,6 +486,55 @@ const SAMPLE_QUOTATIONS: Quotation[] = [
     status: 'sent',
     createdAt: '2026-09-09T10:50:00.000Z',
     updatedAt: '2026-09-09T10:50:00.000Z'
+  },
+  {
+    id: 'lious-quote-07',
+    quotationNumber: 'LIOUS2026090902',
+    companyName: 'Leave It On Us',
+    providerSubtitle: 'Creator-Led Digital Marketing & Production Agency',
+    providerContact: 'Contact / WhatsApp: +91 98765 43210',
+    clientCompany: 'Springfield School',
+    clientName: 'Ms. Deepa Jain',
+    clientPhone: '+91 98978 21411',
+    clientEmail: '',
+    clientAddress: 'Moradabad, Uttar Pradesh',
+    serviceCategory: 'Comprehensive School Digital Marketing & Campus Production Suite',
+    lineItems: [
+      {
+        serviceName: 'Comprehensive School Digital Marketing & Video Production Suite',
+        description: 'Full-funnel digital marketing, social media growth, and professional campus production for Springfield School, Moradabad:\n• 4 to 5 On-Site Professional Video Shoots per month covering school infrastructure, campus life, sports, annual events, student activities, and modern classrooms\n• 8 to 10 High-Quality Social Media Reels per month with high-retention editing, sound design, and viral storytelling\n• Concept Development & Professional Scripting tailored for school admissions, student achievements, and parent engagement\n• 5 to 7 Custom-Designed Static & Carousel Creatives per month for official announcements, holiday greetings, exams, and milestones\n• End-to-End Meta Ads Management (Facebook & Instagram campaigns targeted to parents in Moradabad for admissions & brand awareness; ad spend excluded)\n• Social Media Profile Optimization & Active Community Management across Instagram & Facebook',
+        unit: 'Per Month (Complete Suite)',
+        qty: 1,
+        unitPrice: 25000,
+        total: 25000
+      }
+    ],
+    enableBatchBreakdown: false,
+    batchTitle: '',
+    batchItems: [],
+    batchTotalText: '',
+    batchTotalAmount: 0,
+    subtotal: 25000,
+    taxPercent: 0,
+    taxAmount: 0,
+    discountPercent: 0,
+    discountAmount: 0,
+    grandTotal: 25000,
+    currency: 'INR',
+    date: 'September 09, 2026',
+    validUntil: 'October 09, 2026',
+    notes: 'Comprehensive digital marketing, campus life video production, student admission campaigns, and multi-channel social media management engineered for Springfield School, Moradabad.',
+    referenceLinks: [],
+    termsTitle: 'Terms & Working Conditions',
+    termsList: [
+      '**Payment Terms:** **50% advance payment** is required at the beginning of each monthly billing cycle.',
+      '**Ad Spend Budget:** All **ad spend costs will be paid directly by Springfield School** through their dedicated ad account for complete transparency.',
+      '**Shoot Coordination:** On-site professional shoots must be **scheduled at least 1 or 2 days in advance** for proper team and equipment preparation.'
+    ],
+    terms: '• Payment Terms: **50% advance payment** is required at the beginning of each monthly billing cycle.\n• Ad Spend Budget: All **ad spend costs will be paid directly by Springfield School** through their dedicated ad account for complete transparency.\n• Shoot Coordination: On-site professional shoots must be **scheduled at least 1 or 2 days in advance** for proper team and equipment preparation.',
+    status: 'sent',
+    createdAt: '2026-09-09T11:35:00.000Z',
+    updatedAt: '2026-09-09T11:35:00.000Z'
   }
 ]
 
@@ -503,7 +552,7 @@ const DEFAULT_SERVICES: ServiceItem[] = [
 const { read: readQ, write: writeQ } = useAdminStorage<Quotation[]>(QUOTATIONS_KEY, SAMPLE_QUOTATIONS)
 const { read: readS, write: writeS } = useAdminStorage<ServiceItem[]>(SERVICES_KEY, DEFAULT_SERVICES)
 
-const SEED_FLAG_KEY = 'lious_quotes_v9_bhagwati_single_total'
+const SEED_FLAG_KEY = 'lious_quotes_v10_springfield_school'
 
 export const getApiBase = (): string => {
   if (import.meta.server) return 'https://leaveitonusmedia.com/api'
@@ -581,7 +630,8 @@ export function useQuotations() {
         } else if (
           sample.id === 'lious-quote-04' || sample.quotationNumber === 'LIOUS2026090701' ||
           sample.id === 'lious-quote-05' || sample.quotationNumber === 'LIOUS2026090801' ||
-          sample.id === 'lious-quote-06' || sample.quotationNumber === 'LIOUS2026090901'
+          sample.id === 'lious-quote-06' || sample.quotationNumber === 'LIOUS2026090901' ||
+          sample.id === 'lious-quote-07' || sample.quotationNumber === 'LIOUS2026090902'
         ) {
           list[idx] = { ...sample }
           modified = true

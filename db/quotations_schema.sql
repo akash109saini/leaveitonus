@@ -293,3 +293,55 @@ INSERT INTO `quotation_line_items` (
   1
 );
 
+
+-- 6. Insert Quotation: Springfield School (LIOUS2026090902)
+INSERT INTO `quotations` (
+  `id`, `quotation_number`, `company_name`, `provider_subtitle`, `provider_contact`,
+  `client_company`, `client_name`, `client_phone`, `client_email`, `client_address`,
+  `service_category`, `enable_batch_breakdown`, `batch_title`, `batch_items`, `batch_total_text`, `batch_total_amount`,
+  `subtotal`, `tax_percent`, `tax_amount`, `discount_percent`, `discount_amount`, `grand_total`,
+  `currency`, `date`, `valid_until`, `notes`, `terms_title`, `terms_list`, `terms`, `status`
+) VALUES (
+  'lious-quote-07',
+  'LIOUS2026090902',
+  'Leave It On Us',
+  'Creator-Led Digital Marketing & Production Agency',
+  'Contact / WhatsApp: +91 98765 43210',
+  'Springfield School',
+  'Ms. Deepa Jain',
+  '9897821411',
+  NULL,
+  'Moradabad, Uttar Pradesh',
+  'Comprehensive School Digital Marketing & Campus Production Suite',
+  0,
+  NULL,
+  NULL,
+  NULL,
+  0.00,
+  25000.00, 0.00, 0.00, 0.00, 0.00, 25000.00,
+  'INR',
+  'September 09, 2026',
+  'October 09, 2026',
+  'Comprehensive digital marketing, campus life video production, student admission campaigns, and multi-channel social media management engineered for Springfield School, Moradabad.',
+  'Terms & Working Conditions',
+  '["Payment Terms: 50% advance payment is required at the beginning of each monthly billing cycle.","Ad Spend Budget: All ad spend costs will be paid directly by Springfield School through their dedicated ad account for complete transparency.","Shoot Coordination: On-site professional shoots must be scheduled at least 1 or 2 days in advance for proper team and equipment preparation."]',
+  '• Payment Terms: **50% advance payment** is required at the beginning of each monthly billing cycle.\n• Ad Spend Budget: All **ad spend costs will be paid directly by Springfield School** through their dedicated ad account for complete transparency.\n• Shoot Coordination: On-site professional shoots must be **scheduled at least 1 or 2 days in advance** for proper team and equipment preparation.',
+  'sent'
+) ON DUPLICATE KEY UPDATE `grand_total` = VALUES(`grand_total`);
+
+-- Springfield School Line Item
+INSERT INTO `quotation_line_items` (
+  `quotation_id`, `service_id`, `service_name`, `description`, `unit`, `qty`, `unit_price`, `total`, `sort_order`
+) VALUES (
+  'lious-quote-07',
+  'svc-springfield-pkg',
+  'Comprehensive School Digital Marketing & Video Production Suite',
+  'Full-funnel digital marketing, social media growth, and professional campus production for Springfield School, Moradabad:\n• 4 to 5 On-Site Professional Video Shoots per month covering school infrastructure, campus life, sports, annual events, student activities, and modern classrooms\n• 8 to 10 High-Quality Social Media Reels per month with high-retention editing, sound design, and viral storytelling\n• Concept Development & Professional Scripting tailored for school admissions, student achievements, and parent engagement\n• 5 to 7 Custom-Designed Static & Carousel Creatives per month for official announcements, holiday greetings, exams, and milestones\n• End-to-End Meta Ads Management (Facebook & Instagram campaigns targeted to parents in Moradabad for admissions & brand awareness; ad spend excluded)\n• Social Media Profile Optimization & Active Community Management across Instagram & Facebook',
+  'Per Month (Complete Suite)',
+  1,
+  25000.00,
+  25000.00,
+  1
+);
+
+
