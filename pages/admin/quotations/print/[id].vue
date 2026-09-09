@@ -208,41 +208,44 @@ const route = useRoute()
 const id = route.params.id as string
 const { getQuotation, getQuotations, syncQuotationsFromApi } = useQuotations()
 
-const q = ref<Quotation>({
+const defaultEmptyQuote: Quotation = {
   id: '',
   quotationNumber: 'LIOUS/DM/2026/01',
   companyName: 'Leave It On Us',
   providerSubtitle: 'Creator-Led Digital Marketing & Production Agency',
   providerContact: 'Contact / WhatsApp: +91 98765 43210 · hello@leaveitonus.com',
-  clientCompany: 'Aura Lifestyle Apparel',
-  clientName: 'Ms. Priya Sharma',
-  clientPhone: '+91 98201 54321',
-  clientEmail: 'priya@auralifestyle.in',
-  clientAddress: 'Bandra West, Mumbai, Maharashtra',
-  serviceCategory: 'Full-Funnel Digital Marketing & Creator Growth',
+  clientCompany: '',
+  clientName: '',
+  clientPhone: '',
+  clientEmail: '',
+  clientAddress: '',
+  serviceCategory: 'Digital Marketing & Content Production',
   lineItems: [],
-  enableBatchBreakdown: true,
-  batchTitle: 'Monthly Growth Package Breakdown',
+  enableBatchBreakdown: false,
+  batchTitle: '',
   batchItems: [],
-  batchTotalText: 'Total per Month:',
-  batchTotalAmount: 140000,
-  subtotal: 140000,
+  batchTotalText: '',
+  batchTotalAmount: 0,
+  subtotal: 0,
   taxPercent: 0,
   taxAmount: 0,
   discountPercent: 0,
   discountAmount: 0,
-  grandTotal: 140000,
+  grandTotal: 0,
   currency: 'INR',
-  date: 'August 28, 2026',
-  validUntil: 'September 28, 2026',
+  date: '',
+  validUntil: '',
   notes: '',
   termsTitle: 'Terms & Working Conditions',
   termsList: [],
   terms: '',
-  status: 'sent',
+  status: 'draft',
   createdAt: '',
   updatedAt: ''
-})
+}
+
+const existing = getQuotation(id)
+const q = ref<Quotation>(existing ? JSON.parse(JSON.stringify(existing)) : defaultEmptyQuote)
 
 const printFilename = computed(() => {
   const company = (q.value.clientCompany || q.value.clientName || 'Client').trim()
