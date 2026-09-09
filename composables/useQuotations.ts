@@ -596,6 +596,101 @@ const SAMPLE_QUOTATIONS: Quotation[] = [
     status: 'sent',
     createdAt: '2026-09-09T11:35:00.000Z',
     updatedAt: '2026-09-09T11:35:00.000Z'
+  },
+  {
+    id: 'lious-quote-08',
+    quotationNumber: 'LIOUS2026090903',
+    companyName: 'Leave It On Us',
+    providerSubtitle: 'Creator-Led Digital Marketing & Production Agency',
+    providerContact: 'Contact / WhatsApp: +91 98765 43210',
+    clientCompany: 'Golden Gate Global School',
+    clientName: 'Dr. Sachin Gharwari',
+    clientPhone: '+91 90120 57888',
+    clientEmail: '',
+    clientAddress: '',
+    serviceCategory: 'Comprehensive School Digital Marketing & Campus Production Suite',
+    lineItems: [
+      {
+        serviceName: 'Comprehensive School Digital Marketing & Video Production Suite',
+        description: 'Full-funnel digital marketing, social media growth, campus video production & dedicated management team for Golden Gate Global School (8–10 Reels, 5–6 Creatives, Meta Ads, Scheduled Shoots & Dedicated Account Manager)',
+        unit: 'Per Month (Complete Suite)',
+        qty: 1,
+        unitPrice: 25000,
+        total: 25000
+      }
+    ],
+    serviceDeliverables: [
+      {
+        domain: 'Short-Form Video (Reels)',
+        description: 'High-energy, narrative-driven reels covering school events, student vox-pops, faculty spotlights, and campus life.',
+        frequency: '8 – 10 Videos'
+      },
+      {
+        domain: 'Static & Carousel Creatives',
+        description: 'Professionally designed informative carousels, event announcements, milestone achievements, and festival graphics.',
+        frequency: '5 – 6 Creatives'
+      },
+      {
+        domain: 'Platform Management',
+        description: 'End-to-end publishing, caption drafting, hashtag optimization, and community engagement on **Instagram** and **Facebook**.',
+        frequency: 'Active Monthly'
+      },
+      {
+        domain: 'Meta Ads Management',
+        description: 'Setup, audience targeting, optimization, and reporting for admission campaigns, reach, and brand awareness.',
+        frequency: 'Included'
+      },
+      {
+        domain: 'Professional Production',
+        description: 'On-campus high-quality shoot conducted using professional cinema/mirrorless camera equipment, lighting, and audio gear.',
+        frequency: 'Scheduled Shoots'
+      }
+    ],
+    teamTitle: '3. Dedicated Team & Account Management',
+    teamMembers: [
+      {
+        role: 'Dedicated Account Manager',
+        responsibility: 'Single point of contact for weekly scheduling, content approvals, coordination, and performance reports.'
+      },
+      {
+        role: 'Professional Videographer',
+        responsibility: 'Handles on-ground camera operations, visual composition, audio capture, and b-roll direction.'
+      },
+      {
+        role: 'Content Creator & Scriptwriter',
+        responsibility: 'Formulates creative concepts, student/teacher interview scripts, and engaging copy.'
+      },
+      {
+        role: 'Graphic Designer & Video Editor',
+        responsibility: 'Executes post-production color grading, motion graphics, audio sync, and brand-consistent social creatives.'
+      }
+    ],
+    enableBatchBreakdown: false,
+    batchTitle: '',
+    batchItems: [],
+    batchTotalText: '',
+    batchTotalAmount: 0,
+    subtotal: 25000,
+    taxPercent: 0,
+    taxAmount: 0,
+    discountPercent: 0,
+    discountAmount: 0,
+    grandTotal: 25000,
+    currency: 'INR',
+    date: 'September 09, 2026',
+    validUntil: 'October 09, 2026',
+    notes: 'Comprehensive digital marketing, campus life video production, student admission campaigns, and multi-channel social media management engineered for Golden Gate Global School.',
+    referenceLinks: [],
+    termsTitle: 'Terms & Working Conditions',
+    termsList: [
+      '**Payment Terms:** **50% advance payment** is required at the beginning of each monthly billing cycle.',
+      '**Ad Spend Budget:** All **ad spend costs will be paid directly by Golden Gate Global School** through their dedicated ad account for complete transparency.',
+      '**Shoot Coordination:** On-site professional shoots must be **scheduled at least 1 or 2 days in advance** for proper team and equipment preparation.'
+    ],
+    terms: '• Payment Terms: **50% advance payment** is required at the beginning of each monthly billing cycle.\n• Ad Spend Budget: All **ad spend costs will be paid directly by Golden Gate Global School** through their dedicated ad account for complete transparency.\n• Shoot Coordination: On-site professional shoots must be **scheduled at least 1 or 2 days in advance** for proper team and equipment preparation.',
+    status: 'sent',
+    createdAt: '2026-09-09T14:15:00.000Z',
+    updatedAt: '2026-09-09T14:15:00.000Z'
   }
 ]
 
@@ -613,7 +708,7 @@ const DEFAULT_SERVICES: ServiceItem[] = [
 const { read: readQ, write: writeQ } = useAdminStorage<Quotation[]>(QUOTATIONS_KEY, SAMPLE_QUOTATIONS)
 const { read: readS, write: writeS } = useAdminStorage<ServiceItem[]>(SERVICES_KEY, DEFAULT_SERVICES)
 
-const SEED_FLAG_KEY = 'lious_quotes_v12_springfield_team'
+const SEED_FLAG_KEY = 'lious_quotes_v13_goldengate'
 
 export const getApiBase = (): string => {
   if (import.meta.server) return 'https://leaveitonusmedia.com/api'
@@ -680,7 +775,7 @@ export function useQuotations() {
       return cleaned
     }
 
-    // One-time sync / update to ensure default sample quotations (Healthophia & DMR Hospital) exist and are up to date
+    // One-time sync / update to ensure default sample quotations (including Golden Gate Global School) exist and are up to date
     if (import.meta.client && localStorage.getItem(SEED_FLAG_KEY) !== 'true') {
       let modified = false
       for (const sample of SAMPLE_QUOTATIONS) {
@@ -692,7 +787,8 @@ export function useQuotations() {
           sample.id === 'lious-quote-04' || sample.quotationNumber === 'LIOUS2026090701' ||
           sample.id === 'lious-quote-05' || sample.quotationNumber === 'LIOUS2026090801' ||
           sample.id === 'lious-quote-06' || sample.quotationNumber === 'LIOUS2026090901' ||
-          sample.id === 'lious-quote-07' || sample.quotationNumber === 'LIOUS2026090902'
+          sample.id === 'lious-quote-07' || sample.quotationNumber === 'LIOUS2026090902' ||
+          sample.id === 'lious-quote-08' || sample.quotationNumber === 'LIOUS2026090903'
         ) {
           list[idx] = { ...sample }
           modified = true

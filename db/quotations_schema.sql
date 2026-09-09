@@ -352,3 +352,59 @@ INSERT INTO `quotation_line_items` (
 );
 
 
+-- 7. Insert Quotation: Golden Gate Global School (LIOUS2026090903)
+INSERT INTO `quotations` (
+  `id`, `quotation_number`, `company_name`, `provider_subtitle`, `provider_contact`,
+  `client_company`, `client_name`, `client_phone`, `client_email`, `client_address`,
+  `service_category`, `enable_batch_breakdown`, `batch_title`, `batch_items`, `batch_total_text`, `batch_total_amount`,
+  `service_deliverables`, `team_title`, `team_members`,
+  `subtotal`, `tax_percent`, `tax_amount`, `discount_percent`, `discount_amount`, `grand_total`,
+  `currency`, `date`, `valid_until`, `notes`, `terms_title`, `terms_list`, `terms`, `status`
+) VALUES (
+  'lious-quote-08',
+  'LIOUS2026090903',
+  'Leave It On Us',
+  'Creator-Led Digital Marketing & Production Agency',
+  'Contact / WhatsApp: +91 98765 43210',
+  'Golden Gate Global School',
+  'Dr. Sachin Gharwari',
+  '+91 90120 57888',
+  NULL,
+  NULL,
+  'Comprehensive School Digital Marketing & Campus Production Suite',
+  0,
+  NULL,
+  NULL,
+  NULL,
+  0.00,
+  '[{"domain":"Short-Form Video (Reels)","description":"High-energy, narrative-driven reels covering school events, student vox-pops, faculty spotlights, and campus life.","frequency":"8 – 10 Videos"},{"domain":"Static & Carousel Creatives","description":"Professionally designed informative carousels, event announcements, milestone achievements, and festival graphics.","frequency":"5 – 6 Creatives"},{"domain":"Platform Management","description":"End-to-end publishing, caption drafting, hashtag optimization, and community engagement on **Instagram** and **Facebook**.","frequency":"Active Monthly"},{"domain":"Meta Ads Management","description":"Setup, audience targeting, optimization, and reporting for admission campaigns, reach, and brand awareness.","frequency":"Included"},{"domain":"Professional Production","description":"On-campus high-quality shoot conducted using professional cinema/mirrorless camera equipment, lighting, and audio gear.","frequency":"Scheduled Shoots"}]',
+  '3. Dedicated Team & Account Management',
+  '[{"role":"Dedicated Account Manager","responsibility":"Single point of contact for weekly scheduling, content approvals, coordination, and performance reports."},{"role":"Professional Videographer","responsibility":"Handles on-ground camera operations, visual composition, audio capture, and b-roll direction."},{"role":"Content Creator & Scriptwriter","responsibility":"Formulates creative concepts, student/teacher interview scripts, and engaging copy."},{"role":"Graphic Designer & Video Editor","responsibility":"Executes post-production color grading, motion graphics, audio sync, and brand-consistent social creatives."}]',
+  25000.00, 0.00, 0.00, 0.00, 0.00, 25000.00,
+  'INR',
+  'September 09, 2026',
+  'October 09, 2026',
+  'Comprehensive digital marketing, campus life video production, student admission campaigns, and multi-channel social media management engineered for Golden Gate Global School.',
+  'Terms & Working Conditions',
+  '["Payment Terms: 50% advance payment is required at the beginning of each monthly billing cycle.","Ad Spend Budget: All ad spend costs will be paid directly by Golden Gate Global School through their dedicated ad account for complete transparency.","Shoot Coordination: On-site professional shoots must be scheduled at least 1 or 2 days in advance for proper team and equipment preparation."]',
+  '• Payment Terms: **50% advance payment** is required at the beginning of each monthly billing cycle.\n• Ad Spend Budget: All **ad spend costs will be paid directly by Golden Gate Global School** through their dedicated ad account for complete transparency.\n• Shoot Coordination: On-site professional shoots must be **scheduled at least 1 or 2 days in advance** for proper team and equipment preparation.',
+  'sent'
+) ON DUPLICATE KEY UPDATE `grand_total` = VALUES(`grand_total`);
+
+-- Golden Gate Global School Line Item
+INSERT INTO `quotation_line_items` (
+  `quotation_id`, `service_id`, `service_name`, `description`, `unit`, `qty`, `unit_price`, `total`, `sort_order`
+) VALUES (
+  'lious-quote-08',
+  'svc-goldengate-pkg',
+  'Comprehensive School Digital Marketing & Video Production Suite',
+  'Full-funnel digital marketing, social media growth, campus video production & dedicated management team for Golden Gate Global School (8–10 Reels, 5–6 Creatives, Meta Ads, Scheduled Shoots & Dedicated Account Manager)',
+  'Per Month (Complete Suite)',
+  1,
+  25000.00,
+  25000.00,
+  1
+);
+
+
+
