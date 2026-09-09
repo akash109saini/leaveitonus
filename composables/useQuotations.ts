@@ -458,16 +458,11 @@ const SAMPLE_QUOTATIONS: Quotation[] = [
         total: 13500
       }
     ],
-    enableBatchBreakdown: true,
-    batchTitle: 'Monthly Growth Package Breakdown — Bhagwati Bhojnalaya',
-    batchItems: [
-      { description: '1 Professional On-Location Camera Shoot:', amount: 4000 },
-      { description: '7–8 High-Retention Food Reels & Script Writing:', amount: 5500 },
-      { description: '7–8 Custom Graphic Creatives & Stories:', amount: 2000 },
-      { description: 'Meta Ads Campaign Setup & Management:', amount: 2000 }
-    ],
-    batchTotalText: 'Total Retainer Price per Month:',
-    batchTotalAmount: 13500,
+    enableBatchBreakdown: false,
+    batchTitle: '',
+    batchItems: [],
+    batchTotalText: '',
+    batchTotalAmount: 0,
     subtotal: 13500,
     taxPercent: 0,
     taxAmount: 0,
@@ -508,7 +503,7 @@ const DEFAULT_SERVICES: ServiceItem[] = [
 const { read: readQ, write: writeQ } = useAdminStorage<Quotation[]>(QUOTATIONS_KEY, SAMPLE_QUOTATIONS)
 const { read: readS, write: writeS } = useAdminStorage<ServiceItem[]>(SERVICES_KEY, DEFAULT_SERVICES)
 
-const SEED_FLAG_KEY = 'lious_quotes_v8_bhagwati_bhojnalaya'
+const SEED_FLAG_KEY = 'lious_quotes_v9_bhagwati_single_total'
 
 export const getApiBase = (): string => {
   if (import.meta.server) return 'https://leaveitonusmedia.com/api'
